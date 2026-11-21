@@ -1,0 +1,31 @@
+pyrompt.engines
+===============
+
+.. automodule:: pyrompt.engines
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      register_engine
+      get_engine
+      get_engine_by_extension
+      detect_engine
+      list_engines
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      TemplateEngine
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   format_engine
+   jinja2_engine
+   mustache_engine

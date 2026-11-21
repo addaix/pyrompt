@@ -1,251 +1,822 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html lang="en" data-accent-color="orange" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to pyrompt’s documentation! &mdash; pyrompt 0.0.5 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>pyrompt</title><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API reference" href="api.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d88b86f9" />
+    <link rel="stylesheet" type="text/css" href="_static/shibuya.css?v=2ceb65ce" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link media="print" rel="stylesheet" type="text/css" href="_static/print.css?v=20ff2c19" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="pyrompt: Python Prompt Management"/>
+    <meta name="twitter:card" content="summary"/>
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=282f96c0"></script>
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt" type="text/markdown">
+</head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="#">
+      
+      
+      <strong>pyrompt</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/addaix/pyrompt" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/pyrompt.html">pyrompt</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyrompt.base.html">pyrompt.base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyrompt.cli.html">pyrompt.cli</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyrompt.engines.html">pyrompt.engines</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/pyrompt.engines.format_engine.html">pyrompt.engines.format_engine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/pyrompt.engines.jinja2_engine.html">pyrompt.engines.jinja2_engine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/pyrompt.engines.mustache_engine.html">pyrompt.engines.mustache_engine</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyrompt.github_integration.html">pyrompt.github_integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyrompt.mall.html">pyrompt.mall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyrompt.search.html">pyrompt.search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyrompt.stores.html">pyrompt.stores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/pyrompt.util.html">pyrompt.util</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#quick-start">Quick Start</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#template-languages">Template Languages</a><ul>
+<li><a class="reference internal" href="#default-python-format-strings">Default: Python Format Strings</a></li>
+<li><a class="reference internal" href="#jinja2-recommended-for-complex-prompts">Jinja2 (Recommended for Complex Prompts)</a></li>
+<li><a class="reference internal" href="#mustache-logic-less-templates">Mustache (Logic-less Templates)</a></li>
+<li><a class="reference internal" href="#template-auto-detection">Template Auto-Detection</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#core-concepts">Core Concepts</a><ul>
+<li><a class="reference internal" href="#collections-with-metadata">Collections with Metadata</a></li>
+<li><a class="reference internal" href="#creating-ai-functions">Creating AI Functions</a></li>
+<li><a class="reference internal" href="#using-promptfuncs-for-collections">Using PromptFuncs for Collections</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#storage-locations">Storage Locations</a></li>
+<li><a class="reference internal" href="#custom-storage-location">Custom Storage Location</a></li>
+<li><a class="reference internal" href="#github-integration">GitHub Integration</a><ul>
+<li><a class="reference internal" href="#publishing-your-collection">Publishing Your Collection</a></li>
+<li><a class="reference internal" href="#discovering-collections">Discovering Collections</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#semantic-search">Semantic Search</a><ul>
+<li><a class="reference internal" href="#batch-embeddings">Batch Embeddings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#extending-with-custom-template-engines">Extending with Custom Template Engines</a></li>
+<li><a class="reference internal" href="#collection-of-collections-malls">Collection of Collections (Malls)</a></li>
+<li><a class="reference internal" href="#real-world-example">Real-World Example</a></li>
+<li><a class="reference internal" href="#template-format-comparison">Template Format Comparison</a></li>
+<li><a class="reference internal" href="#architecture-principles">Architecture Principles</a></li>
+<li><a class="reference internal" href="#implementation-stack">Implementation Stack</a></li>
+<li><a class="reference internal" href="#cli-usage-planned">CLI Usage (Planned)</a></li>
+<li><a class="reference internal" href="#contributing">Contributing</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="#"><span itemprop="name">pyrompt</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">pyrompt: Python Prompt Management</strong>
+        <meta itemprop="position" content="2" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue dark-code" role="main">
+          <!-- generated by epythet -->
+<section id="pyrompt-python-prompt-management">
+<h1>pyrompt: Python Prompt Management<a class="headerlink" href="#pyrompt-python-prompt-management" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p>A flexible framework for managing, sharing, and searching prompts and prompt templates with support for multiple templating languages and idiomatic Python interfaces.</p>
+</div></blockquote>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p><strong>pyrompt</strong> makes it easy to:</p>
+<ul class="simple">
+<li><p>📝 Manage collections of prompts and templates with dict-like interfaces</p></li>
+<li><p>🎨 Use multiple template formats (Jinja2, Mustache, Python format strings, etc.)</p></li>
+<li><p>🔌 Extend with custom template languages via plugin system</p></li>
+<li><p>🔍 Search prompts semantically using embeddings</p></li>
+<li><p>🌐 Share and discover prompt collections via GitHub</p></li>
+<li><p>🎯 Create AI-enabled functions from templates using <code class="docutils literal notranslate"><span class="pre">oa.prompt_function</span></code></p></li>
+<li><p>💾 Store prompts locally, on GitHub, or custom backends</p></li>
+<li><p>🏗️ Build composable prompt management systems</p></li>
+</ul>
+<p>All data sources use Python’s <code class="docutils literal notranslate"><span class="pre">Mapping</span></code> and <code class="docutils literal notranslate"><span class="pre">MutableMapping</span></code> interfaces (via <code class="docutils literal notranslate"><span class="pre">dol</span></code>), and all template types are registered in an extensible plugin system.</p>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span><span class="p">,</span> <span class="n">TemplateCollection</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="c1"># Create collections</span>
+</span><span data-line="4"><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s2">"my_project"</span><span class="p">)</span>
+</span><span data-line="5"><span class="n">templates</span> <span class="o">=</span> <span class="n">TemplateCollection</span><span class="p">(</span><span class="s2">"my_project"</span><span class="p">)</span>
+</span><span data-line="6">
+</span><span data-line="7"><span class="c1"># Store a simple prompt</span>
+</span><span data-line="8"><span class="n">prompts</span><span class="p">[</span><span class="s2">"system"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are a helpful Python expert."</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># Store templates (default: Python format strings)</span>
+</span><span data-line="11"><span class="n">templates</span><span class="p">[</span><span class="s2">"greeting"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello, </span><span class="si">{name}</span><span class="s2">! Welcome to </span><span class="si">{place}</span><span class="s2">."</span>
+</span><span data-line="12">
+</span><span data-line="13"><span class="c1"># Use template with format syntax</span>
+</span><span data-line="14"><span class="nb">print</span><span class="p">(</span><span class="n">templates</span><span class="p">[</span><span class="s2">"greeting"</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Alice"</span><span class="p">,</span> <span class="n">place</span><span class="o">=</span><span class="s2">"Wonderland"</span><span class="p">))</span>
+</span><span data-line="15"><span class="c1"># Output: Hello, Alice! Welcome to Wonderland.</span>
+</span><span data-line="16">
+</span><span data-line="17"><span class="c1"># Create an AI function from a template</span>
+</span><span data-line="18"><span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">prompt_function</span>
+</span><span data-line="19">
+</span><span data-line="20"><span class="n">greet</span> <span class="o">=</span> <span class="n">prompt_function</span><span class="p">(</span><span class="n">templates</span><span class="p">[</span><span class="s2">"greeting"</span><span class="p">])</span>
+</span><span data-line="21"><span class="n">response</span> <span class="o">=</span> <span class="n">greet</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Bob"</span><span class="p">,</span> <span class="n">place</span><span class="o">=</span><span class="s2">"the future"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Basic installation (Python format strings only)</span>
+</span><span data-line="2">pip<span class="w"> </span>install<span class="w"> </span>pyrompt
+</span><span data-line="3">
+</span><span data-line="4"><span class="c1"># With Jinja2 support (recommended)</span>
+</span><span data-line="5">pip<span class="w"> </span>install<span class="w"> </span>pyrompt<span class="o">[</span>jinja2<span class="o">]</span>
+</span><span data-line="6">
+</span><span data-line="7"><span class="c1"># With all template engines</span>
+</span><span data-line="8">pip<span class="w"> </span>install<span class="w"> </span>pyrompt<span class="o">[</span>all<span class="o">]</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># Full installation with semantic search</span>
+</span><span data-line="11">pip<span class="w"> </span>install<span class="w"> </span>pyrompt<span class="o">[</span>full<span class="o">]</span>
+</span></pre></div>
+</div>
+<p><strong>Dependencies:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dol</span></code> - Storage abstractions (Mapping/MutableMapping interfaces)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oa</span></code> - AI operations (prompt_function, embeddings)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i2</span></code> - Function signature manipulation and wrapping</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jinja2</span></code> (optional) - Jinja2 templating support</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pystache</span></code> (optional) - Mustache templating support</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imbed</span></code> (optional) - Advanced semantic search</p></li>
+</ul>
+</section>
+<section id="template-languages">
+<h2>Template Languages<a class="headerlink" href="#template-languages" title="Link to this heading">#</a></h2>
+<p>pyrompt supports multiple template formats with an extensible plugin system. Choose the right tool for your needs:</p>
+<section id="default-python-format-strings">
+<h3>Default: Python Format Strings<a class="headerlink" href="#default-python-format-strings" title="Link to this heading">#</a></h3>
+<p>Simple and built-in, perfect for basic substitution:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">templates</span><span class="p">[</span><span class="s2">"basic"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello, </span><span class="si">{name}</span><span class="s2">! You are </span><span class="si">{age}</span><span class="s2"> years old."</span>
+</span></pre></div>
+</div>
+<p><strong>Pros:</strong> Native Python, no dependencies, simple
+<strong>Cons:</strong> No conditionals, no loops, no default values in template</p>
+</section>
+<section id="jinja2-recommended-for-complex-prompts">
+<h3>Jinja2 (Recommended for Complex Prompts)<a class="headerlink" href="#jinja2-recommended-for-complex-prompts" title="Link to this heading">#</a></h3>
+<p>Rich templating with conditionals, loops, and filters:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">templates</span><span class="p">[</span><span class="s2">"advanced.jinja2"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"""</span>
+</span><span data-line="2"><span class="s2">Hello, {{ name|default('friend') }}!</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="s2">{</span><span class="si">% i</span><span class="s2">f role %}</span>
+</span><span data-line="5"><span class="s2">You are logged in as: {{ role }}</span>
+</span><span data-line="6"><span class="s2">{</span><span class="si">% e</span><span class="s2">lse %}</span>
+</span><span data-line="7"><span class="s2">You are browsing as a guest.</span>
+</span><span data-line="8"><span class="s2">{</span><span class="si">% e</span><span class="s2">ndif %}</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="s2">{</span><span class="si">% i</span><span class="s2">f items %}</span>
+</span><span data-line="11"><span class="s2">Your items:</span>
+</span><span data-line="12"><span class="s2">{</span><span class="si">% f</span><span class="s2">or item in items %}</span>
+</span><span data-line="13"><span class="s2">  - {{ item }}</span>
+</span><span data-line="14"><span class="s2">{</span><span class="si">% e</span><span class="s2">ndfor %}</span>
+</span><span data-line="15"><span class="s2">{</span><span class="si">% e</span><span class="s2">ndif %}</span>
+</span><span data-line="16"><span class="s2">"""</span>
+</span><span data-line="17">
+</span><span data-line="18"><span class="c1"># Use with Jinja2 engine</span>
+</span><span data-line="19"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt.engines</span><span class="w"> </span><span class="kn">import</span> <span class="n">Jinja2Engine</span>
+</span><span data-line="20">
+</span><span data-line="21"><span class="n">result</span> <span class="o">=</span> <span class="n">templates</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+</span><span data-line="22">    <span class="s2">"advanced.jinja2"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"Alice"</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="s2">"admin"</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="p">[</span><span class="s2">"prompt1"</span><span class="p">,</span> <span class="s2">"prompt2"</span><span class="p">]</span>
+</span><span data-line="23"><span class="p">)</span>
+</span></pre></div>
+</div>
+<p><strong>Pros:</strong> Powerful, widely used, great for complex prompts
+<strong>Cons:</strong> Requires jinja2 dependency, more complex syntax</p>
+</section>
+<section id="mustache-logic-less-templates">
+<h3>Mustache (Logic-less Templates)<a class="headerlink" href="#mustache-logic-less-templates" title="Link to this heading">#</a></h3>
+<p>Cross-platform, simple conditional sections:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">templates</span><span class="p">[</span><span class="s2">"mustache.mustache"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"""</span>
+</span><span data-line="2"><span class="s2">Hello {{name}}!</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="s2">{{#premium}}</span>
+</span><span data-line="5"><span class="s2">Thank you for being a premium member!</span>
+</span><span data-line="6"><span class="s2">{{/premium}}</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="s2">{{^premium}}</span>
+</span><span data-line="9"><span class="s2">Consider upgrading to premium.</span>
+</span><span data-line="10"><span class="s2">{{/premium}}</span>
+</span><span data-line="11">
+</span><span data-line="12"><span class="s2">{{#features}}</span>
+</span><span data-line="13"><span class="s2">- {{.}}</span>
+</span><span data-line="14"><span class="s2">{{/features}}</span>
+</span><span data-line="15"><span class="s2">"""</span>
+</span><span data-line="16">
+</span><span data-line="17"><span class="c1"># Mustache automatically handles sections and loops</span>
+</span><span data-line="18"><span class="n">result</span> <span class="o">=</span> <span class="n">templates</span><span class="o">.</span><span class="n">render</span><span class="p">(</span>
+</span><span data-line="19">    <span class="s2">"mustache.mustache"</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"Bob"</span><span class="p">,</span> <span class="n">premium</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="p">[</span><span class="s2">"feature1"</span><span class="p">,</span> <span class="s2">"feature2"</span><span class="p">]</span>
+</span><span data-line="20"><span class="p">)</span>
+</span></pre></div>
+</div>
+<p><strong>Pros:</strong> Simple, logic-less, cross-language standard
+<strong>Cons:</strong> Limited power, requires pystache dependency</p>
+</section>
+<section id="template-auto-detection">
+<h3>Template Auto-Detection<a class="headerlink" href="#template-auto-detection" title="Link to this heading">#</a></h3>
+<p>pyrompt automatically detects template types by extension:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># These are automatically parsed with the right engine:</span>
+</span><span data-line="2"><span class="n">templates</span><span class="p">[</span><span class="s2">"simple.txt"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello </span><span class="si">{name}</span><span class="s2">"</span>  <span class="c1"># Python format</span>
+</span><span data-line="3"><span class="n">templates</span><span class="p">[</span><span class="s2">"complex.jinja2"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello {{ name }}"</span>  <span class="c1"># Jinja2</span>
+</span><span data-line="4"><span class="n">templates</span><span class="p">[</span><span class="s2">"logic.mustache"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello {{name}}"</span>  <span class="c1"># Mustache</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="c1"># Sub-extensions also work:</span>
+</span><span data-line="7"><span class="n">templates</span><span class="p">[</span><span class="s2">"code.jinja2.txt"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"..."</span>  <span class="c1"># Detected as Jinja2</span>
+</span><span data-line="8"><span class="n">templates</span><span class="p">[</span><span class="s2">"data.mustache.md"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"..."</span>  <span class="c1"># Detected as Mustache</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+<section id="core-concepts">
+<h2>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading">#</a></h2>
+<section id="collections-with-metadata">
+<h3>Collections with Metadata<a class="headerlink" href="#collections-with-metadata" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s2">"my_project"</span><span class="p">,</span> <span class="n">with_metadata</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="c1"># Store a prompt</span>
+</span><span data-line="6"><span class="n">prompts</span><span class="p">[</span><span class="s2">"data_analyst"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are an expert data analyst specializing in Python."</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="c1"># Add metadata</span>
+</span><span data-line="9"><span class="n">prompts</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s2">"data_analyst"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="10">    <span class="s2">"author"</span><span class="p">:</span> <span class="s2">"thor"</span><span class="p">,</span>
+</span><span data-line="11">    <span class="s2">"version"</span><span class="p">:</span> <span class="s2">"1.0"</span><span class="p">,</span>
+</span><span data-line="12">    <span class="s2">"tags"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"system"</span><span class="p">,</span> <span class="s2">"data"</span><span class="p">,</span> <span class="s2">"python"</span><span class="p">],</span>
+</span><span data-line="13">    <span class="s2">"template_engine"</span><span class="p">:</span> <span class="s2">"format"</span><span class="p">,</span>  <span class="c1"># or 'jinja2', 'mustache', etc.</span>
+</span><span data-line="14">    <span class="s2">"created"</span><span class="p">:</span> <span class="s2">"2025-11-12"</span><span class="p">,</span>
+</span><span data-line="15">    <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"System prompt for data analysis tasks"</span><span class="p">,</span>
+</span><span data-line="16"><span class="p">}</span>
+</span></pre></div>
+</div>
+</section>
+<section id="creating-ai-functions">
+<h3>Creating AI Functions<a class="headerlink" href="#creating-ai-functions" title="Link to this heading">#</a></h3>
+<p>Transform templates into callable AI functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateCollection</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">prompt_function</span><span class="p">,</span> <span class="n">prompt_json_function</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="n">templates</span> <span class="o">=</span> <span class="n">TemplateCollection</span><span class="p">(</span><span class="s2">"my_project"</span><span class="p">)</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="c1"># Simple prompt function</span>
+</span><span data-line="7"><span class="n">templates</span><span class="p">[</span><span class="s2">"code_review"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"""</span>
+</span><span data-line="8"><span class="s2">Review this </span><span class="si">{language}</span><span class="s2"> code:</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="si">{code}</span>
+</span><span data-line="11">
+</span><span data-line="12"><span class="s2">Focus on: </span><span class="si">{focus_areas}</span>
+</span><span data-line="13"><span class="s2">"""</span>
+</span><span data-line="14">
+</span><span data-line="15"><span class="n">review_code</span> <span class="o">=</span> <span class="n">prompt_function</span><span class="p">(</span>
+</span><span data-line="16">    <span class="n">templates</span><span class="p">[</span><span class="s2">"code_review"</span><span class="p">],</span> <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">"focus_areas"</span><span class="p">:</span> <span class="s2">"correctness and readability"</span><span class="p">}</span>
+</span><span data-line="17"><span class="p">)</span>
+</span><span data-line="18">
+</span><span data-line="19"><span class="n">result</span> <span class="o">=</span> <span class="n">review_code</span><span class="p">(</span><span class="n">language</span><span class="o">=</span><span class="s2">"python"</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">'def hello(): return "world"'</span><span class="p">)</span>
+</span><span data-line="20">
+</span><span data-line="21"><span class="c1"># JSON-returning function</span>
+</span><span data-line="22"><span class="n">templates</span><span class="p">[</span><span class="s2">"extract_entities"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"""</span>
+</span><span data-line="23"><span class="s2">Extract entities from this text: </span><span class="si">{text}</span>
+</span><span data-line="24">
+</span><span data-line="25"><span class="s2">Return a JSON object with keys: people, places, organizations</span>
+</span><span data-line="26"><span class="s2">"""</span>
+</span><span data-line="27">
+</span><span data-line="28"><span class="n">extract</span> <span class="o">=</span> <span class="n">prompt_json_function</span><span class="p">(</span>
+</span><span data-line="29">    <span class="n">templates</span><span class="p">[</span><span class="s2">"extract_entities"</span><span class="p">],</span>
+</span><span data-line="30">    <span class="n">json_schema</span><span class="o">=</span><span class="p">{</span>
+</span><span data-line="31">        <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"entities"</span><span class="p">,</span>
+</span><span data-line="32">        <span class="s2">"schema"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="33">            <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+</span><span data-line="34">            <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="35">                <span class="s2">"people"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span> <span class="s2">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
+</span><span data-line="36">                <span class="s2">"places"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span> <span class="s2">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
+</span><span data-line="37">                <span class="s2">"organizations"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span> <span class="s2">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
+</span><span data-line="38">            <span class="p">},</span>
+</span><span data-line="39">        <span class="p">},</span>
+</span><span data-line="40">    <span class="p">},</span>
+</span><span data-line="41"><span class="p">)</span>
+</span><span data-line="42">
+</span><span data-line="43"><span class="n">entities</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Alice works at Google in New York."</span><span class="p">)</span>
+</span><span data-line="44"><span class="c1"># Returns: {"people": ["Alice"], "places": ["New York"], "organizations": ["Google"]}</span>
+</span></pre></div>
+</div>
+</section>
+<section id="using-promptfuncs-for-collections">
+<h3>Using PromptFuncs for Collections<a class="headerlink" href="#using-promptfuncs-for-collections" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptFuncs</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="c1"># Create a collection of AI-enabled functions</span>
+</span><span data-line="4"><span class="n">funcs</span> <span class="o">=</span> <span class="n">PromptFuncs</span><span class="p">(</span>
+</span><span data-line="5">    <span class="n">template_store</span><span class="o">=</span><span class="n">templates</span><span class="p">,</span>
+</span><span data-line="6">    <span class="c1"># Automatically creates functions for all templates</span>
+</span><span data-line="7"><span class="p">)</span>
+</span><span data-line="8">
+</span><span data-line="9"><span class="c1"># Or from a dict</span>
+</span><span data-line="10"><span class="n">funcs</span> <span class="o">=</span> <span class="n">PromptFuncs</span><span class="p">(</span>
+</span><span data-line="11">    <span class="n">template_store</span><span class="o">=</span><span class="p">{</span>
+</span><span data-line="12">        <span class="s2">"haiku"</span><span class="p">:</span> <span class="s2">"Write a haiku about </span><span class="si">{subject}</span><span class="s2">. Only output the haiku."</span><span class="p">,</span>
+</span><span data-line="13">        <span class="s2">"summarize"</span><span class="p">:</span> <span class="s2">"Summarize this in </span><span class="si">{n_words}</span><span class="s2"> words: </span><span class="si">{text}</span><span class="s2">"</span><span class="p">,</span>
+</span><span data-line="14">    <span class="p">}</span>
+</span><span data-line="15"><span class="p">)</span>
+</span><span data-line="16">
+</span><span data-line="17"><span class="c1"># Use them</span>
+</span><span data-line="18"><span class="nb">print</span><span class="p">(</span><span class="n">funcs</span><span class="o">.</span><span class="n">haiku</span><span class="p">(</span><span class="n">subject</span><span class="o">=</span><span class="s2">"Python"</span><span class="p">))</span>
+</span><span data-line="19"><span class="nb">print</span><span class="p">(</span><span class="n">funcs</span><span class="o">.</span><span class="n">summarize</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Long text..."</span><span class="p">,</span> <span class="n">n_words</span><span class="o">=</span><span class="s2">"50"</span><span class="p">))</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+<section id="storage-locations">
+<h2>Storage Locations<a class="headerlink" href="#storage-locations" title="Link to this heading">#</a></h2>
+<p>Default storage:</p>
+<ul class="simple">
+<li><p><strong>macOS/Linux</strong>: <code class="docutils literal notranslate"><span class="pre">~/.local/share/pyrompt/collections/{collection_name}/</span></code></p></li>
+<li><p><strong>Windows</strong>: <code class="docutils literal notranslate"><span class="pre">%LOCALAPPDATA%/pyrompt/collections/{collection_name}/</span></code></p></li>
+</ul>
+<p>Structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1">my_project/
+</span><span data-line="2">├── prompts/                    # Simple prompts
+</span><span data-line="3">├── templates/                  # Templates (auto-detected by extension)
+</span><span data-line="4">│   ├── simple.txt             # Python format
+</span><span data-line="5">│   ├── advanced.jinja2        # Jinja2
+</span><span data-line="6">│   └── logic.mustache         # Mustache
+</span><span data-line="7">├── _prompt_meta/              # JSON metadata
+</span><span data-line="8">└── _template_meta/            # JSON metadata
+</span></pre></div>
+</div>
+</section>
+<section id="custom-storage-location">
+<h2>Custom Storage Location<a class="headerlink" href="#custom-storage-location" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="c1"># Use a specific directory</span>
+</span><span data-line="4"><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s2">"my_project"</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="s2">"/custom/path"</span><span class="p">)</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="c1"># Or environment variable</span>
+</span><span data-line="7"><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span data-line="8">
+</span><span data-line="9"><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"PYROMPT_DATA_DIR"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"/my/prompts"</span>
+</span><span data-line="10"><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s2">"my_project"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="github-integration">
+<h2>GitHub Integration<a class="headerlink" href="#github-integration" title="Link to this heading">#</a></h2>
+<section id="publishing-your-collection">
+<h3>Publishing Your Collection<a class="headerlink" href="#publishing-your-collection" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">GitHubPromptCollection</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">gh_prompts</span> <span class="o">=</span> <span class="n">GitHubPromptCollection</span><span class="p">(</span>
+</span><span data-line="4">    <span class="n">repo</span><span class="o">=</span><span class="s2">"username/my_project_pyrompt"</span><span class="p">,</span>  <span class="c1"># Must end with '_pyrompt'</span>
+</span><span data-line="5">    <span class="n">token</span><span class="o">=</span><span class="s2">"your_github_token"</span><span class="p">,</span>
+</span><span data-line="6"><span class="p">)</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="n">gh_prompts</span><span class="p">[</span><span class="s2">"sql_expert"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are an expert in SQL optimization."</span>
+</span><span data-line="9"><span class="n">gh_prompts</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>  <span class="c1"># Commits and pushes</span>
+</span></pre></div>
+</div>
+</section>
+<section id="discovering-collections">
+<h3>Discovering Collections<a class="headerlink" href="#discovering-collections" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">discover_prompt_collections</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">collections</span> <span class="o">=</span> <span class="n">discover_prompt_collections</span><span class="p">(</span><span class="n">search_term</span><span class="o">=</span><span class="s2">"python data"</span><span class="p">,</span> <span class="n">min_stars</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="n">collections</span><span class="p">:</span>
+</span><span data-line="6">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">repo</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">repo</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+<section id="semantic-search">
+<h2>Semantic Search<a class="headerlink" href="#semantic-search" title="Link to this heading">#</a></h2>
+<p>Build semantic indices for intelligent discovery:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span><span class="p">,</span> <span class="n">SemanticIndex</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s2">"my_project"</span><span class="p">)</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="c1"># Add prompts</span>
+</span><span data-line="6"><span class="n">prompts</span><span class="p">[</span><span class="s2">"python_expert"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are a Python programming expert."</span>
+</span><span data-line="7"><span class="n">prompts</span><span class="p">[</span><span class="s2">"data_viz"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You specialize in data visualizations."</span>
+</span><span data-line="8"><span class="n">prompts</span><span class="p">[</span><span class="s2">"ml_engineer"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are a machine learning engineer."</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># Build semantic index (uses oa.embeddings)</span>
+</span><span data-line="11"><span class="n">index</span> <span class="o">=</span> <span class="n">SemanticIndex</span><span class="p">(</span><span class="n">prompts</span><span class="p">)</span>
+</span><span data-line="12">
+</span><span data-line="13"><span class="c1"># Search semantically</span>
+</span><span data-line="14"><span class="n">results</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"help with pandas dataframes"</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span><span data-line="15"><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span data-line="16">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> (score: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<section id="batch-embeddings">
+<h3>Batch Embeddings<a class="headerlink" href="#batch-embeddings" title="Link to this heading">#</a></h3>
+<p>For large collections:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">oa.batch_embeddings</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_embeddings</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">prompt_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">prompts</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</span><span data-line="4"><span class="n">prompt_texts</span> <span class="o">=</span> <span class="p">[</span><span class="n">prompts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">prompt_keys</span><span class="p">]</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="c1"># Compute in batches (uses OpenAI batch API)</span>
+</span><span data-line="7"><span class="n">result_texts</span><span class="p">,</span> <span class="n">embeddings</span> <span class="o">=</span> <span class="n">compute_embeddings</span><span class="p">(</span>
+</span><span data-line="8">    <span class="n">segments</span><span class="o">=</span><span class="n">prompt_texts</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">1</span>
+</span><span data-line="9"><span class="p">)</span>
+</span><span data-line="10">
+</span><span data-line="11"><span class="c1"># Store embeddings</span>
+</span><span data-line="12"><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">embedding</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">prompt_keys</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">):</span>
+</span><span data-line="13">    <span class="n">prompts</span><span class="o">.</span><span class="n">embeddings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">embedding</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+<section id="extending-with-custom-template-engines">
+<h2>Extending with Custom Template Engines<a class="headerlink" href="#extending-with-custom-template-engines" title="Link to this heading">#</a></h2>
+<p>Register your own template engines:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt.engines</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateEngine</span><span class="p">,</span> <span class="n">register_engine</span>
+</span><span data-line="2">
+</span><span data-line="3">
+</span><span data-line="4"><span class="k">class</span><span class="w"> </span><span class="nc">MyCustomEngine</span><span class="p">(</span><span class="n">TemplateEngine</span><span class="p">):</span>
+</span><span data-line="5"><span class="w">    </span><span class="sd">"""Custom template engine"""</span>
+</span><span data-line="6">
+</span><span data-line="7">    <span class="n">name</span> <span class="o">=</span> <span class="s2">"custom"</span>
+</span><span data-line="8">    <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">".custom"</span><span class="p">,</span> <span class="s2">".cust"</span><span class="p">]</span>
+</span><span data-line="9">
+</span><span data-line="10">    <span class="k">def</span><span class="w"> </span><span class="nf">parse_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</span><span data-line="11"><span class="w">        </span><span class="sd">"""Extract placeholders and defaults"""</span>
+</span><span data-line="12">        <span class="c1"># Your parsing logic</span>
+</span><span data-line="13">        <span class="k">return</span> <span class="p">{</span><span class="s2">"placeholders"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"name"</span><span class="p">,</span> <span class="s2">"value"</span><span class="p">],</span> <span class="s2">"defaults"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"value"</span><span class="p">:</span> <span class="s2">"42"</span><span class="p">}}</span>
+</span><span data-line="14">
+</span><span data-line="15">    <span class="k">def</span><span class="w"> </span><span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">template_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span data-line="16"><span class="w">        </span><span class="sd">"""Render template with values"""</span>
+</span><span data-line="17">        <span class="c1"># Your rendering logic</span>
+</span><span data-line="18">        <span class="k">return</span> <span class="n">template_str</span>  <span class="c1"># simplified</span>
+</span><span data-line="19">
+</span><span data-line="20">    <span class="k">def</span><span class="w"> </span><span class="nf">detect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span data-line="21"><span class="w">        </span><span class="sd">"""Detect if content uses this engine"""</span>
+</span><span data-line="22">        <span class="k">return</span> <span class="s2">"&lt;&lt;"</span> <span class="ow">in</span> <span class="n">content</span> <span class="ow">and</span> <span class="s2">"&gt;&gt;"</span> <span class="ow">in</span> <span class="n">content</span>
+</span><span data-line="23">
+</span><span data-line="24">
+</span><span data-line="25"><span class="c1"># Register it</span>
+</span><span data-line="26"><span class="n">register_engine</span><span class="p">(</span><span class="n">MyCustomEngine</span><span class="p">())</span>
+</span><span data-line="27">
+</span><span data-line="28"><span class="c1"># Now use it</span>
+</span><span data-line="29"><span class="n">templates</span><span class="p">[</span><span class="s2">"my_template.custom"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello &lt;&lt;name&gt;&gt;, value is &lt;&lt;value&gt;&gt;"</span>
+</span></pre></div>
+</div>
+</section>
+<section id="collection-of-collections-malls">
+<h2>Collection of Collections (Malls)<a class="headerlink" href="#collection-of-collections-malls" title="Link to this heading">#</a></h2>
+<p>Organize multiple collections:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptMall</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">mall</span> <span class="o">=</span> <span class="n">PromptMall</span><span class="p">(</span><span class="s2">"my_workspace"</span><span class="p">)</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="c1"># Access different collections</span>
+</span><span data-line="6"><span class="n">mall</span><span class="p">[</span><span class="s2">"system_prompts"</span><span class="p">][</span><span class="s2">"python_expert"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are a Python expert."</span>
+</span><span data-line="7"><span class="n">mall</span><span class="p">[</span><span class="s2">"templates"</span><span class="p">][</span><span class="s2">"code_review"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Review this </span><span class="si">{language}</span><span class="s2"> code..."</span>
+</span><span data-line="8"><span class="n">mall</span><span class="p">[</span><span class="s2">"personas"</span><span class="p">][</span><span class="s2">"analyst"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are a data analyst..."</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># List collections</span>
+</span><span data-line="11"><span class="nb">list</span><span class="p">(</span><span class="n">mall</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>  <span class="c1"># ['system_prompts', 'templates', 'personas']</span>
+</span><span data-line="12">
+</span><span data-line="13"><span class="c1"># Search across collections</span>
+</span><span data-line="14"><span class="n">results</span> <span class="o">=</span> <span class="n">mall</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"python"</span><span class="p">,</span> <span class="n">collections</span><span class="o">=</span><span class="p">[</span><span class="s2">"system_prompts"</span><span class="p">,</span> <span class="s2">"personas"</span><span class="p">])</span>
+</span></pre></div>
+</div>
+</section>
+<section id="real-world-example">
+<h2>Real-World Example<a class="headerlink" href="#real-world-example" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span><span class="p">,</span> <span class="n">TemplateCollection</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">prompt_function</span><span class="p">,</span> <span class="n">PromptFuncs</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="c1"># Set up collections</span>
+</span><span data-line="5"><span class="n">system_prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s2">"system"</span><span class="p">)</span>
+</span><span data-line="6"><span class="n">templates</span> <span class="o">=</span> <span class="n">TemplateCollection</span><span class="p">(</span><span class="s2">"templates"</span><span class="p">)</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="c1"># System prompts</span>
+</span><span data-line="9"><span class="n">system_prompts</span><span class="p">[</span><span class="s2">"code_reviewer"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"""You are an expert code reviewer.</span>
+</span><span data-line="10"><span class="s2">Focus on: correctness, efficiency, readability, and best practices."""</span>
+</span><span data-line="11">
+</span><span data-line="12"><span class="c1"># Jinja2 template with conditionals</span>
+</span><span data-line="13"><span class="n">templates</span><span class="p">[</span><span class="s2">"review_pr.jinja2"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"""</span>
+</span><span data-line="14"><span class="s2">Review this pull request:</span>
+</span><span data-line="15">
+</span><span data-line="16"><span class="s2">**Title**: {{ pr_title }}</span>
+</span><span data-line="17"><span class="s2">**Description**: {{ pr_description }}</span>
+</span><span data-line="18">
+</span><span data-line="19"><span class="s2">{</span><span class="si">% i</span><span class="s2">f changed_files %}</span>
+</span><span data-line="20"><span class="s2">**Changed Files**:</span>
+</span><span data-line="21"><span class="s2">{{ changed_files }}</span>
+</span><span data-line="22"><span class="s2">{</span><span class="si">% e</span><span class="s2">ndif %}</span>
+</span><span data-line="23">
+</span><span data-line="24"><span class="s2">Provide:</span>
+</span><span data-line="25"><span class="s2">1. Summary of changes</span>
+</span><span data-line="26"><span class="s2">2. Potential issues</span>
+</span><span data-line="27"><span class="s2">{</span><span class="si">% i</span><span class="s2">f include_suggestions %}</span>
+</span><span data-line="28"><span class="s2">3. Suggestions for improvement</span>
+</span><span data-line="29"><span class="s2">{</span><span class="si">% e</span><span class="s2">ndif %}</span>
+</span><span data-line="30"><span class="s2">"""</span>
+</span><span data-line="31">
+</span><span data-line="32"><span class="c1"># Create AI function</span>
+</span><span data-line="33"><span class="n">review_pr</span> <span class="o">=</span> <span class="n">prompt_function</span><span class="p">(</span>
+</span><span data-line="34">    <span class="n">templates</span><span class="p">[</span><span class="s2">"review_pr.jinja2"</span><span class="p">],</span>
+</span><span data-line="35">    <span class="n">prompt_func_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"system"</span><span class="p">:</span> <span class="n">system_prompts</span><span class="p">[</span><span class="s2">"code_reviewer"</span><span class="p">]},</span>
+</span><span data-line="36"><span class="p">)</span>
+</span><span data-line="37">
+</span><span data-line="38"><span class="c1"># Use it</span>
+</span><span data-line="39"><span class="n">result</span> <span class="o">=</span> <span class="n">review_pr</span><span class="p">(</span>
+</span><span data-line="40">    <span class="n">pr_title</span><span class="o">=</span><span class="s2">"Add new feature"</span><span class="p">,</span>
+</span><span data-line="41">    <span class="n">pr_description</span><span class="o">=</span><span class="s2">"Implements user authentication"</span><span class="p">,</span>
+</span><span data-line="42">    <span class="n">changed_files</span><span class="o">=</span><span class="s2">"auth.py, models.py"</span><span class="p">,</span>
+</span><span data-line="43">    <span class="n">include_suggestions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span data-line="44"><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="template-format-comparison">
+<h2>Template Format Comparison<a class="headerlink" href="#template-format-comparison" title="Link to this heading">#</a></h2>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>Format</p></th>
+<th class="head"><p>Jinja2</p></th>
+<th class="head"><p>Mustache</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Syntax</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{var}</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">var</span> <span class="pre">}}</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">{{var}}</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Conditionals</p></td>
+<td><p>No</p></td>
+<td><p>Yes (<code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">if</span> <span class="pre">%}</span></code>)</p></td>
+<td><p>Yes (<code class="docutils literal notranslate"><span class="pre">{{#var}}</span></code>)</p></td>
+</tr>
+<tr class="row-even"><td><p>Loops</p></td>
+<td><p>No</p></td>
+<td><p>Yes (<code class="docutils literal notranslate"><span class="pre">{%</span> <span class="pre">for</span> <span class="pre">%}</span></code>)</p></td>
+<td><p>Yes (<code class="docutils literal notranslate"><span class="pre">{{#array}}</span></code>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Defaults</p></td>
+<td><p>No</p></td>
+<td><p>Yes (<code class="docutils literal notranslate"><span class="pre">|default</span></code>)</p></td>
+<td><p>Via sections</p></td>
+</tr>
+<tr class="row-even"><td><p>Filters</p></td>
+<td><p>No</p></td>
+<td><p>Yes</p></td>
+<td><p>No</p></td>
+</tr>
+<tr class="row-odd"><td><p>Dependencies</p></td>
+<td><p>None</p></td>
+<td><p>jinja2</p></td>
+<td><p>pystache</p></td>
+</tr>
+<tr class="row-even"><td><p>Complexity</p></td>
+<td><p>Simple</p></td>
+<td><p>Medium</p></td>
+<td><p>Simple</p></td>
+</tr>
+<tr class="row-odd"><td><p>Best For</p></td>
+<td><p>Basic substitution</p></td>
+<td><p>Complex prompts</p></td>
+<td><p>Cross-platform</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Recommendation:</strong> Start with Python format strings for simple prompts. Graduate to Jinja2 when you need conditionals, loops, or default values. Use Mustache if you need cross-language compatibility.</p>
+</section>
+<section id="architecture-principles">
+<h2>Architecture Principles<a class="headerlink" href="#architecture-principles" title="Link to this heading">#</a></h2>
+<p>Following <code class="docutils literal notranslate"><span class="pre">i2mint</span></code> philosophy, <code class="docutils literal notranslate"><span class="pre">pyrompt</span></code>:</p>
+<ol class="arabic simple">
+<li><p><strong>Facades everything</strong>: Storage via <code class="docutils literal notranslate"><span class="pre">dol.Mapping</span></code>/<code class="docutils literal notranslate"><span class="pre">MutableMapping</span></code>, templates via unified interface</p></li>
+<li><p><strong>Plugin system</strong>: Register new template engines without modifying core</p></li>
+<li><p><strong>Composable</strong>: Build complex workflows from simple components</p></li>
+<li><p><strong>Type-hinted</strong>: Full type coverage for IDE support</p></li>
+<li><p><strong>Zero magic</strong>: Explicit interfaces, clear abstractions</p></li>
+<li><p><strong>Open-closed</strong>: Extend functionality without changing existing code</p></li>
+</ol>
+</section>
+<section id="implementation-stack">
+<h2>Implementation Stack<a class="headerlink" href="#implementation-stack" title="Link to this heading">#</a></h2>
+<p><strong>Core dependencies:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">dol</span></code>: Storage abstractions and key-value transformations</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">dol.Files</span></code>, <code class="docutils literal notranslate"><span class="pre">dol.wrap_kvs</span></code>, <code class="docutils literal notranslate"><span class="pre">dol.filt_iter</span></code>, <code class="docutils literal notranslate"><span class="pre">dol.KeyCodecs</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">i2</span></code>: Function manipulation and signature handling</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">i2.Sig</span></code>, <code class="docutils literal notranslate"><span class="pre">i2.Wrapper</span></code>, <code class="docutils literal notranslate"><span class="pre">i2.signatures</span></code></p></li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oa</span></code>: AI operations</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">oa.prompt_function</span></code>, <code class="docutils literal notranslate"><span class="pre">oa.prompt_json_function</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oa.embeddings</span></code>, <code class="docutils literal notranslate"><span class="pre">oa.PromptFuncs</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Optional integrations:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">imbed</span></code>: Semantic search and clustering</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">jinja2</span></code>: Advanced templating</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pystache</span></code>: Mustache templates</p></li>
+</ul>
+</section>
+<section id="cli-usage-planned">
+<h2>CLI Usage (Planned)<a class="headerlink" href="#cli-usage-planned" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Create a new collection</span>
+</span><span data-line="2">pyrompt<span class="w"> </span>new<span class="w"> </span>my_project
+</span><span data-line="3">
+</span><span data-line="4"><span class="c1"># Add a prompt</span>
+</span><span data-line="5">pyrompt<span class="w"> </span>add<span class="w"> </span>my_project/greeting<span class="w"> </span><span class="s2">"Hello, {name}!"</span>
+</span><span data-line="6">
+</span><span data-line="7"><span class="c1"># List templates</span>
+</span><span data-line="8">pyrompt<span class="w"> </span>list<span class="w"> </span>my_project<span class="w"> </span>--templates
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># Test a template</span>
+</span><span data-line="11">pyrompt<span class="w"> </span>render<span class="w"> </span>my_project/greeting.jinja2<span class="w"> </span>--name<span class="w"> </span>Alice
+</span><span data-line="12">
+</span><span data-line="13"><span class="c1"># Search prompts</span>
+</span><span data-line="14">pyrompt<span class="w"> </span>search<span class="w"> </span>my_project<span class="w"> </span><span class="s2">"help with databases"</span>
+</span><span data-line="15">
+</span><span data-line="16"><span class="c1"># Sync to GitHub</span>
+</span><span data-line="17">pyrompt<span class="w"> </span>sync<span class="w"> </span>my_project<span class="w"> </span>--repo<span class="w"> </span>username/my_project_pyrompt
+</span><span data-line="18">
+</span><span data-line="19"><span class="c1"># Discover collections</span>
+</span><span data-line="20">pyrompt<span class="w"> </span>discover<span class="w"> </span>--search<span class="w"> </span><span class="s2">"python"</span><span class="w"> </span>--min-stars<span class="w"> </span><span class="m">10</span>
+</span></pre></div>
+</div>
+</section>
+<section id="contributing">
+<h2>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">#</a></h2>
+<p>We welcome contributions! Priority areas:</p>
+<ul class="simple">
+<li><p>Additional template engines (Handlebars, Guidance DSL, etc.)</p></li>
+<li><p>Enhanced semantic search algorithms</p></li>
+<li><p>Prompt optimization tools</p></li>
+<li><p>Template testing utilities</p></li>
+<li><p>Collection templates for common use cases</p></li>
+</ul>
+<p>See <code class="docutils literal notranslate"><span class="pre">IMPLEMENTATION_PLAN.md</span></code> for development roadmap.</p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Link to this heading">#</a></h2>
+<p>MIT License - See LICENSE file for details</p>
+<hr class="docutils" />
+<p><strong>Key Features:</strong></p>
+<ul class="simple">
+<li><p>🎨 Multiple template formats (Format, Jinja2, Mustache, extensible)</p></li>
+<li><p>🔌 Plugin architecture for custom engines</p></li>
+<li><p>🤖 Direct integration with <code class="docutils literal notranslate"><span class="pre">oa.prompt_function</span></code> and <code class="docutils literal notranslate"><span class="pre">oa.prompt_json_function</span></code></p></li>
+<li><p>📦 Clean storage via <code class="docutils literal notranslate"><span class="pre">dol</span></code> abstractions</p></li>
+<li><p>🔍 Semantic search with <code class="docutils literal notranslate"><span class="pre">oa.embeddings</span></code></p></li>
+<li><p>🌐 GitHub sharing and discovery</p></li>
+<li><p>🏗️ Built on <code class="docutils literal notranslate"><span class="pre">i2mint</span></code> principles: facades, composition, extensibility</p></li>
+</ul>
+<p class="epythet-aggregates">This documentation as a single file: <a href="pyrompt.md">pyrompt.md</a> (Markdown, for agents).</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-21 18:21 UTC from <a href="https://github.com/addaix/pyrompt/commit/9ad5c80919006f43d22de16951f05c5c5fba42fb">9ad5c80</a> (main) · pyrompt 0.0.7 · <a href="about-this-build.html">about this build</a></p>
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-next">
+    <a href="api.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">API reference</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright">
+  <p>
+    Made with
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+  <a href="https://github.com/addaix/pyrompt" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
+    </div>
+  </div>
+</footer>
+      <script src="_static/documentation_options.js?v=bbaf98b3"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="pyrompt" href="module_docs/pyrompt.html" /> 
-</head>
-
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="#" class="icon icon-home">
-            pyrompt
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt.html">pyrompt</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/base.html">pyrompt.base</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/cli.html">pyrompt.cli</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/engines.html">pyrompt.engines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/engines/format_engine.html">pyrompt.engines.format_engine</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/engines/jinja2_engine.html">pyrompt.engines.jinja2_engine</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/engines/mustache_engine.html">pyrompt.engines.mustache_engine</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/github_integration.html">pyrompt.github_integration</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/mall.html">pyrompt.mall</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/search.html">pyrompt.search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/stores.html">pyrompt.stores</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests.html">pyrompt.tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/conftest.html">pyrompt.tests.conftest</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/test_collections.html">pyrompt.tests.test_collections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/test_engines.html">pyrompt.tests.test_engines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/test_mall.html">pyrompt.tests.test_mall</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/test_search.html">pyrompt.tests.test_search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/test_stores.html">pyrompt.tests.test_stores</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/util.html">pyrompt.util</a></li>
-</ul>
-
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">pyrompt</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to pyrompt’s documentation!</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="welcome-to-pyrompt-s-documentation">
-<h1>Welcome to pyrompt’s documentation!<a class="headerlink" href="#welcome-to-pyrompt-s-documentation" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt.html">pyrompt</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.GitHubPromptCollection"><code class="docutils literal notranslate"><span class="pre">GitHubPromptCollection</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.PromptCollection"><code class="docutils literal notranslate"><span class="pre">PromptCollection</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.PromptMall"><code class="docutils literal notranslate"><span class="pre">PromptMall</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.SemanticIndex"><code class="docutils literal notranslate"><span class="pre">SemanticIndex</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.TemplateCollection"><code class="docutils literal notranslate"><span class="pre">TemplateCollection</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.TemplateEngine"><code class="docutils literal notranslate"><span class="pre">TemplateEngine</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.clone_collection"><code class="docutils literal notranslate"><span class="pre">clone_collection()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.create_project_structure"><code class="docutils literal notranslate"><span class="pre">create_project_structure()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.detect_engine"><code class="docutils literal notranslate"><span class="pre">detect_engine()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.discover_prompt_collections"><code class="docutils literal notranslate"><span class="pre">discover_prompt_collections()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.export_to_dict"><code class="docutils literal notranslate"><span class="pre">export_to_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.fork_collection"><code class="docutils literal notranslate"><span class="pre">fork_collection()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.get_default_base_path"><code class="docutils literal notranslate"><span class="pre">get_default_base_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.get_engine"><code class="docutils literal notranslate"><span class="pre">get_engine()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.get_stats"><code class="docutils literal notranslate"><span class="pre">get_stats()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.import_from_dict"><code class="docutils literal notranslate"><span class="pre">import_from_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.list_available_engines"><code class="docutils literal notranslate"><span class="pre">list_available_engines()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.list_engines"><code class="docutils literal notranslate"><span class="pre">list_engines()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.merge_collections"><code class="docutils literal notranslate"><span class="pre">merge_collections()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.quick_setup"><code class="docutils literal notranslate"><span class="pre">quick_setup()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.register_engine"><code class="docutils literal notranslate"><span class="pre">register_engine()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.render_template_file"><code class="docutils literal notranslate"><span class="pre">render_template_file()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt.html#pyrompt.validate_template"><code class="docutils literal notranslate"><span class="pre">validate_template()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/base.html">pyrompt.base</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/base.html#pyrompt.base.PromptCollection"><code class="docutils literal notranslate"><span class="pre">PromptCollection</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/base.html#pyrompt.base.TemplateCollection"><code class="docutils literal notranslate"><span class="pre">TemplateCollection</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/cli.html">pyrompt.cli</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/cli.html#pyrompt.cli.cmd_add"><code class="docutils literal notranslate"><span class="pre">cmd_add()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/cli.html#pyrompt.cli.cmd_engines"><code class="docutils literal notranslate"><span class="pre">cmd_engines()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/cli.html#pyrompt.cli.cmd_list"><code class="docutils literal notranslate"><span class="pre">cmd_list()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/cli.html#pyrompt.cli.cmd_new"><code class="docutils literal notranslate"><span class="pre">cmd_new()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/cli.html#pyrompt.cli.cmd_render"><code class="docutils literal notranslate"><span class="pre">cmd_render()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/cli.html#pyrompt.cli.cmd_show"><code class="docutils literal notranslate"><span class="pre">cmd_show()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/cli.html#pyrompt.cli.cmd_stats"><code class="docutils literal notranslate"><span class="pre">cmd_stats()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/cli.html#pyrompt.cli.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/engines.html">pyrompt.engines</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/engines.html#pyrompt.engines.TemplateEngine"><code class="docutils literal notranslate"><span class="pre">TemplateEngine</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/engines.html#pyrompt.engines.detect_engine"><code class="docutils literal notranslate"><span class="pre">detect_engine()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/engines.html#pyrompt.engines.get_engine"><code class="docutils literal notranslate"><span class="pre">get_engine()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/engines.html#pyrompt.engines.get_engine_by_extension"><code class="docutils literal notranslate"><span class="pre">get_engine_by_extension()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/engines.html#pyrompt.engines.list_engines"><code class="docutils literal notranslate"><span class="pre">list_engines()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/engines.html#pyrompt.engines.register_engine"><code class="docutils literal notranslate"><span class="pre">register_engine()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/engines/format_engine.html">pyrompt.engines.format_engine</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/engines/format_engine.html#pyrompt.engines.format_engine.FormatEngine"><code class="docutils literal notranslate"><span class="pre">FormatEngine</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/engines/jinja2_engine.html">pyrompt.engines.jinja2_engine</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/engines/jinja2_engine.html#pyrompt.engines.jinja2_engine.Jinja2Engine"><code class="docutils literal notranslate"><span class="pre">Jinja2Engine</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/engines/mustache_engine.html">pyrompt.engines.mustache_engine</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/engines/mustache_engine.html#pyrompt.engines.mustache_engine.MustacheEngine"><code class="docutils literal notranslate"><span class="pre">MustacheEngine</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/github_integration.html">pyrompt.github_integration</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/github_integration.html#pyrompt.github_integration.GitHubPromptCollection"><code class="docutils literal notranslate"><span class="pre">GitHubPromptCollection</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/github_integration.html#pyrompt.github_integration.clone_collection"><code class="docutils literal notranslate"><span class="pre">clone_collection()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/github_integration.html#pyrompt.github_integration.discover_prompt_collections"><code class="docutils literal notranslate"><span class="pre">discover_prompt_collections()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/github_integration.html#pyrompt.github_integration.fork_collection"><code class="docutils literal notranslate"><span class="pre">fork_collection()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/mall.html">pyrompt.mall</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/mall.html#pyrompt.mall.PromptMall"><code class="docutils literal notranslate"><span class="pre">PromptMall</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/search.html">pyrompt.search</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/search.html#pyrompt.search.SemanticIndex"><code class="docutils literal notranslate"><span class="pre">SemanticIndex</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/stores.html">pyrompt.stores</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/stores.html#pyrompt.stores.get_default_base_path"><code class="docutils literal notranslate"><span class="pre">get_default_base_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/stores.html#pyrompt.stores.mk_collection_path"><code class="docutils literal notranslate"><span class="pre">mk_collection_path()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/stores.html#pyrompt.stores.mk_collection_stores"><code class="docutils literal notranslate"><span class="pre">mk_collection_stores()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/stores.html#pyrompt.stores.mk_metadata_store"><code class="docutils literal notranslate"><span class="pre">mk_metadata_store()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/stores.html#pyrompt.stores.mk_prompt_store"><code class="docutils literal notranslate"><span class="pre">mk_prompt_store()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/stores.html#pyrompt.stores.mk_template_store"><code class="docutils literal notranslate"><span class="pre">mk_template_store()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests.html">pyrompt.tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/conftest.html">pyrompt.tests.conftest</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/test_collections.html">pyrompt.tests.test_collections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/test_engines.html">pyrompt.tests.test_engines</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/test_mall.html">pyrompt.tests.test_mall</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/test_search.html">pyrompt.tests.test_search</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/tests/test_stores.html">pyrompt.tests.test_stores</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/pyrompt/util.html">pyrompt.util</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/util.html#pyrompt.util.create_project_structure"><code class="docutils literal notranslate"><span class="pre">create_project_structure()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/util.html#pyrompt.util.export_to_dict"><code class="docutils literal notranslate"><span class="pre">export_to_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/util.html#pyrompt.util.get_stats"><code class="docutils literal notranslate"><span class="pre">get_stats()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/util.html#pyrompt.util.import_from_dict"><code class="docutils literal notranslate"><span class="pre">import_from_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/util.html#pyrompt.util.list_available_engines"><code class="docutils literal notranslate"><span class="pre">list_available_engines()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/util.html#pyrompt.util.merge_collections"><code class="docutils literal notranslate"><span class="pre">merge_collections()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/util.html#pyrompt.util.quick_setup"><code class="docutils literal notranslate"><span class="pre">quick_setup()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/util.html#pyrompt.util.render_template_file"><code class="docutils literal notranslate"><span class="pre">render_template_file()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/pyrompt/util.html#pyrompt.util.validate_template"><code class="docutils literal notranslate"><span class="pre">validate_template()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-<p>Release: 0.0.5</p>
-<p>Last change: Jun 18, 2026</p>
-</section>
-
-
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="module_docs/pyrompt.html" class="btn btn-neutral float-right" title="pyrompt" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p></p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+      <script src="_static/copybutton.js?v=fd10adb8"></script>
+      <script src="_static/shibuya.js?v=50760d75"></script></body>
 </html>

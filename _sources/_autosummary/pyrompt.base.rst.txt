@@ -1,0 +1,13 @@
+pyrompt.base
+============
+
+.. automodule:: pyrompt.base
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      PromptCollection
+      TemplateCollection
+   

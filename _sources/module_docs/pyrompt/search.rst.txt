@@ -1,4 +1,0 @@
-pyrompt.search
-==============
-.. automodule:: pyrompt.search
-   :members:

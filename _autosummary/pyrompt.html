@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="orange" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>pyrompt - pyrompt</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="pyrompt.base" href="pyrompt.base.html" /><link rel="prev" title="API reference" href="../api.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d88b86f9" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="pyrompt"/>
+    <meta name="twitter:card" content="summary"/>
+  
+<link rel="alternate" type="text/markdown" href="pyrompt.html.md">
+<link rel="describedby" href="../llms.txt" type="text/markdown">
+</head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="../index.html">
+      
+      
+      <strong>pyrompt</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/addaix/pyrompt" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyrompt</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyrompt.base.html">pyrompt.base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyrompt.cli.html">pyrompt.cli</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyrompt.engines.html">pyrompt.engines</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyrompt.engines.format_engine.html">pyrompt.engines.format_engine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyrompt.engines.jinja2_engine.html">pyrompt.engines.jinja2_engine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyrompt.engines.mustache_engine.html">pyrompt.engines.mustache_engine</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyrompt.github_integration.html">pyrompt.github_integration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyrompt.mall.html">pyrompt.mall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyrompt.search.html">pyrompt.search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyrompt.stores.html">pyrompt.stores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyrompt.util.html">pyrompt.util</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#pyrompt.GitHubPromptCollection"><code class="docutils literal notranslate"><span class="pre">GitHubPromptCollection</span></code></a><ul>
+<li><a class="reference internal" href="#pyrompt.GitHubPromptCollection.sync"><code class="docutils literal notranslate"><span class="pre">GitHubPromptCollection.sync()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyrompt.PromptCollection"><code class="docutils literal notranslate"><span class="pre">PromptCollection</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.PromptMall"><code class="docutils literal notranslate"><span class="pre">PromptMall</span></code></a><ul>
+<li><a class="reference internal" href="#pyrompt.PromptMall.add_collection"><code class="docutils literal notranslate"><span class="pre">PromptMall.add_collection()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.PromptMall.get_collection_type"><code class="docutils literal notranslate"><span class="pre">PromptMall.get_collection_type()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.PromptMall.items"><code class="docutils literal notranslate"><span class="pre">PromptMall.items()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.PromptMall.keys"><code class="docutils literal notranslate"><span class="pre">PromptMall.keys()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.PromptMall.remove_collection"><code class="docutils literal notranslate"><span class="pre">PromptMall.remove_collection()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.PromptMall.search"><code class="docutils literal notranslate"><span class="pre">PromptMall.search()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.PromptMall.values"><code class="docutils literal notranslate"><span class="pre">PromptMall.values()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyrompt.SemanticIndex"><code class="docutils literal notranslate"><span class="pre">SemanticIndex</span></code></a><ul>
+<li><a class="reference internal" href="#pyrompt.SemanticIndex.add"><code class="docutils literal notranslate"><span class="pre">SemanticIndex.add()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.SemanticIndex.cluster"><code class="docutils literal notranslate"><span class="pre">SemanticIndex.cluster()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.SemanticIndex.rebuild"><code class="docutils literal notranslate"><span class="pre">SemanticIndex.rebuild()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.SemanticIndex.remove"><code class="docutils literal notranslate"><span class="pre">SemanticIndex.remove()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.SemanticIndex.search"><code class="docutils literal notranslate"><span class="pre">SemanticIndex.search()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyrompt.TemplateCollection"><code class="docutils literal notranslate"><span class="pre">TemplateCollection</span></code></a><ul>
+<li><a class="reference internal" href="#pyrompt.TemplateCollection.create_prompt_functions"><code class="docutils literal notranslate"><span class="pre">TemplateCollection.create_prompt_functions()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.TemplateCollection.parse"><code class="docutils literal notranslate"><span class="pre">TemplateCollection.parse()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.TemplateCollection.render"><code class="docutils literal notranslate"><span class="pre">TemplateCollection.render()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.TemplateCollection.to_prompt_function"><code class="docutils literal notranslate"><span class="pre">TemplateCollection.to_prompt_function()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.TemplateCollection.to_prompt_json_function"><code class="docutils literal notranslate"><span class="pre">TemplateCollection.to_prompt_json_function()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyrompt.TemplateEngine"><code class="docutils literal notranslate"><span class="pre">TemplateEngine</span></code></a><ul>
+<li><a class="reference internal" href="#pyrompt.TemplateEngine.detect"><code class="docutils literal notranslate"><span class="pre">TemplateEngine.detect()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.TemplateEngine.parse_template"><code class="docutils literal notranslate"><span class="pre">TemplateEngine.parse_template()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.TemplateEngine.render"><code class="docutils literal notranslate"><span class="pre">TemplateEngine.render()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyrompt.clone_collection"><code class="docutils literal notranslate"><span class="pre">clone_collection()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.create_project_structure"><code class="docutils literal notranslate"><span class="pre">create_project_structure()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.detect_engine"><code class="docutils literal notranslate"><span class="pre">detect_engine()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.discover_prompt_collections"><code class="docutils literal notranslate"><span class="pre">discover_prompt_collections()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.export_to_dict"><code class="docutils literal notranslate"><span class="pre">export_to_dict()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.fork_collection"><code class="docutils literal notranslate"><span class="pre">fork_collection()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.get_default_base_path"><code class="docutils literal notranslate"><span class="pre">get_default_base_path()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.get_engine"><code class="docutils literal notranslate"><span class="pre">get_engine()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.get_stats"><code class="docutils literal notranslate"><span class="pre">get_stats()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.import_from_dict"><code class="docutils literal notranslate"><span class="pre">import_from_dict()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.list_available_engines"><code class="docutils literal notranslate"><span class="pre">list_available_engines()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.list_engines"><code class="docutils literal notranslate"><span class="pre">list_engines()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.merge_collections"><code class="docutils literal notranslate"><span class="pre">merge_collections()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.quick_setup"><code class="docutils literal notranslate"><span class="pre">quick_setup()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.register_engine"><code class="docutils literal notranslate"><span class="pre">register_engine()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.render_template_file"><code class="docutils literal notranslate"><span class="pre">render_template_file()</span></code></a></li>
+<li><a class="reference internal" href="#pyrompt.validate_template"><code class="docutils literal notranslate"><span class="pre">validate_template()</span></code></a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">pyrompt</span></a>
+        <meta itemprop="position" content="1" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue dark-code" role="main">
+          <section id="module-pyrompt">
+<span id="pyrompt"></span><h1>pyrompt<a class="headerlink" href="#module-pyrompt" title="Link to this heading">#</a></h1>
+<p>pyrompt: Python Prompt Management</p>
+<p>A flexible framework for managing, sharing, and searching prompts and prompt templates
+with support for multiple templating languages and idiomatic Python interfaces.</p>
+<p>Quick Start:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span><span class="p">,</span> <span class="n">TemplateCollection</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">_base</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s1">'my_project'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">_base</span><span class="p">)</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span> <span class="o">=</span> <span class="n">TemplateCollection</span><span class="p">(</span><span class="s1">'my_project'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">_base</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span><span class="p">[</span><span class="s1">'system'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are a helpful Python expert."</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span><span class="p">[</span><span class="s1">'greeting.txt'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello, </span><span class="si">{name}</span><span class="s2">!"</span>
+</span><span data-line="8"><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">templates</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">'greeting.txt'</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'Alice'</span><span class="p">))</span>
+</span><span data-line="9"><span class="go">Hello, Alice!</span>
+</span></pre></div>
+</div>
+<p>Main Components:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>PromptCollection: Store and manage prompts</p></li>
+<li><p>TemplateCollection: Store and manage templates with multi-engine support</p></li>
+<li><p>PromptMall: Collection of collections</p></li>
+<li><p>SemanticIndex: Semantic search over prompts</p></li>
+<li><p>GitHubPromptCollection: GitHub-backed collections</p></li>
+</ul>
+</div></blockquote>
+<p class="rubric">Functions</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.register_engine" title="pyrompt.register_engine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register_engine</span></code></a>(engine)</p></td>
+<td><p>Register a template engine.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrompt.get_engine" title="pyrompt.get_engine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_engine</span></code></a>(name)</p></td>
+<td><p>Get engine by name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.list_engines" title="pyrompt.list_engines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_engines</span></code></a>()</p></td>
+<td><p>List all registered engine names.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrompt.detect_engine" title="pyrompt.detect_engine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">detect_engine</span></code></a>(content[, extension])</p></td>
+<td><p>Detect appropriate engine for content.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.discover_prompt_collections" title="pyrompt.discover_prompt_collections"><code class="xref py py-obj docutils literal notranslate"><span class="pre">discover_prompt_collections</span></code></a>([search_term, ...])</p></td>
+<td><p>Discover public *_pyrompt repositories on GitHub.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrompt.fork_collection" title="pyrompt.fork_collection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fork_collection</span></code></a>(source, token[, organization])</p></td>
+<td><p>Fork a collection to your account or organization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.clone_collection" title="pyrompt.clone_collection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clone_collection</span></code></a>(repo, local_path[, token])</p></td>
+<td><p>Clone a GitHub collection to local directory.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrompt.get_default_base_path" title="pyrompt.get_default_base_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_default_base_path</span></code></a>()</p></td>
+<td><p>Get platform-appropriate base path for pyrompt data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.quick_setup" title="pyrompt.quick_setup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">quick_setup</span></code></a>(project_name[, with_templates, ...])</p></td>
+<td><p>Quick setup for a new pyrompt project.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrompt.import_from_dict" title="pyrompt.import_from_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_from_dict</span></code></a>(collection, prompts[, metadata])</p></td>
+<td><p>Import prompts from a dictionary.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.export_to_dict" title="pyrompt.export_to_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_dict</span></code></a>(collection[, include_metadata])</p></td>
+<td><p>Export collection to a dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrompt.validate_template" title="pyrompt.validate_template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_template</span></code></a>(template_str[, ...])</p></td>
+<td><p>Validate a template string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.merge_collections" title="pyrompt.merge_collections"><code class="xref py py-obj docutils literal notranslate"><span class="pre">merge_collections</span></code></a>(target, *sources[, ...])</p></td>
+<td><p>Merge multiple collections into a target collection.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrompt.list_available_engines" title="pyrompt.list_available_engines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_available_engines</span></code></a>()</p></td>
+<td><p>List all available template engines with their details.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.render_template_file" title="pyrompt.render_template_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">render_template_file</span></code></a>(file_path[, output_path])</p></td>
+<td><p>Render a template file directly.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrompt.create_project_structure" title="pyrompt.create_project_structure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_project_structure</span></code></a>(project_name[, ...])</p></td>
+<td><p>Create a complete project structure for prompt management.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.get_stats" title="pyrompt.get_stats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_stats</span></code></a>(collection)</p></td>
+<td><p>Get statistics about a collection.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Classes</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.PromptCollection" title="pyrompt.PromptCollection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PromptCollection</span></code></a>(collection_name, *[, ...])</p></td>
+<td><p>Collection of prompts with MutableMapping interface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrompt.TemplateCollection" title="pyrompt.TemplateCollection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TemplateCollection</span></code></a>(collection_name, *[, ...])</p></td>
+<td><p>Collection of templates with multi-engine support.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.PromptMall" title="pyrompt.PromptMall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PromptMall</span></code></a>(workspace_name, *[, base_path, ...])</p></td>
+<td><p>Collection of collections - a &quot;mall&quot; of stores.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrompt.TemplateEngine" title="pyrompt.TemplateEngine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TemplateEngine</span></code></a>()</p></td>
+<td><p>Abstract base class for template engines.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.SemanticIndex" title="pyrompt.SemanticIndex"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SemanticIndex</span></code></a>(collection, *[, auto_update, ...])</p></td>
+<td><p>Semantic search index for prompts/templates.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#pyrompt.GitHubPromptCollection" title="pyrompt.GitHubPromptCollection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GitHubPromptCollection</span></code></a>(repo, *[, token, ...])</p></td>
+<td><p>Prompt collection backed by GitHub repository.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrompt.GitHubPromptCollection">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">GitHubPromptCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">readonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">branch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'main'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prompts'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/github_integration.html#GitHubPromptCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.GitHubPromptCollection" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.MutableMapping" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableMapping</span></code></a></p>
+<p>Prompt collection backed by GitHub repository.</p>
+<p>Repositories must end with ‘_pyrompt’ suffix for discovery.
+Contains prompts/ and/or templates/ directories.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Publishing a collection</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">gh</span> <span class="o">=</span> <span class="n">GitHubPromptCollection</span><span class="p">(</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="n">repo</span><span class="o">=</span><span class="s1">'username/my_prompts_pyrompt'</span><span class="p">,</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="n">token</span><span class="o">=</span><span class="s1">'ghp_...'</span><span class="p">,</span>
+</span><span data-line="5"><span class="gp">... </span>    <span class="n">readonly</span><span class="o">=</span><span class="kc">False</span>
+</span><span data-line="6"><span class="gp">... </span><span class="p">)</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="n">gh</span><span class="p">[</span><span class="s1">'greeting'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello, </span><span class="si">{name}</span><span class="s2">!"</span>
+</span><span data-line="8"><span class="gp">&gt;&gt;&gt; </span><span class="n">gh</span><span class="o">.</span><span class="n">sync</span><span class="p">()</span>  <span class="c1"># Commits and pushes to GitHub</span>
+</span></pre></div>
+</div>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.GitHubPromptCollection.sync">
+<span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Update</span> <span class="pre">prompts</span> <span class="pre">via</span> <span class="pre">pyrompt'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/github_integration.html#GitHubPromptCollection.sync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.GitHubPromptCollection.sync" title="Link to this definition">#</a></dt>
+<dd><p>Push local changes to GitHub.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>message</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Commit message</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#PermissionError" title="(in Python v3.15)"><strong>PermissionError</strong></a> – If collection is readonly</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrompt.PromptCollection">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">PromptCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection_name</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_factory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/base.html#PromptCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.PromptCollection" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.MutableMapping" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableMapping</span></code></a></p>
+<p>Collection of prompts with MutableMapping interface.</p>
+<p>Backed by file storage via dol, with optional metadata.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s1">'my_project'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span><span class="p">[</span><span class="s1">'system'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are a helpful assistant."</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">prompts</span><span class="p">[</span><span class="s1">'system'</span><span class="p">])</span>
+</span><span data-line="5"><span class="go">You are a helpful assistant.</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">prompts</span><span class="p">)</span>
+</span><span data-line="7"><span class="go">1</span>
+</span></pre></div>
+</div>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrompt.PromptMall">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">PromptMall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">workspace_name</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/mall.html#PromptMall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.PromptMall" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a></p>
+<p>Collection of collections - a “mall” of stores.</p>
+<p>Provides nested access: mall[‘collection_name’][‘prompt_key’]</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">mall</span> <span class="o">=</span> <span class="n">PromptMall</span><span class="p">(</span><span class="s1">'my_workspace'</span><span class="p">)</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">mall</span><span class="p">[</span><span class="s1">'system'</span><span class="p">][</span><span class="s1">'python_expert'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are a Python expert."</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">mall</span><span class="p">[</span><span class="s1">'templates'</span><span class="p">][</span><span class="s1">'greeting'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello </span><span class="si">{name}</span><span class="s2">!"</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">mall</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</span><span data-line="5"><span class="go">['system', 'templates']</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">mall</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">'python'</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.PromptMall.add_collection">
+<span class="sig-name descname"><span class="pre">add_collection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'prompt'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/mall.html#PromptMall.add_collection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.PromptMall.add_collection" title="Link to this definition">#</a></dt>
+<dd><p>Add a new collection to the mall.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Collection name</p></li>
+<li><p><strong>collection_type</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – ‘prompt’ or ‘template’</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">mall</span><span class="o">.</span><span class="n">add_collection</span><span class="p">(</span><span class="s1">'personas'</span><span class="p">,</span> <span class="s1">'prompt'</span><span class="p">)</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">mall</span><span class="p">[</span><span class="s1">'personas'</span><span class="p">][</span><span class="s1">'analyst'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are a data analyst."</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.PromptMall.get_collection_type">
+<span class="sig-name descname"><span class="pre">get_collection_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/mall.html#PromptMall.get_collection_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.PromptMall.get_collection_type" title="Link to this definition">#</a></dt>
+<dd><p>Get the type of a collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Collection name</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>‘prompt’, ‘template’, or None if not found</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.PromptMall.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/mall.html#PromptMall.items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.PromptMall.items" title="Link to this definition">#</a></dt>
+<dd><p>Get (name, collection) pairs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.PromptMall.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/mall.html#PromptMall.keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.PromptMall.keys" title="Link to this definition">#</a></dt>
+<dd><p>Get collection names.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.PromptMall.remove_collection">
+<span class="sig-name descname"><span class="pre">remove_collection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/mall.html#PromptMall.remove_collection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.PromptMall.remove_collection" title="Link to this definition">#</a></dt>
+<dd><p>Remove a collection from the mall.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This only removes it from the mall, not from disk.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Collection name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.PromptMall.search">
+<span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collections</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">search_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/mall.html#PromptMall.search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.PromptMall.search" title="Link to this definition">#</a></dt>
+<dd><p>Search across multiple collections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Search query</p></li>
+<li><p><strong>collections</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]</span>) – Collection names to search (None = all)</p></li>
+<li><p><strong>**search_kwargs</strong> – Additional args for SemanticIndex.search</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict mapping collection_name -&gt; search results</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">mall</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">'python expert'</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">coll_name</span><span class="p">,</span> <span class="n">matches</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="si">{</span><span class="n">coll_name</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">matches</span><span class="p">:</span>
+</span><span data-line="5"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.PromptMall.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/mall.html#PromptMall.values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.PromptMall.values" title="Link to this definition">#</a></dt>
+<dd><p>Get collections.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrompt.SemanticIndex">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">SemanticIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text-embedding-3-small'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/search.html#SemanticIndex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.SemanticIndex" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Semantic search index for prompts/templates.</p>
+<p>Uses oa.embeddings to create vector representations,
+then supports similarity search.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span><span class="p">,</span> <span class="n">SemanticIndex</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s1">'my_project'</span><span class="p">)</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span><span class="p">[</span><span class="s1">'python'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are a Python expert."</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You specialize in data analysis."</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">index</span> <span class="o">=</span> <span class="n">SemanticIndex</span><span class="p">(</span><span class="n">prompts</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"help with pandas"</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.SemanticIndex.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/search.html#SemanticIndex.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.SemanticIndex.add" title="Link to this definition">#</a></dt>
+<dd><p>Add single item to index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Key of item to add</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.SemanticIndex.cluster">
+<span class="sig-name descname"><span class="pre">cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/search.html#SemanticIndex.cluster"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.SemanticIndex.cluster" title="Link to this definition">#</a></dt>
+<dd><p>Cluster prompts/templates into groups.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n_clusters</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of clusters</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict mapping cluster_id -&gt; list of keys</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ImportError" title="(in Python v3.15)"><strong>ImportError</strong></a> – If scikit-learn not available</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.SemanticIndex.rebuild">
+<span class="sig-name descname"><span class="pre">rebuild</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/search.html#SemanticIndex.rebuild"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.SemanticIndex.rebuild" title="Link to this definition">#</a></dt>
+<dd><p>Rebuild entire index from current collection.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.SemanticIndex.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/search.html#SemanticIndex.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.SemanticIndex.remove" title="Link to this definition">#</a></dt>
+<dd><p>Remove item from index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Key of item to remove</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.SemanticIndex.search">
+<span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diversity_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/search.html#SemanticIndex.search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.SemanticIndex.search" title="Link to this definition">#</a></dt>
+<dd><p>Search for similar prompts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Search query text</p></li>
+<li><p><strong>top_k</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Number of results to return</p></li>
+<li><p><strong>filters</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</span>) – Metadata filters (if collection has metadata)</p></li>
+<li><p><strong>diversity_threshold</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]</span>) – If set, exclude results too similar to each other</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of (key, similarity_score) tuples, sorted by score descending</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"help with data analysis"</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrompt.TemplateCollection">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">TemplateCollection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection_name</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_engine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'format'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/base.html#TemplateCollection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.TemplateCollection" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.MutableMapping" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableMapping</span></code></a></p>
+<p>Collection of templates with multi-engine support.</p>
+<p>Automatically detects template engine based on file extension
+or content. Provides rendering capabilities.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span> <span class="o">=</span> <span class="n">TemplateCollection</span><span class="p">(</span><span class="s1">'my_project'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span><span class="p">[</span><span class="s1">'greeting.txt'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello </span><span class="si">{name}</span><span class="s2">!"</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">'greeting.txt'</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'Alice'</span><span class="p">)</span>
+</span><span data-line="5"><span class="go">'Hello Alice!'</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="c1"># With Jinja2 (if installed)</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span><span class="p">[</span><span class="s1">'greeting.jinja2'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello {{ name }}!"</span>
+</span><span data-line="8"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">'greeting.jinja2'</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'Bob'</span><span class="p">)</span>
+</span><span data-line="9"><span class="go">'Hello Bob!'</span>
+</span></pre></div>
+</div>
+<dl class="field-list simple">
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.TemplateCollection.create_prompt_functions">
+<span class="sig-name descname"><span class="pre">create_prompt_functions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">common_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/base.html#TemplateCollection.create_prompt_functions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.TemplateCollection.create_prompt_functions" title="Link to this definition">#</a></dt>
+<dd><p>Create an <code class="docutils literal notranslate"><span class="pre">aix.PromptFuncs</span></code> collection from templates (one function per key).</p>
+<p>LLM generation routes through <code class="xref py py-mod docutils literal notranslate"><span class="pre">aix</span></code> (lazy import).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>keys</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]</span>) – Template keys to include (None = all)</p></li>
+<li><p><strong>**common_kwargs</strong> – Common kwargs for all prompt functions (e.g. ‘model’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">aix.PromptFuncs</span></code> object with a function for each template</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateCollection</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">tc</span> <span class="o">=</span> <span class="n">TemplateCollection</span><span class="p">(</span><span class="s1">'demo'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">tc</span><span class="p">[</span><span class="s1">'greeting.txt'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Greet </span><span class="si">{name}</span><span class="s2">"</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">funcs</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">create_prompt_functions</span><span class="p">()</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">funcs</span><span class="p">[</span><span class="s1">'greeting.txt'</span><span class="p">](</span><span class="n">name</span><span class="o">=</span><span class="s1">'Alice'</span><span class="p">)</span>
+</span><span data-line="7"><span class="go">'Hello Alice!'</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.TemplateCollection.parse">
+<span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/base.html#TemplateCollection.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.TemplateCollection.parse" title="Link to this definition">#</a></dt>
+<dd><p>Parse a template to extract structure.</p>
+<p>Returns dict with placeholders, defaults, metadata.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Template key</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict with ‘placeholders’, ‘defaults’, ‘metadata’</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span> <span class="o">=</span> <span class="n">TemplateCollection</span><span class="p">(</span><span class="s1">'demo'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span><span class="p">[</span><span class="s1">'greeting.txt'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello </span><span class="si">{name}</span><span class="s2">!"</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span> <span class="o">=</span> <span class="n">templates</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">'greeting.txt'</span><span class="p">)</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="p">[</span><span class="s1">'placeholders'</span><span class="p">]</span>
+</span><span data-line="6"><span class="go">['name']</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.TemplateCollection.render">
+<span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/base.html#TemplateCollection.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.TemplateCollection.render" title="Link to this definition">#</a></dt>
+<dd><p>Render a template with provided values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Template key</p></li>
+<li><p><strong>**kwargs</strong> – Values to inject</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Rendered template string</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span> <span class="o">=</span> <span class="n">TemplateCollection</span><span class="p">(</span><span class="s1">'demo'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span><span class="p">[</span><span class="s1">'greeting.txt'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello </span><span class="si">{name}</span><span class="s2">!"</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="s1">'greeting.txt'</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'Alice'</span><span class="p">)</span>
+</span><span data-line="5"><span class="go">'Hello Alice!'</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.TemplateCollection.to_prompt_function">
+<span class="sig-name descname"><span class="pre">to_prompt_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">prompt_func_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/base.html#TemplateCollection.to_prompt_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.TemplateCollection.to_prompt_function" title="Link to this definition">#</a></dt>
+<dd><p>Convert template to an AI-enabled function using <code class="docutils literal notranslate"><span class="pre">aix.prompt_func</span></code>.</p>
+<p>LLM generation is routed through <code class="xref py py-mod docutils literal notranslate"><span class="pre">aix</span></code> (the multi-provider facade) so the
+model/provider is switchable. <code class="docutils literal notranslate"><span class="pre">aix</span></code> is imported lazily, only when called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Template key</p></li>
+<li><p><strong>**prompt_func_kwargs</strong> – Additional kwargs for <code class="docutils literal notranslate"><span class="pre">aix.prompt_func</span></code>
+(e.g., ‘model’, ‘temperature’, ‘name’)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Callable function that invokes the LLM with the rendered template</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateCollection</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">tc</span> <span class="o">=</span> <span class="n">TemplateCollection</span><span class="p">(</span><span class="s1">'demo'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">tc</span><span class="p">[</span><span class="s1">'explain.txt'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Explain </span><span class="si">{concept}</span><span class="s2"> in simple terms."</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">explain</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">to_prompt_function</span><span class="p">(</span><span class="s1">'explain.txt'</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">explain</span><span class="p">(</span><span class="n">concept</span><span class="o">=</span><span class="s2">"quantum computing"</span><span class="p">)</span>
+</span><span data-line="7"><span class="go">'Quantum computing is ...'</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.TemplateCollection.to_prompt_json_function">
+<span class="sig-name descname"><span class="pre">to_prompt_json_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_schema</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">prompt_func_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/base.html#TemplateCollection.to_prompt_json_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.TemplateCollection.to_prompt_json_function" title="Link to this definition">#</a></dt>
+<dd><p>Convert template to a JSON-returning AI function.</p>
+<p>Uses <code class="docutils literal notranslate"><span class="pre">aix.prompt_func(output_schema=dict)</span></code>: aix requests JSON and parses it
+robustly (tolerating fenced output), returning a parsed dict. <code class="docutils literal notranslate"><span class="pre">json_schema</span></code> is
+accepted for API compatibility; aix does best-effort JSON rather than strict
+JSON-Schema enforcement. LLM generation routes through <code class="xref py py-mod docutils literal notranslate"><span class="pre">aix</span></code> (lazy import).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Template key</p></li>
+<li><p><strong>json_schema</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span>) – Desired JSON schema (kept for API compatibility)</p></li>
+<li><p><strong>**prompt_func_kwargs</strong> – Additional kwargs for <code class="docutils literal notranslate"><span class="pre">aix.prompt_func</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Function that returns a parsed JSON dict</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateCollection</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">tc</span> <span class="o">=</span> <span class="n">TemplateCollection</span><span class="p">(</span><span class="s1">'demo'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">tc</span><span class="p">[</span><span class="s1">'extract.txt'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Extract people from: </span><span class="si">{text}</span><span class="s2">"</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">extract</span> <span class="o">=</span> <span class="n">tc</span><span class="o">.</span><span class="n">to_prompt_json_function</span><span class="p">(</span><span class="s1">'extract.txt'</span><span class="p">,</span> <span class="p">{})</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">extract</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Alice met Bob"</span><span class="p">)</span>
+</span><span data-line="7"><span class="go">{'people': ['Alice', 'Bob']}</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="pyrompt.TemplateEngine">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">TemplateEngine</span></span><a class="reference internal" href="../_modules/pyrompt/engines.html#TemplateEngine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.TemplateEngine" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Abstract base class for template engines.</p>
+<p>Template engines parse and render templates with different syntaxes.
+They must provide:</p>
+<ul class="simple">
+<li><p>name: Unique identifier (e.g., ‘format’, ‘jinja2’)</p></li>
+<li><p>extensions: List of file extensions (e.g., [‘.jinja2’, ‘.j2’])</p></li>
+<li><p>parse_template: Extract placeholders and defaults</p></li>
+<li><p>render: Render template with values</p></li>
+<li><p>detect: Optionally detect if content uses this engine</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.TemplateEngine.detect">
+<span class="sig-name descname"><span class="pre">detect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/engines.html#TemplateEngine.detect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.TemplateEngine.detect" title="Link to this definition">#</a></dt>
+<dd><p>Detect if content uses this engine based on syntax.</p>
+<p>Used when extension doesn’t clearly indicate engine.
+Override to provide content-based detection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>content</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Template content</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if content appears to use this engine</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.TemplateEngine.parse_template">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">parse_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template_str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/engines.html#TemplateEngine.parse_template"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.TemplateEngine.parse_template" title="Link to this definition">#</a></dt>
+<dd><p>Parse template to extract structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>template_str</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Template content</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>‘placeholders’: list of parameter names</p></li>
+<li><p>’defaults’: dict of default values</p></li>
+<li><p>’metadata’: any engine-specific info</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyrompt.TemplateEngine.render">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">render</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template_str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/engines.html#TemplateEngine.render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.TemplateEngine.render" title="Link to this definition">#</a></dt>
+<dd><p>Render template with provided values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template_str</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Template content</p></li>
+<li><p><strong>**kwargs</strong> – Values to inject</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Rendered string</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.clone_collection">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">clone_collection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">repo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/github_integration.html#clone_collection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.clone_collection" title="Link to this definition">#</a></dt>
+<dd><p>Clone a GitHub collection to local directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>repo</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Repository name (user/repo_pyrompt)</p></li>
+<li><p><strong>local_path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Local directory path</p></li>
+<li><p><strong>token</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – Optional GitHub token</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">clone_collection</span><span class="p">(</span>
+</span><span data-line="2"><span class="gp">... </span>    <span class="s1">'thorwhalen/awesome_prompts_pyrompt'</span><span class="p">,</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="s1">'/tmp/my_prompts'</span>
+</span><span data-line="4"><span class="gp">... </span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.create_project_structure">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">create_project_structure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_examples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/util.html#create_project_structure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.create_project_structure" title="Link to this definition">#</a></dt>
+<dd><p>Create a complete project structure for prompt management.</p>
+<p>Creates directories and example files for a new pyrompt project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Name of the project</p></li>
+<li><p><strong>base_path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – Optional base path</p></li>
+<li><p><strong>include_examples</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to include example prompts</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path to created project directory</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">create_project_structure</span><span class="p">(</span><span class="s1">'my_ai_app'</span><span class="p">)</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Project created at: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.detect_engine">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">detect_engine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/engines.html#detect_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.detect_engine" title="Link to this definition">#</a></dt>
+<dd><p>Detect appropriate engine for content.</p>
+<p>Priority:</p>
+<ol class="arabic simple">
+<li><p>Extension match (if provided)</p></li>
+<li><p>Content-based detection</p></li>
+<li><p>Default (format)</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Template content</p></li>
+<li><p><strong>extension</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Optional file extension</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyrompt.engines.html#pyrompt.engines.TemplateEngine" title="pyrompt.engines.TemplateEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateEngine</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>TemplateEngine instance (never None, falls back to ‘format’)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.discover_prompt_collections">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">discover_prompt_collections</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_term</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_stars</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">language</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Python'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_results</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/github_integration.html#discover_prompt_collections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.discover_prompt_collections" title="Link to this definition">#</a></dt>
+<dd><p>Discover public *_pyrompt repositories on GitHub.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_term</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – Search query (e.g., “python data”)</p></li>
+<li><p><strong>min_stars</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Minimum star count</p></li>
+<li><p><strong>language</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Programming language filter</p></li>
+<li><p><strong>max_results</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a></span>) – Maximum number of results</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of dicts with repo info (name, description, stars, url)</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">collections</span> <span class="o">=</span> <span class="n">discover_prompt_collections</span><span class="p">(</span>
+</span><span data-line="2"><span class="gp">... </span>    <span class="n">search_term</span><span class="o">=</span><span class="s1">'python'</span><span class="p">,</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="n">min_stars</span><span class="o">=</span><span class="mi">5</span>
+</span><span data-line="4"><span class="gp">... </span><span class="p">)</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="n">collections</span><span class="p">:</span>
+</span><span data-line="6"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">repo</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">repo</span><span class="p">[</span><span class="s1">'stars'</span><span class="p">]</span><span class="si">}</span><span class="s2"> stars"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.export_to_dict">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">export_to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/util.html#export_to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.export_to_dict" title="Link to this definition">#</a></dt>
+<dd><p>Export collection to a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection</strong> – PromptCollection or TemplateCollection</p></li>
+<li><p><strong>include_metadata</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to include metadata</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict with ‘prompts’ and optionally ‘metadata’ keys</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s1">'my_project'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span><span class="p">[</span><span class="s1">'system'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'You are helpful.'</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">export_to_dict</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="n">include_metadata</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span data-line="6"><span class="go">{'prompts': {'system': 'You are helpful.'}}</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.fork_collection">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">fork_collection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">organization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/github_integration.html#fork_collection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.fork_collection" title="Link to this definition">#</a></dt>
+<dd><p>Fork a collection to your account or organization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Source repo (user/repo_pyrompt)</p></li>
+<li><p><strong>token</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – GitHub token with repo permissions</p></li>
+<li><p><strong>organization</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – Optional organization to fork to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyrompt.github_integration.html#pyrompt.github_integration.GitHubPromptCollection" title="pyrompt.github_integration.GitHubPromptCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">GitHubPromptCollection</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>GitHubPromptCollection for the new fork</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">forked</span> <span class="o">=</span> <span class="n">fork_collection</span><span class="p">(</span>
+</span><span data-line="2"><span class="gp">... </span>    <span class="s1">'thorwhalen/awesome_prompts_pyrompt'</span><span class="p">,</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="n">token</span><span class="o">=</span><span class="s1">'ghp_...'</span>
+</span><span data-line="4"><span class="gp">... </span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.get_default_base_path">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">get_default_base_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/stores.html#get_default_base_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.get_default_base_path" title="Link to this definition">#</a></dt>
+<dd><p>Get platform-appropriate base path for pyrompt data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>%LOCALAPPDATA%/pyrompt
+- macOS/Linux: ~/.local/share/pyrompt</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.get_engine">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">get_engine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/engines.html#get_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.get_engine" title="Link to this definition">#</a></dt>
+<dd><p>Get engine by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Engine name (e.g., ‘format’, ‘jinja2’)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference internal" href="pyrompt.engines.html#pyrompt.engines.TemplateEngine" title="pyrompt.engines.TemplateEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateEngine</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>TemplateEngine instance or None if not found</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.get_stats">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">get_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/util.html#get_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.get_stats" title="Link to this definition">#</a></dt>
+<dd><p>Get statistics about a collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>collection</strong> – PromptCollection or TemplateCollection</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict with statistics</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s1">'my_project'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">get_stats</span><span class="p">(</span><span class="n">prompts</span><span class="p">)[</span><span class="s1">'total_prompts'</span><span class="p">]</span>
+</span><span data-line="5"><span class="go">0</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.import_from_dict">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">import_from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/util.html#import_from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.import_from_dict" title="Link to this definition">#</a></dt>
+<dd><p>Import prompts from a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>collection</strong> – PromptCollection or TemplateCollection</p></li>
+<li><p><strong>prompts</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – Dict mapping keys to prompt/template strings</p></li>
+<li><p><strong>metadata</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]]</span>) – Optional dict mapping keys to metadata dicts</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s1">'my_project'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">import_from_dict</span><span class="p">(</span><span class="n">prompts</span><span class="p">,</span> <span class="p">{</span><span class="s1">'system'</span><span class="p">:</span> <span class="s1">'You are helpful.'</span><span class="p">,</span> <span class="s1">'user'</span><span class="p">:</span> <span class="s1">'Hello!'</span><span class="p">})</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">prompts</span><span class="p">)</span>
+</span><span data-line="6"><span class="go">['system', 'user']</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.list_available_engines">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">list_available_engines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/util.html#list_available_engines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.list_available_engines" title="Link to this definition">#</a></dt>
+<dd><p>List all available template engines with their details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict mapping engine name to info dict</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">engines</span> <span class="o">=</span> <span class="n">list_available_engines</span><span class="p">()</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">engines</span><span class="p">[</span><span class="s1">'format'</span><span class="p">][</span><span class="s1">'extensions'</span><span class="p">])</span>
+</span><span data-line="3"><span class="go">['.txt', '']</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.list_engines">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">list_engines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/engines.html#list_engines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.list_engines" title="Link to this definition">#</a></dt>
+<dd><p>List all registered engine names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of engine names</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.merge_collections">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">merge_collections</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">sources</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conflict_strategy</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'skip'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/util.html#merge_collections"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.merge_collections" title="Link to this definition">#</a></dt>
+<dd><p>Merge multiple collections into a target collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target</strong> – Target collection to merge into</p></li>
+<li><p><strong>*sources</strong> – Source collections to merge from</p></li>
+<li><p><strong>conflict_strategy</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – How to handle conflicts (‘skip’, ‘overwrite’, ‘error’)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">base</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">target</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s1">'merged'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">base</span><span class="p">)</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">source1</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s1">'source1'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">base</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">source1</span><span class="p">[</span><span class="s1">'a'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'A'</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="n">merge_collections</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">source1</span><span class="p">,</span> <span class="n">conflict_strategy</span><span class="o">=</span><span class="s1">'skip'</span><span class="p">)</span>
+</span><span data-line="8"><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+</span><span data-line="9"><span class="go">['a']</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.quick_setup">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">quick_setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_templates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_metadata</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">base_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/util.html#quick_setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.quick_setup" title="Link to this definition">#</a></dt>
+<dd><p>Quick setup for a new pyrompt project.</p>
+<p>Creates both prompt and template collections with sensible defaults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project_name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Name of the project</p></li>
+<li><p><strong>with_templates</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to create a template collection</p></li>
+<li><p><strong>with_metadata</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a></span>) – Whether to enable metadata</p></li>
+<li><p><strong>base_path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – Optional base path</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict with ‘prompts’ and optionally ‘templates’ keys</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">collections</span> <span class="o">=</span> <span class="n">quick_setup</span><span class="p">(</span><span class="s1">'my_ai_project'</span><span class="p">,</span> <span class="n">base_path</span><span class="o">=</span><span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">())</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">collections</span><span class="p">[</span><span class="s1">'prompts'</span><span class="p">][</span><span class="s1">'system'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"You are a helpful assistant."</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">collections</span><span class="p">[</span><span class="s1">'templates'</span><span class="p">][</span><span class="s1">'greeting.txt'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"Hello </span><span class="si">{name}</span><span class="s2">!"</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">collections</span><span class="p">)</span>
+</span><span data-line="6"><span class="go">['prompts', 'templates']</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.register_engine">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">register_engine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">engine</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/engines.html#register_engine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.register_engine" title="Link to this definition">#</a></dt>
+<dd><p>Register a template engine.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>engine</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="pyrompt.engines.html#pyrompt.engines.TemplateEngine" title="pyrompt.engines.TemplateEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateEngine</span></code></a></span>) – TemplateEngine instance to register</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.render_template_file">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">render_template_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/util.html#render_template_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.render_template_file" title="Link to this definition">#</a></dt>
+<dd><p>Render a template file directly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Path to template file</p></li>
+<li><p><strong>output_path</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]</span>) – Optional path to save rendered output</p></li>
+<li><p><strong>**kwargs</strong> – Template parameters</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Rendered string</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">render_template_file</span><span class="p">(</span>
+</span><span data-line="2"><span class="gp">... </span>    <span class="s1">'templates/greeting.txt'</span><span class="p">,</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="n">name</span><span class="o">=</span><span class="s1">'Alice'</span>
+</span><span data-line="4"><span class="gp">... </span><span class="p">)</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.validate_template">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.</span></span><span class="sig-name descname"><span class="pre">validate_template</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">template_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'format'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">required_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/util.html#validate_template"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.validate_template" title="Link to this definition">#</a></dt>
+<dd><p>Validate a template string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>template_str</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Template content</p></li>
+<li><p><strong>engine_name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – Engine to use (‘format’, ‘jinja2’, ‘mustache’)</p></li>
+<li><p><strong>required_params</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>]]</span>) – Optional list of required parameter names</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict with ‘valid’, ‘errors’, ‘warnings’, ‘placeholders’</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">validate_template</span><span class="p">(</span><span class="s2">"Hello </span><span class="si">{name}</span><span class="s2">!"</span><span class="p">,</span> <span class="n">required_params</span><span class="o">=</span><span class="p">[</span><span class="s1">'name'</span><span class="p">])</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">result</span><span class="p">[</span><span class="s1">'valid'</span><span class="p">]</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">validate_template</span><span class="p">(</span><span class="s2">"Hello </span><span class="si">{name}</span><span class="s2">!"</span><span class="p">,</span> <span class="n">required_params</span><span class="o">=</span><span class="p">[</span><span class="s1">'name'</span><span class="p">,</span> <span class="s1">'age'</span><span class="p">])</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="ow">not</span> <span class="n">result</span><span class="p">[</span><span class="s1">'valid'</span><span class="p">]</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<p class="rubric">Modules</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="pyrompt.base.html#module-pyrompt.base" title="pyrompt.base"><code class="xref py py-obj docutils literal notranslate"><span class="pre">base</span></code></a></p></td>
+<td><p>Core collection classes for prompts and templates.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="pyrompt.cli.html#module-pyrompt.cli" title="pyrompt.cli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cli</span></code></a></p></td>
+<td><p>Command-line interface for pyrompt.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pyrompt.engines.html#module-pyrompt.engines" title="pyrompt.engines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">engines</span></code></a></p></td>
+<td><p>Template engine plugin system for pyrompt.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="pyrompt.github_integration.html#module-pyrompt.github_integration" title="pyrompt.github_integration"><code class="xref py py-obj docutils literal notranslate"><span class="pre">github_integration</span></code></a></p></td>
+<td><p>GitHub integration for sharing and discovering prompt collections.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pyrompt.mall.html#module-pyrompt.mall" title="pyrompt.mall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mall</span></code></a></p></td>
+<td><p>Collection of collections - a &quot;mall&quot; of prompt/template stores.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="pyrompt.search.html#module-pyrompt.search" title="pyrompt.search"><code class="xref py py-obj docutils literal notranslate"><span class="pre">search</span></code></a></p></td>
+<td><p>Semantic search for prompts and templates using embeddings.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="pyrompt.stores.html#module-pyrompt.stores" title="pyrompt.stores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stores</span></code></a></p></td>
+<td><p>Storage layer for pyrompt using dol abstractions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="pyrompt.util.html#module-pyrompt.util" title="pyrompt.util"><code class="xref py py-obj docutils literal notranslate"><span class="pre">util</span></code></a></p></td>
+<td><p>Utility functions and convenience helpers for pyrompt.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="../api.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">API reference</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="pyrompt.base.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">pyrompt.base</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright">
+  <p>
+    Made with
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+  <a href="https://github.com/addaix/pyrompt" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=bbaf98b3"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=fd10adb8"></script>
+      <script src="../_static/shibuya.js?v=50760d75"></script></body>
+</html>

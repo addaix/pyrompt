@@ -1,4 +1,0 @@
-pyrompt.tests.test_search
-=========================
-.. automodule:: pyrompt.tests.test_search
-   :members:

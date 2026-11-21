@@ -1,0 +1,12 @@
+pyrompt.mall
+============
+
+.. automodule:: pyrompt.mall
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      PromptMall
+   

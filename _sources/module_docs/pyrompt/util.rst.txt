@@ -1,4 +1,0 @@
-pyrompt.util
-============
-.. automodule:: pyrompt.util
-   :members:

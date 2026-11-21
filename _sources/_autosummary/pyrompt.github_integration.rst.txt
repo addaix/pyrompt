@@ -1,0 +1,20 @@
+pyrompt.github\_integration
+===========================
+
+.. automodule:: pyrompt.github_integration
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      clone_collection
+      discover_prompt_collections
+      fork_collection
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      GitHubPromptCollection
+   

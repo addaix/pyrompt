@@ -1,0 +1,19 @@
+pyrompt.cli
+===========
+
+.. automodule:: pyrompt.cli
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      cmd_add
+      cmd_engines
+      cmd_list
+      cmd_new
+      cmd_render
+      cmd_show
+      cmd_stats
+      main
+   

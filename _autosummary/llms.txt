@@ -1,0 +1,23 @@
+# pyrompt
+
+> Manage, share, and search prompts and prompt templates, with multiple templating languages
+
+
+## Pages in this subsection
+
+- [pyrompt](pyrompt.html.md): pyrompt: Python Prompt Management
+- [pyrompt.base](pyrompt.base.html.md): Core collection classes for prompts and templates.
+- [pyrompt.cli](pyrompt.cli.html.md): Command-line interface for pyrompt.
+- [pyrompt.engines](pyrompt.engines.html.md): Template engine plugin system for pyrompt.
+- [pyrompt.engines.format_engine](pyrompt.engines.format_engine.html.md): Python format string template engine.
+- [pyrompt.engines.jinja2_engine](pyrompt.engines.jinja2_engine.html.md): Jinja2 template engine.
+- [pyrompt.engines.mustache_engine](pyrompt.engines.mustache_engine.html.md): Mustache template engine.
+- [pyrompt.github_integration](pyrompt.github_integration.html.md): GitHub integration for sharing and discovering prompt collections.
+- [pyrompt.mall](pyrompt.mall.html.md): Collection of collections - a “mall” of prompt/template stores.
+- [pyrompt.search](pyrompt.search.html.md): Semantic search for prompts and templates using embeddings.
+- [pyrompt.stores](pyrompt.stores.html.md): Storage layer for pyrompt using dol abstractions.
+- [pyrompt.util](pyrompt.util.html.md): Utility functions and convenience helpers for pyrompt.
+
+## Optional
+
+- [Top-level llms.txt](../llms.txt): Complete documentation index.

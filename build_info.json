@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-11-21T18:21:15Z",
+  "package": {
+    "name": "pyrompt",
+    "version": "0.0.7",
+    "display_name": "pyrompt",
+    "source": "pyproject.toml"
+  },
+  "git": {
+    "available": true,
+    "commit": "9ad5c80919006f43d22de16951f05c5c5fba42fb",
+    "short_commit": "9ad5c80",
+    "branch": "main",
+    "tags": [
+      "0.0.7"
+    ],
+    "dirty": false,
+    "remote_url": "https://github.com/addaix/pyrompt",
+    "commit_url": "https://github.com/addaix/pyrompt/commit/9ad5c80919006f43d22de16951f05c5c5fba42fb",
+    "error": null
+  },
+  "ci": {
+    "provider": "github",
+    "repository": "addaix/pyrompt",
+    "sha": "a23ecf4e1a116f61f012cbfd63fe3b000d3bf864",
+    "sha_in_history": true,
+    "ref": "refs/heads/main",
+    "ref_name": "main",
+    "run_id": "44934894213",
+    "run_url": "https://github.com/addaix/pyrompt/actions/runs/44934894213",
+    "server_url": "https://github.com"
+  },
+  "tools": {
+    "epythet": "0.2.23",
+    "sphinx": "9.1.1",
+    "docutils": "0.22.4",
+    "python": "3.12.16"
+  },
+  "config": {
+    "theme": "auto",
+    "html_theme": "shibuya",
+    "accent": "#903a00",
+    "mode": "auto",
+    "api_generator": "autosummary",
+    "ignore": [
+      "tests/",
+      "scrap/",
+      "examples/"
+    ],
+    "agent_outputs": true,
+    "aggregates": [
+      "md"
+    ],
+    "ai_artifacts": true,
+    "provenance": true,
+    "docs_dir": "docsrc"
+  },
+  "site": {
+    "modules_documented": 12,
+    "objects_documented": 114
+  },
+  "pypi": {
+    "checked": true,
+    "latest": "0.0.7",
+    "relation": "same",
+    "error": null
+  },
+  "reproduce": "git clone https://github.com/addaix/pyrompt && cd pyrompt\ngit checkout 9ad5c80919006f43d22de16951f05c5c5fba42fb\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "warnings": [],
+  "alignment": {
+    "aligned": true,
+    "notes": []
+  }
+}

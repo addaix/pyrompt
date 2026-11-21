@@ -1,0 +1,30 @@
+# pyrompt
+
+> Manage, share, and search prompts and prompt templates, with multiple templating languages
+
+
+## Pages
+
+- [pyrompt: Python Prompt Management](index.html.md): &gt; A flexible framework for managing, sharing, and searching prompts and prompt templates with suppor...
+- [API reference](api.html.md): | &#96;pyrompt&#96;   | pyrompt: Python Prompt Management   |
+- [pyrompt](_autosummary/pyrompt.html.md): pyrompt: Python Prompt Management
+- [pyrompt.base](_autosummary/pyrompt.base.html.md): Core collection classes for prompts and templates.
+- [pyrompt.cli](_autosummary/pyrompt.cli.html.md): Command-line interface for pyrompt.
+- [pyrompt.engines](_autosummary/pyrompt.engines.html.md): Template engine plugin system for pyrompt.
+- [pyrompt.engines.format_engine](_autosummary/pyrompt.engines.format_engine.html.md): Python format string template engine.
+- [pyrompt.engines.jinja2_engine](_autosummary/pyrompt.engines.jinja2_engine.html.md): Jinja2 template engine.
+- [pyrompt.engines.mustache_engine](_autosummary/pyrompt.engines.mustache_engine.html.md): Mustache template engine.
+- [pyrompt.github_integration](_autosummary/pyrompt.github_integration.html.md): GitHub integration for sharing and discovering prompt collections.
+- [pyrompt.mall](_autosummary/pyrompt.mall.html.md): Collection of collections - a “mall” of prompt/template stores.
+- [pyrompt.search](_autosummary/pyrompt.search.html.md): Semantic search for prompts and templates using embeddings.
+- [pyrompt.stores](_autosummary/pyrompt.stores.html.md): Storage layer for pyrompt using dol abstractions.
+- [pyrompt.util](_autosummary/pyrompt.util.html.md): Utility functions and convenience helpers for pyrompt.
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-21 18:21 UTC&#42;&#42; from commit &lt;a href="https://github.com/add...
+
+## Optional
+
+- [pyrompt.md](pyrompt.md): Complete documentation in a single file.
+
+## Build
+
+- [build_info.json](build_info.json): build provenance (commit, version, tool versions, whether the docs match the package)

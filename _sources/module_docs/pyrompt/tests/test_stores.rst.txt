@@ -1,4 +1,0 @@
-pyrompt.tests.test_stores
-=========================
-.. automodule:: pyrompt.tests.test_stores
-   :members:

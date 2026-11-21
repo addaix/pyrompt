@@ -1,0 +1,12 @@
+pyrompt.search
+==============
+
+.. automodule:: pyrompt.search
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SemanticIndex
+   

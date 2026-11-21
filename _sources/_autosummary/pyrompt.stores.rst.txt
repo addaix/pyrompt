@@ -1,0 +1,17 @@
+pyrompt.stores
+==============
+
+.. automodule:: pyrompt.stores
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      get_default_base_path
+      mk_collection_path
+      mk_collection_stores
+      mk_metadata_store
+      mk_prompt_store
+      mk_template_store
+   
