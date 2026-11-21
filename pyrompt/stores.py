@@ -74,8 +74,8 @@ def mk_prompt_store(rootdir: str, extension: str = "txt"):
     # Hide extension from users
     store = wrap_kvs(
         filtered,
-        key_of_id=lambda k: k.replace(ext_with_dot, ""),
-        id_of_key=lambda k: f"{k}{ext_with_dot}",
+        key_decoder=lambda k: k.replace(ext_with_dot, ""),
+        key_encoder=lambda k: f"{k}{ext_with_dot}",
     )
 
     # Add tab completion support
