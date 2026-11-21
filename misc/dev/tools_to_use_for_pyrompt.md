@@ -29,13 +29,13 @@ This document describes the i2mint ecosystem tools and patterns that will be use
 from dol import Files
 
 # Create a file store (keys are relative paths, values are bytes)
-store = Files('/path/to/prompts', max_levels=0)  # max_levels=0 for flat directory
+store = Files("/path/to/prompts", max_levels=0)  # max_levels=0 for flat directory
 
 # Use like a dict
-store['greeting.txt'] = b"Hello, {name}!"
-content = store['greeting.txt']
+store["greeting.txt"] = b"Hello, {name}!"
+content = store["greeting.txt"]
 list(store)  # ['greeting.txt', 'farewell.txt', ...]
-del store['greeting.txt']
+del store["greeting.txt"]
 ```
 
 **Usage in pyrompt:**
@@ -49,11 +49,11 @@ del store['greeting.txt']
 from dol import TextFiles
 
 # Text files (keys are relative paths, values are strings)
-text_store = TextFiles('/path/to/prompts')
+text_store = TextFiles("/path/to/prompts")
 
 # Work with strings directly
-text_store['system.txt'] = "You are a helpful assistant."
-prompt = text_store['system.txt']  # Returns string, not bytes
+text_store["system.txt"] = "You are a helpful assistant."
+prompt = text_store["system.txt"]  # Returns string, not bytes
 ```
 
 **Usage in pyrompt:**
@@ -67,16 +67,16 @@ prompt = text_store['system.txt']  # Returns string, not bytes
 from dol import JsonFiles
 
 # Store metadata as JSON
-metadata_store = JsonFiles('/path/to/metadata')
+metadata_store = JsonFiles("/path/to/metadata")
 
-metadata_store['greeting_meta'] = {
-    'author': 'thor',
-    'version': '1.0',
-    'tags': ['greeting', 'friendly'],
-    'created': '2025-11-12'
+metadata_store["greeting_meta"] = {
+    "author": "thor",
+    "version": "1.0",
+    "tags": ["greeting", "friendly"],
+    "created": "2025-11-12",
 }
 
-meta = metadata_store['greeting_meta']  # Returns dict
+meta = metadata_store["greeting_meta"]  # Returns dict
 ```
 
 **Usage in pyrompt:**
@@ -90,19 +90,19 @@ meta = metadata_store['greeting_meta']  # Returns dict
 from dol import Files, wrap_kvs
 
 # Hide file extensions from users
-base_store = Files('/path/to/prompts')
+base_store = Files("/path/to/prompts")
 
 # Add key transformations
 store = wrap_kvs(
     base_store,
-    key_of_id=lambda k: k.replace('.txt', ''),  # file path -> user key
-    id_of_key=lambda k: f'{k}.txt',              # user key -> file path
+    key_of_id=lambda k: k.replace(".txt", ""),  # file path -> user key
+    id_of_key=lambda k: f"{k}.txt",  # user key -> file path
 )
 
 # Now users see clean keys
-store['greeting'] = b"Hello!"  # Actually saves to greeting.txt
-content = store['greeting']     # Actually reads from greeting.txt
-list(store)                     # ['greeting', 'farewell'] (no .txt)
+store["greeting"] = b"Hello!"  # Actually saves to greeting.txt
+content = store["greeting"]  # Actually reads from greeting.txt
+list(store)  # ['greeting', 'farewell'] (no .txt)
 ```
 
 **Usage in pyrompt:**
@@ -118,16 +118,16 @@ import json
 
 # Store JSON objects as files
 store = wrap_kvs(
-    Files('/path/to/data'),
-    key_of_id=lambda k: k.replace('.json', ''),
-    id_of_key=lambda k: f'{k}.json',
+    Files("/path/to/data"),
+    key_of_id=lambda k: k.replace(".json", ""),
+    id_of_key=lambda k: f"{k}.json",
     obj_of_data=json.loads,  # bytes -> Python object
-    data_of_obj=lambda obj: json.dumps(obj, indent=2).encode()  # object -> bytes
+    data_of_obj=lambda obj: json.dumps(obj, indent=2).encode(),  # object -> bytes
 )
 
 # Now store Python objects directly
-store['config'] = {'model': 'gpt-4', 'temperature': 0.7}
-config = store['config']  # Returns dict, not bytes
+store["config"] = {"model": "gpt-4", "temperature": 0.7}
+config = store["config"]  # Returns dict, not bytes
 ```
 
 #### 5. filt_iter - Filter Keys
@@ -135,24 +135,21 @@ config = store['config']  # Returns dict, not bytes
 ```python
 from dol import Files, filt_iter
 
-store = Files('/path/to/templates')
+store = Files("/path/to/templates")
 
 # Filter by extension
-txt_files = filt_iter(store, filt=filt_iter.suffixes('.txt'))
-jinja_files = filt_iter(store, filt=filt_iter.suffixes('.jinja2'))
+txt_files = filt_iter(store, filt=filt_iter.suffixes(".txt"))
+jinja_files = filt_iter(store, filt=filt_iter.suffixes(".jinja2"))
 
 # Multiple extensions
 template_files = filt_iter(
-    store, 
-    filt=filt_iter.suffixes('.txt', '.jinja2', '.mustache')
+    store, filt=filt_iter.suffixes(".txt", ".jinja2", ".mustache")
 )
 
 # Custom filter function
 import re
-python_files = filt_iter(
-    store,
-    filt=lambda k: re.match(r'.*\.py$', k)
-)
+
+python_files = filt_iter(store, filt=lambda k: re.match(r".*\.py$", k))
 ```
 
 **Usage in pyrompt:**
@@ -167,15 +164,15 @@ from dol import KeyCodecs, Files, wrap_kvs
 
 # Remove extensions and normalize case
 codec = KeyCodecs(
-    key_of_id=lambda k: k.replace('.txt', '').lower(),
-    id_of_key=lambda k: f'{k.lower()}.txt'
+    key_of_id=lambda k: k.replace(".txt", "").lower(),
+    id_of_key=lambda k: f"{k.lower()}.txt",
 )
 
-store = wrap_kvs(Files('/path'), **codec.to_wrap_kvs_kwargs())
+store = wrap_kvs(Files("/path"), **codec.to_wrap_kvs_kwargs())
 
 # User sees normalized keys
-store['MyPrompt'] = b"content"  # Saves to myprompt.txt
-store['myprompt']               # Works!
+store["MyPrompt"] = b"content"  # Saves to myprompt.txt
+store["myprompt"]  # Works!
 ```
 
 **Usage in pyrompt:**
@@ -188,7 +185,7 @@ store['myprompt']               # Works!
 ```python
 from dol import Files, add_ipython_key_completions
 
-store = Files('/path/to/prompts')
+store = Files("/path/to/prompts")
 store = add_ipython_key_completions(store)
 
 # Now in IPython/Jupyter:
@@ -203,62 +200,72 @@ store = add_ipython_key_completions(store)
 ### Complete Example: Prompt Store with dol
 
 ```python
-from dol import Files, TextFiles, JsonFiles, wrap_kvs, filt_iter, add_ipython_key_completions
+from dol import (
+    Files,
+    TextFiles,
+    JsonFiles,
+    wrap_kvs,
+    filt_iter,
+    add_ipython_key_completions,
+)
 from pathlib import Path
+
 
 def mk_prompt_store(rootdir: str):
     """
     Create a prompt store with clean interface.
-    
+
     - Keys don't show .txt extension
     - Values are strings, not bytes
     - Supports tab completion
     """
     # Start with text files
     base = TextFiles(rootdir, max_levels=0)
-    
+
     # Filter for .txt files only
-    filtered = filt_iter(base, filt=filt_iter.suffixes('.txt'))
-    
+    filtered = filt_iter(base, filt=filt_iter.suffixes(".txt"))
+
     # Hide .txt extension
     store = wrap_kvs(
         filtered,
-        key_of_id=lambda k: k.replace('.txt', ''),
-        id_of_key=lambda k: f'{k}.txt'
+        key_of_id=lambda k: k.replace(".txt", ""),
+        id_of_key=lambda k: f"{k}.txt",
     )
-    
+
     # Add tab completion
     return add_ipython_key_completions(store)
+
 
 def mk_template_store(rootdir: str):
     """
     Create a template store that handles multiple extensions.
-    
+
     Keeps the extension in the key so we can detect template engine.
     """
     base = TextFiles(rootdir, max_levels=0)
-    
+
     # Filter for template extensions
     filtered = filt_iter(
-        base,
-        filt=filt_iter.suffixes('.txt', '.jinja2', '.mustache', '.j2')
+        base, filt=filt_iter.suffixes(".txt", ".jinja2", ".mustache", ".j2")
     )
-    
+
     return add_ipython_key_completions(filtered)
+
 
 def mk_metadata_store(rootdir: str):
     """Create a JSON metadata store."""
     return JsonFiles(rootdir, max_levels=0)
 
+
 # Usage
-prompts = mk_prompt_store('~/.pyrompt/my_project/prompts')
-templates = mk_template_store('~/.pyrompt/my_project/templates')
-meta = mk_metadata_store('~/.pyrompt/my_project/_meta')
+prompts = mk_prompt_store("~/.pyrompt/my_project/prompts")
+templates = mk_template_store("~/.pyrompt/my_project/templates")
+meta = mk_metadata_store("~/.pyrompt/my_project/_meta")
 
 # Simple interface
-prompts['system'] = "You are a helpful assistant."
-templates['greeting.jinja2'] = "Hello {{ name|default('friend') }}!"
-meta['system.json'] = {'author': 'thor', 'version': '1.0'}
+prompts["system"] = "You are a helpful assistant."
+templates["greeting.jinja2"] = "Hello {{ name|default('friend') }}!"
+meta["system.json"] = {"author": "thor", "version": "1.0"}
 ```
 
 ### Pattern: Extension-Based Routing
@@ -268,34 +275,35 @@ from dol import wrap_kvs, Files
 import json
 import pickle
 
+
 def mk_multi_format_store(rootdir: str):
     """
     Store that automatically chooses codec based on extension.
     """
     base = Files(rootdir)
-    
+
     def obj_of_data(data, key):
         """Decode based on extension in key."""
-        if key.endswith('.json'):
+        if key.endswith(".json"):
             return json.loads(data.decode())
-        elif key.endswith('.pkl'):
+        elif key.endswith(".pkl"):
             return pickle.loads(data)
         else:
             return data.decode()  # text
-    
+
     def data_of_obj(obj, key):
         """Encode based on extension in key."""
-        if key.endswith('.json'):
+        if key.endswith(".json"):
             return json.dumps(obj).encode()
-        elif key.endswith('.pkl'):
+        elif key.endswith(".pkl"):
             return pickle.dumps(obj)
         else:
             return str(obj).encode()
-    
+
     # Note: This is a simplified example. In practice, you'd need
     # to pass the key through the codec functions, which wrap_kvs
     # doesn't support directly. You'd need a custom Store subclass.
-    
+
     return base  # Simplified for illustration
 ```
 
@@ -313,8 +321,10 @@ def mk_multi_format_store(rootdir: str):
 ```python
 from i2 import Sig
 
+
 def greet(name: str, greeting: str = "Hello"):
     return f"{greeting}, {name}!"
+
 
 # Get signature
 sig = Sig(greet)
@@ -326,7 +336,8 @@ print(sig.defaults)  # {'greeting': 'Hello'}
 # Modify signature
 new_sig = sig.ch_defaults(greeting="Hi")
 new_sig = sig.ch_annotations(name=int)
-new_sig = sig - ['greeting']  # Remove parameter
+new_sig = sig - ["greeting"]  # Remove parameter
+
 
 # Apply new signature to function
 @new_sig
@@ -344,18 +355,22 @@ def greet_modified(name):
 ```python
 from i2 import wrap
 
+
 def process_data(x: int, y: int) -> int:
     return x + y
+
 
 # Ingress: Transform inputs before function
 def ingress(x: str, y: str):
     """Convert strings to ints"""
     return (int(x), int(y)), {}
 
+
 # Egress: Transform output after function
 def egress(result):
     """Format output"""
     return f"Result: {result}"
+
 
 # Wrap the function
 wrapped = wrap(process_data, ingress=ingress, egress=egress)
@@ -374,20 +389,20 @@ result = wrapped("5", "10")  # "Result: 15"
 ```python
 from i2 import Ingress, wrap
 
+
 def my_function(a: int, b: int):
     return a * b
 
+
 def kwargs_trans(outer_kwargs):
     """Transform outer interface to inner interface"""
-    return dict(
-        a=outer_kwargs['x'] * 2,
-        b=outer_kwargs['y'] + 1
-    )
+    return dict(a=outer_kwargs["x"] * 2, b=outer_kwargs["y"] + 1)
+
 
 ingress = Ingress(
     inner_sig=my_function,
     kwargs_trans=kwargs_trans,
-    outer_sig='x: int, y: int'  # New interface
+    outer_sig="x: int, y: int",  # New interface
 )
 
 wrapped = wrap(my_function, ingress=ingress)
@@ -406,17 +421,18 @@ result = wrapped(x=3, y=4)  # (3*2) * (4+1) = 30
 ```python
 from i2 import wrap, Sig
 
+
 def create_template_function(template_str: str, template_engine):
     """
     Wrap a template string into a callable function.
-    
+
     The resulting function will have parameters matching the template.
     """
     # Parse template to get parameters
     params = template_engine.parse_template(template_str)
-    placeholders = params['placeholders']
-    defaults = params.get('defaults', {})
-    
+    placeholders = params["placeholders"]
+    defaults = params.get("defaults", {})
+
     # Create signature for the function
     sig_parts = []
     for param in placeholders:
@@ -424,28 +440,32 @@ def create_template_function(template_str: str, template_engine):
             sig_parts.append(f"{param}='{defaults[param]}'")
         else:
             sig_parts.append(param)
-    
-    sig_str = ', '.join(sig_parts)
+
+    sig_str = ", ".join(sig_parts)
     outer_sig = Sig(sig_str)
-    
+
     # Create the rendering function
     def render_template(**kwargs):
         return template_engine.render(template_str, **kwargs)
-    
+
     # Apply the signature
     return outer_sig(render_template)
+
 
 # Example usage
 template = "Hello {name}, welcome to {place}!"
 
+
 class SimpleEngine:
     def parse_template(self, s):
         import re
-        placeholders = re.findall(r'\{(\w+)\}', s)
-        return {'placeholders': placeholders}
-    
+
+        placeholders = re.findall(r"\{(\w+)\}", s)
+        return {"placeholders": placeholders}
+
     def render(self, template, **kwargs):
         return template.format(**kwargs)
+
 
 engine = SimpleEngine()
 greet_func = create_template_function(template, engine)
@@ -480,15 +500,11 @@ result = explain(concept="quantum computing")
 
 # With system prompt
 explain = prompt_function(
-    template,
-    prompt_func_kwargs={'system': "You are a physics teacher."}
+    template, prompt_func_kwargs={"system": "You are a physics teacher."}
 )
 
 # With defaults
-explain = prompt_function(
-    template,
-    defaults={'concept': 'relativity'}
-)
+explain = prompt_function(template, defaults={"concept": "relativity"})
 result = explain()  # Uses default concept
 ```
 
@@ -513,10 +529,10 @@ extract = prompt_json_function(
             "properties": {
                 "people": {"type": "array", "items": {"type": "string"}},
                 "places": {"type": "array", "items": {"type": "string"}},
-                "organizations": {"type": "array", "items": {"type": "string"}}
-            }
-        }
-    }
+                "organizations": {"type": "array", "items": {"type": "string"}},
+            },
+        },
+    },
 )
 
 result = extract(text="Alice works at Google in New York.")
@@ -537,7 +553,7 @@ from oa import PromptFuncs
 templates = {
     "summarize": "Summarize this in {n_words} words: {text}",
     "haiku": "Write a haiku about {subject}",
-    "translate": "Translate to {language}: {text}"
+    "translate": "Translate to {language}: {text}",
 }
 
 funcs = PromptFuncs(template_store=templates)
@@ -574,7 +590,7 @@ embeddings(
     texts,
     model="text-embedding-3-small",
     dimensions=512,  # Reduce dimensionality
-    batch_size=100
+    batch_size=100,
 )
 ```
 
@@ -589,17 +605,14 @@ embeddings(
 from oa.batch_embeddings import compute_embeddings
 
 # For large collections
-segments = {
-    f"prompt_{i}": f"This is prompt {i}"
-    for i in range(1000)
-}
+segments = {f"prompt_{i}": f"This is prompt {i}" for i in range(1000)}
 
 # Uses OpenAI batch API (cheaper, async)
 result_texts, embeddings = compute_embeddings(
     segments,
     batch_size=100,
     verbosity=1,
-    poll_interval=60  # Check every minute
+    poll_interval=60,  # Check every minute
 )
 
 # Store embeddings
@@ -618,47 +631,46 @@ for key, embedding in zip(result_texts, embeddings):
 from oa import prompt_function, PromptFuncs
 from dol import TextFiles
 
+
 class TemplateCollection:
     """A collection that can create AI functions from templates."""
-    
+
     def __init__(self, rootdir: str):
         self.store = TextFiles(rootdir)
         self._func_cache = {}
-    
+
     def __getitem__(self, key):
         """Get template text."""
         return self.store[key]
-    
+
     def __setitem__(self, key, value):
         """Set template text."""
         self.store[key] = value
         # Invalidate cache
         if key in self._func_cache:
             del self._func_cache[key]
-    
+
     def to_function(self, key, **prompt_func_kwargs):
         """Convert template to callable AI function."""
         if key not in self._func_cache:
             template = self.store[key]
-            self._func_cache[key] = prompt_function(
-                template,
-                **prompt_func_kwargs
-            )
+            self._func_cache[key] = prompt_function(template, **prompt_func_kwargs)
         return self._func_cache[key]
-    
+
     def get_funcs(self, keys=None):
         """Get a PromptFuncs collection."""
         if keys is None:
             keys = list(self.store)
-        
+
         template_dict = {k: self.store[k] for k in keys}
         return PromptFuncs(template_store=template_dict)
 
+
 # Usage
-templates = TemplateCollection('~/.pyrompt/templates')
+templates = TemplateCollection("~/.pyrompt/templates")
 
 # Store templates
-templates['code_review'] = """
+templates["code_review"] = """
 Review this {language} code:
 
 {code}
@@ -668,18 +680,14 @@ Focus on: {focus_areas}
 
 # Convert to function
 review = templates.to_function(
-    'code_review',
-    defaults={'focus_areas': 'correctness and readability'}
+    "code_review", defaults={"focus_areas": "correctness and readability"}
 )
 
-result = review(
-    language='python',
-    code='def hello(): return "world"'
-)
+result = review(language="python", code='def hello(): return "world"')
 
 # Or use collection
 funcs = templates.get_funcs()
-result = funcs.code_review(language='python', code='...')
+result = funcs.code_review(language="python", code="...")
 ```
 
 ---
@@ -698,20 +706,24 @@ from larder import store_on_output
 
 output_store = {}
 
-@store_on_output('result', store=output_store)
+
+@store_on_output("result", store=output_store)
 def compute(x, y):
     return x + y
 
+
 result = compute(2, 3)  # Returns 5
-output_store['result']  # Also contains 5
+output_store["result"]  # Also contains 5
+
 
 # With dynamic naming
-@store_on_output(store=output_store, save_name_param='save_as')
-def compute(x, y, save_as='default'):
+@store_on_output(store=output_store, save_name_param="save_as")
+def compute(x, y, save_as="default"):
     return x + y
 
-compute(2, 3, save_as='sum_result')
-output_store['sum_result']  # 5
+
+compute(2, 3, save_as="sum_result")
+output_store["sum_result"]  # 5
 ```
 
 **Usage in pyrompt:**
@@ -726,27 +738,27 @@ from larder import prepare_for_crude_dispatch
 
 # Stores (malls)
 mall = {
-    'templates': {'greeting': 'Hello {name}!'},
-    'names': {'user1': 'Alice', 'user2': 'Bob'},
-    'outputs': {}
+    "templates": {"greeting": "Hello {name}!"},
+    "names": {"user1": "Alice", "user2": "Bob"},
+    "outputs": {},
 }
+
 
 def render(template, name):
     return template.format(name=name)
 
+
 # Wrap to resolve from stores
 render_from_stores = prepare_for_crude_dispatch(
     render,
-    param_to_mall_map={'template': 'templates', 'name': 'names'},
+    param_to_mall_map={"template": "templates", "name": "names"},
     mall=mall,
-    output_store='outputs'
+    output_store="outputs",
 )
 
 # Call with keys instead of values
 result = render_from_stores(
-    template='greeting',
-    name='user1',
-    save_name='greeting_alice'
+    template="greeting", name="user1", save_name="greeting_alice"
 )
 # Returns: "Hello Alice!"
 # mall['outputs']['greeting_alice'] contains the result
@@ -763,45 +775,44 @@ result = render_from_stores(
 from larder import store_on_output, prepare_for_crude_dispatch
 from dol import TextFiles, JsonFiles
 
+
 class TemplateProcessor:
     """Process templates with automatic storage."""
-    
+
     def __init__(self, rootdir: str):
-        self.templates = TextFiles(f'{rootdir}/templates')
-        self.results = TextFiles(f'{rootdir}/results')
-        self.metadata = JsonFiles(f'{rootdir}/metadata')
-    
+        self.templates = TextFiles(f"{rootdir}/templates")
+        self.results = TextFiles(f"{rootdir}/results")
+        self.metadata = JsonFiles(f"{rootdir}/metadata")
+
     def render_template(self, template_name: str, **kwargs):
         """Render a template by name."""
         template = self.templates[template_name]
         return template.format(**kwargs)
-    
+
     def render_with_storage(self, template_name: str, result_name: str, **kwargs):
         """Render and store result."""
+
         @store_on_output(result_name, store=self.results)
         def _render():
             return self.render_template(template_name, **kwargs)
-        
+
         result = _render()
-        
+
         # Also store metadata
         self.metadata[result_name] = {
-            'template': template_name,
-            'parameters': kwargs,
-            'timestamp': str(datetime.now())
+            "template": template_name,
+            "parameters": kwargs,
+            "timestamp": str(datetime.now()),
         }
-        
+
         return result
 
-# Usage
-processor = TemplateProcessor('~/.pyrompt/workspace')
-processor.templates['greeting'] = 'Hello {name}!'
 
-result = processor.render_with_storage(
-    'greeting',
-    'greeting_alice',
-    name='Alice'
-)
+# Usage
+processor = TemplateProcessor("~/.pyrompt/workspace")
+processor.templates["greeting"] = "Hello {name}!"
+
+result = processor.render_with_storage("greeting", "greeting_alice", name="Alice")
 # Result stored in results/greeting_alice.txt
 # Metadata stored in metadata/greeting_alice.json
 ```
@@ -821,25 +832,25 @@ result = processor.render_with_storage(
 from hubcap import GithubReader
 
 # Connect to a user/org
-reader = GithubReader('thorwhalen')
+reader = GithubReader("thorwhalen")
 
 # List repositories
 repos = list(reader)
 
 # Access a repository
-repo = reader['pyrompt']
+repo = reader["pyrompt"]
 
 # List branches
 branches = list(repo)
 
 # Access a branch
-branch = repo['main']
+branch = repo["main"]
 
 # List files
 files = list(branch)  # ['/README.md', '/pyproject.toml', ...]
 
 # Read file content
-content = branch['/README.md']  # Returns bytes
+content = branch["/README.md"]  # Returns bytes
 ```
 
 **Usage in pyrompt:**
@@ -853,14 +864,13 @@ content = branch['/README.md']  # Returns bytes
 from hubcap import GithubReader, get_repository_info
 import re
 
+
 def discover_prompt_collections(
-    search_org: str = None,
-    suffix: str = '_pyrompt',
-    min_stars: int = 0
+    search_org: str = None, suffix: str = "_pyrompt", min_stars: int = 0
 ):
     """
     Discover prompt collections on GitHub.
-    
+
     Collections should be named {name}_pyrompt for discovery.
     """
     if search_org:
@@ -870,18 +880,20 @@ def discover_prompt_collections(
         # Would need GitHub API search here
         # For now, assume we have repo names
         repos = []
-    
+
     collections = []
     for repo_name in repos:
-        info = get_repository_info(f'{search_org}/{repo_name}')
-        if info['stargazers_count'] >= min_stars:
-            collections.append({
-                'name': repo_name,
-                'url': info['html_url'],
-                'description': info['description'],
-                'stars': info['stargazers_count']
-            })
-    
+        info = get_repository_info(f"{search_org}/{repo_name}")
+        if info["stargazers_count"] >= min_stars:
+            collections.append(
+                {
+                    "name": repo_name,
+                    "url": info["html_url"],
+                    "description": info["description"],
+                    "stars": info["stargazers_count"],
+                }
+            )
+
     return collections
 ```
 
@@ -891,30 +903,28 @@ def discover_prompt_collections(
 from hubcap import GitHubRepoManager
 from dol import Files
 
+
 class GitHubPromptCollection:
     """A prompt collection backed by GitHub."""
-    
-    def __init__(self, repo: str, token: str, branch: str = 'main'):
+
+    def __init__(self, repo: str, token: str, branch: str = "main"):
         self.manager = GitHubRepoManager(repo, token)
         self.branch = branch
-        self.local_cache = Files('/tmp/pyrompt_cache')
-    
+        self.local_cache = Files("/tmp/pyrompt_cache")
+
     def __getitem__(self, key):
         """Get prompt from GitHub."""
-        path = f'/prompts/{key}.txt'
+        path = f"/prompts/{key}.txt"
         content = self.manager.read_file(path, branch=self.branch)
         return content.decode()
-    
+
     def __setitem__(self, key, value):
         """Save prompt to GitHub."""
-        path = f'/prompts/{key}.txt'
+        path = f"/prompts/{key}.txt"
         self.manager.write_file(
-            path,
-            value.encode(),
-            branch=self.branch,
-            message=f"Update {key}"
+            path, value.encode(), branch=self.branch, message=f"Update {key}"
         )
-    
+
     def sync(self, message: str = "Update prompts"):
         """Commit and push changes."""
         self.manager.commit_and_push(message)
@@ -940,10 +950,10 @@ class GitHubPromptCollection:
 from graze import Graze
 
 # Create cache
-g = Graze('~/.pyrompt/cache')
+g = Graze("~/.pyrompt/cache")
 
 # Fetch URL (caches automatically)
-url = 'https://example.com/template.txt'
+url = "https://example.com/template.txt"
 content = g[url]  # Bytes
 
 # Second access uses cache
@@ -969,9 +979,9 @@ from graze import GrazeWithDataRefresh
 
 # Re-fetch if older than 1 hour
 g = GrazeWithDataRefresh(
-    rootdir='~/.pyrompt/cache',
+    rootdir="~/.pyrompt/cache",
     time_to_live=3600,  # seconds
-    on_error='ignore'   # Use stale data if refresh fails
+    on_error="ignore",  # Use stale data if refresh fails
 )
 
 content = g[url]  # Fresh or cached
@@ -988,44 +998,46 @@ content = g[url]  # Fresh or cached
 from graze import Graze
 from dol import wrap_kvs
 
+
 class RemoteTemplateLoader:
     """Load templates from URLs with caching."""
-    
-    def __init__(self, cache_dir: str = '~/.pyrompt/remote_cache'):
+
+    def __init__(self, cache_dir: str = "~/.pyrompt/remote_cache"):
         self.cache = Graze(cache_dir)
-    
+
     def load_template(self, url: str) -> str:
         """Load and decode template from URL."""
         content = self.cache[url]
-        return content.decode('utf-8')
-    
-    def load_collection(self, base_url: str, manifest_file: str = 'manifest.json'):
+        return content.decode("utf-8")
+
+    def load_collection(self, base_url: str, manifest_file: str = "manifest.json"):
         """
         Load a collection from a URL.
-        
+
         Expects a manifest.json with template names and paths.
         """
         import json
-        
+
         manifest_url = f"{base_url.rstrip('/')}/{manifest_file}"
         manifest_content = self.cache[manifest_url]
         manifest = json.loads(manifest_content)
-        
+
         templates = {}
-        for name, path in manifest['templates'].items():
+        for name, path in manifest["templates"].items():
             url = f"{base_url.rstrip('/')}/{path}"
             templates[name] = self.load_template(url)
-        
+
         return templates
+
 
 # Usage
 loader = RemoteTemplateLoader()
 
 # Load single template
-template = loader.load_template('https://prompts.example.com/greeting.txt')
+template = loader.load_template("https://prompts.example.com/greeting.txt")
 
 # Load collection
-templates = loader.load_collection('https://prompts.example.com/collection')
+templates = loader.load_collection("https://prompts.example.com/collection")
 ```
 
 **Usage in pyrompt:**
@@ -1048,9 +1060,10 @@ templates = loader.load_collection('https://prompts.example.com/collection')
 from oa import embeddings
 import numpy as np
 
+
 class SemanticIndex:
     """Simple semantic search index."""
-    
+
     def __init__(self, texts: dict):
         """
         Args:
@@ -1058,37 +1071,35 @@ class SemanticIndex:
         """
         self.texts = texts
         self.ids = list(texts.keys())
-        
+
         # Compute embeddings
         text_list = [texts[k] for k in self.ids]
         self.vectors = embeddings(text_list)
         self.vectors = np.array(self.vectors)
-    
+
     def search(self, query: str, top_k: int = 5):
         """Search for similar texts."""
         # Get query embedding
         query_vec = np.array(embeddings(query))
-        
+
         # Compute cosine similarities
         similarities = np.dot(self.vectors, query_vec) / (
             np.linalg.norm(self.vectors, axis=1) * np.linalg.norm(query_vec)
         )
-        
+
         # Get top results
         top_indices = np.argsort(similarities)[-top_k:][::-1]
-        
-        results = [
-            (self.ids[i], similarities[i])
-            for i in top_indices
-        ]
-        
+
+        results = [(self.ids[i], similarities[i]) for i in top_indices]
+
         return results
+
 
 # Usage with prompts
 prompts = {
-    'python_expert': "You are a Python expert.",
-    'data_viz': "You specialize in data visualizations.",
-    'ml_engineer': "You are a machine learning engineer.",
+    "python_expert": "You are a Python expert.",
+    "data_viz": "You specialize in data visualizations.",
+    "ml_engineer": "You are a machine learning engineer.",
 }
 
 index = SemanticIndex(prompts)
@@ -1107,67 +1118,61 @@ results = index.search("help with pandas dataframes", top_k=2)
 from oa.batch_embeddings import compute_embeddings
 from dol import PickleFiles
 
+
 class PersistentSemanticIndex:
     """Semantic index with persistent storage."""
-    
+
     def __init__(self, texts_store, embeddings_dir: str):
         self.texts = texts_store
         self.embeddings_store = PickleFiles(embeddings_dir)
-    
+
     def build_index(self, keys=None):
         """Build index for given keys (or all if None)."""
         if keys is None:
             keys = list(self.texts)
-        
+
         # Get texts that don't have embeddings yet
         missing_keys = [k for k in keys if k not in self.embeddings_store]
-        
+
         if missing_keys:
             texts = {k: self.texts[k] for k in missing_keys}
-            
+
             # Batch compute embeddings
             result_keys, vectors = compute_embeddings(
-                texts,
-                batch_size=100,
-                verbosity=1
+                texts, batch_size=100, verbosity=1
             )
-            
+
             # Store embeddings
             for key, vec in zip(result_keys, vectors):
                 self.embeddings_store[key] = vec
-    
+
     def search(self, query: str, top_k: int = 5):
         """Search with persistent embeddings."""
         import numpy as np
-        
+
         # Load all embeddings
         ids = list(self.embeddings_store)
         vectors = np.array([self.embeddings_store[k] for k in ids])
-        
+
         # Get query embedding
         query_vec = np.array(embeddings(query))
-        
+
         # Compute similarities
         similarities = np.dot(vectors, query_vec) / (
             np.linalg.norm(vectors, axis=1) * np.linalg.norm(query_vec)
         )
-        
+
         # Get top results
         top_indices = np.argsort(similarities)[-top_k:][::-1]
-        
-        return [
-            (ids[i], similarities[i])
-            for i in top_indices
-        ]
+
+        return [(ids[i], similarities[i]) for i in top_indices]
+
 
 # Usage
 from dol import TextFiles
 
-texts = TextFiles('~/.pyrompt/prompts')
-index = PersistentSemanticIndex(
-    texts,
-    '~/.pyrompt/embeddings'
-)
+texts = TextFiles("~/.pyrompt/prompts")
+index = PersistentSemanticIndex(texts, "~/.pyrompt/embeddings")
 
 # Build index (only computes missing embeddings)
 index.build_index()
@@ -1195,33 +1200,31 @@ results = index.search("database queries")
 ```python
 from meshed import DAG, FuncNode
 
+
 # Define processing steps
 def load_template(name):
     return f"Template: {name}"
 
+
 def render_template(template, **params):
     return template + str(params)
+
 
 def post_process(rendered):
     return rendered.upper()
 
+
 # Create DAG
-dag = DAG([
-    FuncNode(load_template, out='template'),
-    FuncNode(
-        render_template,
-        bind={'template': 'template'},
-        out='rendered'
-    ),
-    FuncNode(
-        post_process,
-        bind={'rendered': 'rendered'},
-        out='final'
-    )
-])
+dag = DAG(
+    [
+        FuncNode(load_template, out="template"),
+        FuncNode(render_template, bind={"template": "template"}, out="rendered"),
+        FuncNode(post_process, bind={"rendered": "rendered"}, out="final"),
+    ]
+)
 
 # Execute
-result = dag(name='greeting', params={'name': 'Alice'})
+result = dag(name="greeting", params={"name": "Alice"})
 ```
 
 **Usage in pyrompt:**
@@ -1234,71 +1237,81 @@ result = dag(name='greeting', params={'name': 'Alice'})
 ```python
 from meshed import DAG, FuncNode
 
+
 class TemplatePipeline:
     """Complex template processing with DAG."""
-    
+
     def __init__(self):
         self.dag = None
-    
+
     def build_pipeline(self, steps):
         """
         Build a processing pipeline.
-        
+
         Args:
             steps: List of (name, func, bind, out) tuples
         """
         nodes = []
         for name, func, bind, out in steps:
-            nodes.append(
-                FuncNode(func, name=name, bind=bind, out=out)
-            )
-        
+            nodes.append(FuncNode(func, name=name, bind=bind, out=out))
+
         self.dag = DAG(nodes)
         return self
-    
+
     def __call__(self, **inputs):
         """Execute pipeline."""
         return self.dag(**inputs)
 
+
 # Example: Multi-engine template processing
 def detect_engine(template_key):
-    if template_key.endswith('.jinja2'):
-        return 'jinja2'
-    elif template_key.endswith('.mustache'):
-        return 'mustache'
-    return 'format'
+    if template_key.endswith(".jinja2"):
+        return "jinja2"
+    elif template_key.endswith(".mustache"):
+        return "mustache"
+    return "format"
+
 
 def load_template(template_key, templates_store):
     return templates_store[template_key]
 
+
 def select_renderer(engine_type):
     renderers = {
-        'jinja2': jinja2_render,
-        'mustache': mustache_render,
-        'format': format_render
+        "jinja2": jinja2_render,
+        "mustache": mustache_render,
+        "format": format_render,
     }
     return renderers[engine_type]
+
 
 def render(template, renderer, params):
     return renderer(template, **params)
 
+
 # Build pipeline
-pipeline = TemplatePipeline().build_pipeline([
-    ('detect', detect_engine, {'template_key': 'template_key'}, 'engine'),
-    ('load', load_template, 
-     {'template_key': 'template_key', 'templates_store': 'store'}, 
-     'template'),
-    ('select', select_renderer, {'engine_type': 'engine'}, 'renderer'),
-    ('render', render, 
-     {'template': 'template', 'renderer': 'renderer', 'params': 'params'}, 
-     'output')
-])
+pipeline = TemplatePipeline().build_pipeline(
+    [
+        ("detect", detect_engine, {"template_key": "template_key"}, "engine"),
+        (
+            "load",
+            load_template,
+            {"template_key": "template_key", "templates_store": "store"},
+            "template",
+        ),
+        ("select", select_renderer, {"engine_type": "engine"}, "renderer"),
+        (
+            "render",
+            render,
+            {"template": "template", "renderer": "renderer", "params": "params"},
+            "output",
+        ),
+    ]
+)
 
 # Use
 result = pipeline(
-    template_key='greeting.jinja2',
-    store=templates,
-    params={'name': 'Alice'}
+    template_key="greeting.jinja2", store=templates, params={"name": "Alice"}
 )
 ```
 
@@ -1321,35 +1334,34 @@ result = pipeline(
 ```python
 from hfdol import HfFilesStore
 
+
 class HuggingFaceTemplateLibrary:
     """Access templates hosted on HuggingFace."""
-    
+
     def __init__(self, repo_id: str):
         """
         Args:
             repo_id: HF repo like 'username/prompt-templates'
         """
         self.store = HfFilesStore(repo_id)
-    
+
     def list_templates(self):
         """List available templates."""
-        return [k for k in self.store if k.endswith('.txt')]
-    
+        return [k for k in self.store if k.endswith(".txt")]
+
     def get_template(self, name: str):
         """Get template content."""
-        return self.store[name].decode('utf-8')
-    
+        return self.store[name].decode("utf-8")
+
     def search_templates(self, keyword: str):
         """Search templates by keyword."""
-        return [
-            k for k in self.list_templates()
-            if keyword.lower() in k.lower()
-        ]
+        return [k for k in self.list_templates() if keyword.lower() in k.lower()]
+
 
 # Usage
-lib = HuggingFaceTemplateLibrary('org/prompt-templates')
+lib = HuggingFaceTemplateLibrary("org/prompt-templates")
 templates = lib.list_templates()
-template = lib.get_template('code-review.txt')
+template = lib.get_template("code-review.txt")
 ```
 
 **Usage in pyrompt:**
@@ -1367,21 +1379,20 @@ template = lib.get_template('code-review.txt')
 # Base storage pattern
 from dol import TextFiles, JsonFiles, wrap_kvs, add_ipython_key_completions
 
+
 def mk_collection_stores(rootdir: str):
     """Create all stores for a collection."""
     return {
-        'prompts': add_ipython_key_completions(
+        "prompts": add_ipython_key_completions(
             wrap_kvs(
-                TextFiles(f'{rootdir}/prompts'),
-                key_of_id=lambda k: k.replace('.txt', ''),
-                id_of_key=lambda k: f'{k}.txt'
+                TextFiles(f"{rootdir}/prompts"),
+                key_of_id=lambda k: k.replace(".txt", ""),
+                id_of_key=lambda k: f"{k}.txt",
             )
         ),
-        'templates': add_ipython_key_completions(
-            TextFiles(f'{rootdir}/templates')
-        ),
-        'metadata': JsonFiles(f'{rootdir}/_meta'),
-        'embeddings': PickleFiles(f'{rootdir}/_embeddings')
+        "templates": add_ipython_key_completions(TextFiles(f"{rootdir}/templates")),
+        "metadata": JsonFiles(f"{rootdir}/_meta"),
+        "embeddings": PickleFiles(f"{rootdir}/_embeddings"),
     }
 ```
 
@@ -1392,19 +1403,20 @@ def mk_collection_stores(rootdir: str):
 from i2 import Sig
 from oa import prompt_function
 
+
 def template_to_function(template_str, engine, **kwargs):
     """Convert template to callable function."""
     # Parse to get signature
     params = engine.parse_template(template_str)
-    
+
     # Create rendering function
     def render(**values):
         return engine.render(template_str, **values)
-    
+
     # Apply signature and convert to AI function
-    sig = Sig.from_objs(params['placeholders'])
+    sig = Sig.from_objs(params["placeholders"])
     render = sig(render)
-    
+
     return prompt_function(render, **kwargs)
 ```
 
@@ -1415,17 +1427,18 @@ def template_to_function(template_str, engine, **kwargs):
 from oa import embeddings
 import numpy as np
 
+
 class SemanticPromptIndex:
     def __init__(self, prompt_store):
         self.prompts = prompt_store
         self.build_index()
-    
+
     def build_index(self):
         keys = list(self.prompts)
         texts = [self.prompts[k] for k in keys]
         self.vectors = np.array(embeddings(texts))
         self.keys = keys
-    
+
     def search(self, query, top_k=5):
         query_vec = np.array(embeddings(query))
         sims = np.dot(self.vectors, query_vec)
@@ -1439,16 +1452,17 @@ class SemanticPromptIndex:
 # GitHub collection pattern
 from hubcap import GithubReader
 
+
 class GitHubCollection:
     def __init__(self, repo):
         self.reader = GithubReader(repo)
-    
+
     def sync_to_local(self, local_store):
         """Sync GitHub repo to local store."""
-        branch = self.reader['main']
+        branch = self.reader["main"]
         for path in branch:
-            if path.endswith('.txt'):
-                key = path.split('/')[-1].replace('.txt', '')
+            if path.endswith(".txt"):
+                key = path.split("/")[-1].replace(".txt", "")
                 content = branch[path].decode()
                 local_store[key] = content
 ```
@@ -1459,19 +1473,21 @@ class GitHubCollection:
 # Remote template pattern
 from graze import Graze
 
+
 class RemoteTemplateManager:
     def __init__(self):
-        self.cache = Graze('~/.pyrompt/cache')
-    
+        self.cache = Graze("~/.pyrompt/cache")
+
     def load_from_url(self, url):
         return self.cache[url].decode()
-    
+
     def load_collection(self, manifest_url):
         import json
+
         manifest = json.loads(self.cache[manifest_url])
         return {
-            k: self.load_from_url(manifest['base'] + v)
-            for k, v in manifest['templates'].items()
+            k: self.load_from_url(manifest["base"] + v)
+            for k, v in manifest["templates"].items()
         }
 ```
 

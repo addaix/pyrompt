@@ -22,24 +22,24 @@ All data sources use Python's `Mapping` and `MutableMapping` interfaces (via `do
 from pyrompt import PromptCollection, TemplateCollection
 
 # Create collections
-prompts = PromptCollection('my_project')
-templates = TemplateCollection('my_project')
+prompts = PromptCollection("my_project")
+templates = TemplateCollection("my_project")
 
 # Store a simple prompt
-prompts['system'] = "You are a helpful Python expert."
+prompts["system"] = "You are a helpful Python expert."
 
 # Store templates (default: Python format strings)
-templates['greeting'] = "Hello, {name}! Welcome to {place}."
+templates["greeting"] = "Hello, {name}! Welcome to {place}."
 
 # Use template with format syntax
-print(templates['greeting'].format(name='Alice', place='Wonderland'))
+print(templates["greeting"].format(name="Alice", place="Wonderland"))
 # Output: Hello, Alice! Welcome to Wonderland.
 
 # Create an AI function from a template
 from oa import prompt_function
 
-greet = prompt_function(templates['greeting'])
-response = greet(name='Bob', place='the future')
+greet = prompt_function(templates["greeting"])
+response = greet(name="Bob", place="the future")
 ```
 
 ## Installation
@@ -75,7 +75,7 @@ pyrompt supports multiple template formats with an extensible plugin system. Cho
 Simple and built-in, perfect for basic substitution:
 
 ```python
-templates['basic'] = "Hello, {name}! You are {age} years old."
+templates["basic"] = "Hello, {name}! You are {age} years old."
 ```
 
 **Pros:** Native Python, no dependencies, simple
@@ -86,7 +86,7 @@ templates['basic'] = "Hello, {name}! You are {age} years old."
 Rich templating with conditionals, loops, and filters:
 
 ```python
-templates['advanced.jinja2'] = """
+templates["advanced.jinja2"] = """
 Hello, {{ name|default('friend') }}!
 
 {% if role %}
@@ -105,10 +105,9 @@ Your items:
 
 # Use with Jinja2 engine
 from pyrompt.engines import Jinja2Engine
-result = templates.render('advanced.jinja2', 
-    name='Alice', 
-    role='admin',
-    items=['prompt1', 'prompt2']
+
+result = templates.render(
+    "advanced.jinja2", name="Alice", role="admin", items=["prompt1", "prompt2"]
 )
 ```
 
@@ -120,7 +119,7 @@ result = templates.render('advanced.jinja2',
 Cross-platform, simple conditional sections:
 
 ```python
-templates['mustache.mustache'] = """
+templates["mustache.mustache"] = """
 Hello {{name}}!
 
 {{#premium}}
@@ -137,10 +136,8 @@ Consider upgrading to premium.
 """
 
 # Mustache automatically handles sections and loops
-result = templates.render('mustache.mustache',
-    name='Bob',
-    premium=True,
-    features=['feature1', 'feature2']
+result = templates.render(
+    "mustache.mustache", name="Bob", premium=True, features=["feature1", "feature2"]
 )
 ```
 
@@ -153,13 +150,13 @@ pyrompt automatically detects template types by extension:
 
 ```python
 # These are automatically parsed with the right engine:
-templates['simple.txt'] = "Hello {name}"           # Python format
-templates['complex.jinja2'] = "Hello {{ name }}"   # Jinja2
-templates['logic.mustache'] = "Hello {{name}}"     # Mustache
+templates["simple.txt"] = "Hello {name}"  # Python format
+templates["complex.jinja2"] = "Hello {{ name }}"  # Jinja2
+templates["logic.mustache"] = "Hello {{name}}"  # Mustache
 
 # Sub-extensions also work:
-templates['code.jinja2.txt'] = "..."  # Detected as Jinja2
-templates['data.mustache.md'] = "..."  # Detected as Mustache
+templates["code.jinja2.txt"] = "..."  # Detected as Jinja2
+templates["data.mustache.md"] = "..."  # Detected as Mustache
 ```
 
 ## Core Concepts
@@ -169,19 +166,19 @@ templates['data.mustache.md'] = "..."  # Detected as Mustache
 ```python
 from pyrompt import PromptCollection
 
-prompts = PromptCollection('my_project', with_metadata=True)
+prompts = PromptCollection("my_project", with_metadata=True)
 
 # Store a prompt
-prompts['data_analyst'] = "You are an expert data analyst specializing in Python."
+prompts["data_analyst"] = "You are an expert data analyst specializing in Python."
 
 # Add metadata
-prompts.meta['data_analyst'] = {
-    'author': 'thor',
-    'version': '1.0',
-    'tags': ['system', 'data', 'python'],
-    'template_engine': 'format',  # or 'jinja2', 'mustache', etc.
-    'created': '2025-11-12',
-    'description': 'System prompt for data analysis tasks'
+prompts.meta["data_analyst"] = {
+    "author": "thor",
+    "version": "1.0",
+    "tags": ["system", "data", "python"],
+    "template_engine": "format",  # or 'jinja2', 'mustache', etc.
+    "created": "2025-11-12",
+    "description": "System prompt for data analysis tasks",
 }
 ```
 
@@ -193,10 +190,10 @@ Transform templates into callable AI functions:
 from pyrompt import TemplateCollection
 from oa import prompt_function, prompt_json_function
 
-templates = TemplateCollection('my_project')
+templates = TemplateCollection("my_project")
 
 # Simple prompt function
-templates['code_review'] = """
+templates["code_review"] = """
 Review this {language} code:
 
 {code}
@@ -205,24 +202,20 @@ Focus on: {focus_areas}
 """
 
 review_code = prompt_function(
-    templates['code_review'],
-    defaults={'focus_areas': 'correctness and readability'}
+    templates["code_review"], defaults={"focus_areas": "correctness and readability"}
 )
 
-result = review_code(
-    language='python',
-    code='def hello(): return "world"'
-)
+result = review_code(language="python", code='def hello(): return "world"')
 
 # JSON-returning function
-templates['extract_entities'] = """
+templates["extract_entities"] = """
 Extract entities from this text: {text}
 
 Return a JSON object with keys: people, places, organizations
 """
 
 extract = prompt_json_function(
-    templates['extract_entities'],
+    templates["extract_entities"],
     json_schema={
         "name": "entities",
         "schema": {
@@ -230,10 +223,10 @@ extract = prompt_json_function(
             "properties": {
                 "people": {"type": "array", "items": {"type": "string"}},
                 "places": {"type": "array", "items": {"type": "string"}},
-                "organizations": {"type": "array", "items": {"type": "string"}}
-            }
-        }
-    }
+                "organizations": {"type": "array", "items": {"type": "string"}},
+            },
+        },
+    },
 )
 
 entities = extract(text="Alice works at Google in New York.")
@@ -255,7 +248,7 @@ funcs = PromptFuncs(
 funcs = PromptFuncs(
     template_store={
         "haiku": "Write a haiku about {subject}. Only output the haiku.",
-        "summarize": "Summarize this in {n_words} words: {text}"
+        "summarize": "Summarize this in {n_words} words: {text}",
     }
 )
 
@@ -288,12 +281,13 @@ my_project/
 from pyrompt import PromptCollection
 
 # Use a specific directory
-prompts = PromptCollection('my_project', base_path='/custom/path')
+prompts = PromptCollection("my_project", base_path="/custom/path")
 
 # Or environment variable
 import os
-os.environ['PYROMPT_DATA_DIR'] = '/my/prompts'
-prompts = PromptCollection('my_project')
+
+os.environ["PYROMPT_DATA_DIR"] = "/my/prompts"
+prompts = PromptCollection("my_project")
 ```
 
 ## GitHub Integration
@@ -304,11 +298,11 @@ prompts = PromptCollection('my_project')
 from pyrompt import GitHubPromptCollection
 
 gh_prompts = GitHubPromptCollection(
-    repo='username/my_project_pyrompt',  # Must end with '_pyrompt'
-    token='your_github_token'
+    repo="username/my_project_pyrompt",  # Must end with '_pyrompt'
+    token="your_github_token",
 )
 
-gh_prompts['sql_expert'] = "You are an expert in SQL optimization."
+gh_prompts["sql_expert"] = "You are an expert in SQL optimization."
 gh_prompts.sync()  # Commits and pushes
 ```
 
@@ -317,10 +311,7 @@ gh_prompts.sync()  # Commits and pushes
 ```python
 from pyrompt import discover_prompt_collections
 
-collections = discover_prompt_collections(
-    search_term='python data',
-    min_stars=10
-)
+collections = discover_prompt_collections(search_term="python data", min_stars=10)
 
 for repo in collections:
     print(f"{repo['name']}: {repo['description']}")
@@ -333,12 +324,12 @@ Build semantic indices for intelligent discovery:
 ```python
 from pyrompt import PromptCollection, SemanticIndex
 
-prompts = PromptCollection('my_project')
+prompts = PromptCollection("my_project")
 
 # Add prompts
-prompts['python_expert'] = "You are a Python programming expert."
-prompts['data_viz'] = "You specialize in data visualizations."
-prompts['ml_engineer'] = "You are a machine learning engineer."
+prompts["python_expert"] = "You are a Python programming expert."
+prompts["data_viz"] = "You specialize in data visualizations."
+prompts["ml_engineer"] = "You are a machine learning engineer."
 
 # Build semantic index (uses oa.embeddings)
 index = SemanticIndex(prompts)
@@ -361,9 +352,7 @@ prompt_texts = [prompts[k] for k in prompt_keys]
 
 # Compute in batches (uses OpenAI batch API)
 result_texts, embeddings = compute_embeddings(
-    segments=prompt_texts,
-    batch_size=100,
-    verbosity=1
+    segments=prompt_texts, batch_size=100, verbosity=1
 )
 
 # Store embeddings
@@ -378,34 +367,33 @@ Register your own template engines:
 ```python
 from pyrompt.engines import TemplateEngine, register_engine
 
+
 class MyCustomEngine(TemplateEngine):
     """Custom template engine"""
-    
+
     name = "custom"
-    extensions = ['.custom', '.cust']
-    
+    extensions = [".custom", ".cust"]
+
     def parse_template(self, template_str: str) -> dict:
         """Extract placeholders and defaults"""
         # Your parsing logic
-        return {
-            'placeholders': ['name', 'value'],
-            'defaults': {'value': '42'}
-        }
-    
+        return {"placeholders": ["name", "value"], "defaults": {"value": "42"}}
+
     def render(self, template_str: str, **kwargs) -> str:
         """Render template with values"""
         # Your rendering logic
         return template_str  # simplified
-    
+
     def detect(self, content: str) -> bool:
         """Detect if content uses this engine"""
-        return '<<' in content and '>>' in content
+        return "<<" in content and ">>" in content
+
 
 # Register it
 register_engine(MyCustomEngine())
 
 # Now use it
-templates['my_template.custom'] = "Hello <<name>>, value is <<value>>"
+templates["my_template.custom"] = "Hello <<name>>, value is <<value>>"
 ```
 
 ## Collection of Collections (Malls)
@@ -415,18 +403,18 @@ Organize multiple collections:
 ```python
 from pyrompt import PromptMall
 
-mall = PromptMall('my_workspace')
+mall = PromptMall("my_workspace")
 
 # Access different collections
-mall['system_prompts']['python_expert'] = "You are a Python expert."
-mall['templates']['code_review'] = "Review this {language} code..."
-mall['personas']['analyst'] = "You are a data analyst..."
+mall["system_prompts"]["python_expert"] = "You are a Python expert."
+mall["templates"]["code_review"] = "Review this {language} code..."
+mall["personas"]["analyst"] = "You are a data analyst..."
 
 # List collections
 list(mall.keys())  # ['system_prompts', 'templates', 'personas']
 
 # Search across collections
-results = mall.search('python', collections=['system_prompts', 'personas'])
+results = mall.search("python", collections=["system_prompts", "personas"])
 ```
 
 ## Real-World Example
@@ -436,15 +424,15 @@ from pyrompt import PromptCollection, TemplateCollection
 from oa import prompt_function, PromptFuncs
 
 # Set up collections
-system_prompts = PromptCollection('system')
-templates = TemplateCollection('templates')
+system_prompts = PromptCollection("system")
+templates = TemplateCollection("templates")
 
 # System prompts
-system_prompts['code_reviewer'] = """You are an expert code reviewer.
+system_prompts["code_reviewer"] = """You are an expert code reviewer.
 Focus on: correctness, efficiency, readability, and best practices."""
 
 # Jinja2 template with conditionals
-templates['review_pr.jinja2'] = """
+templates["review_pr.jinja2"] = """
 Review this pull request:
 
 **Title**: {{ pr_title }}
@@ -465,8 +453,8 @@ Provide:
 
 # Create AI function
 review_pr = prompt_function(
-    templates['review_pr.jinja2'],
-    prompt_func_kwargs={'system': system_prompts['code_reviewer']}
+    templates["review_pr.jinja2"],
+    prompt_func_kwargs={"system": system_prompts["code_reviewer"]},
 )
 
 # Use it
@@ -474,7 +462,7 @@ result = review_pr(
     pr_title="Add new feature",
     pr_description="Implements user authentication",
     changed_files="auth.py, models.py",
-    include_suggestions=True
+    include_suggestions=True,
 )
 ```
 

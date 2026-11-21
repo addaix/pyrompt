@@ -46,27 +46,28 @@ Use `dol` tools to create file-based stores:
 from dol import Files, wrap_kvs, filt_iter, KeyCodecs, add_ipython_key_completions
 from dol import Pipe
 
+
 # Implementation pattern:
-def mk_prompt_store(rootdir: str, extension: str = 'txt'):
+def mk_prompt_store(rootdir: str, extension: str = "txt"):
     """
     Create a file store for prompts.
-    
+
     Use Files as base, then wrap_kvs to add key transformations.
     """
     # Start with Files - gives us MutableMapping over filesystem
     base_store = Files(rootdir, max_levels=0)
-    
+
     # Filter by extension using filt_iter
-    filtered = filt_iter(base_store, filt=filt_iter.suffixes(f'.{extension}'))
-    
+    filtered = filt_iter(base_store, filt=filt_iter.suffixes(f".{extension}"))
+
     # Add key transformations to hide extensions from users
     # KeyCodecs can transform keys on read/write
     store = wrap_kvs(
         filtered,
-        key_of_id=lambda k: k.replace(f'.{extension}', ''),
-        id_of_key=lambda k: f'{k}.{extension}'
+        key_of_id=lambda k: k.replace(f".{extension}", ""),
+        id_of_key=lambda k: f"{k}.{extension}",
     )
-    
+
     # Add IPython autocomplete support
     return add_ipython_key_completions(store)
 ```
@@ -110,16 +111,18 @@ from dol import wrap_kvs
 import json
 import pickle
 
+
 # Pattern for extension-based routing:
 def extension_codec(extension: str):
     """Return appropriate codec functions for extension"""
     codecs = {
-        '.json': (json.dumps, json.loads),
-        '.pkl': (pickle.dumps, pickle.loads),
-        '.txt': (str, str),
+        ".json": (json.dumps, json.loads),
+        ".pkl": (pickle.dumps, pickle.loads),
+        ".txt": (str, str),
     }
     data_of_obj, obj_of_data = codecs.get(extension, (str, str))
     return data_of_obj, obj_of_data
+
 
 # Use in wrap_kvs:
 def mk_multi_format_store(rootdir):
@@ -140,17 +143,18 @@ Define abstract base class and registry:
 from typing import Protocol, Dict, List, Optional
 from abc import ABC, abstractmethod
 
+
 class TemplateEngine(ABC):
     """Abstract base for template engines"""
-    
+
     name: str  # e.g., 'format', 'jinja2', 'mustache'
     extensions: List[str]  # e.g., ['.jinja2', '.j2']
-    
+
     @abstractmethod
     def parse_template(self, template_str: str) -> dict:
         """
         Parse template to extract structure.
-        
+
         Returns:
             dict with keys:
                 - 'placeholders': list of parameter names
@@ -158,35 +162,39 @@ class TemplateEngine(ABC):
                 - 'metadata': any engine-specific info
         """
         pass
-    
+
     @abstractmethod
     def render(self, template_str: str, **kwargs) -> str:
         """Render template with provided values"""
         pass
-    
+
     def detect(self, content: str) -> bool:
         """
         Detect if content uses this engine based on syntax.
-        
+
         Used when extension doesn't clearly indicate engine.
         """
         return False  # Default: rely on extension
 
+
 # Global registry
 _ENGINE_REGISTRY: Dict[str, TemplateEngine] = {}
+
 
 def register_engine(engine: TemplateEngine):
     """Register a template engine"""
     _ENGINE_REGISTRY[engine.name] = engine
-    
+
+
 def get_engine(name: str) -> Optional[TemplateEngine]:
     """Get engine by name"""
     return _ENGINE_REGISTRY.get(name)
 
+
 def detect_engine(content: str, extension: str = None) -> TemplateEngine:
     """
     Detect appropriate engine for content.
-    
+
     Priority:
     1. Extension match (if provided)
     2. Content-based detection
@@ -197,14 +205,14 @@ def detect_engine(content: str, extension: str = None) -> TemplateEngine:
         for engine in _ENGINE_REGISTRY.values():
             if extension in engine.extensions:
                 return engine
-    
+
     # Try content detection
     for engine in _ENGINE_REGISTRY.values():
         if engine.detect(content):
             return engine
-    
+
     # Default to format engine
-    return get_engine('format')
+    return get_engine("format")
 ```
 
 **Key concepts:**
@@ -222,53 +230,57 @@ import re
 from typing import Dict, List
 from . import TemplateEngine, register_engine
 
+
 class FormatEngine(TemplateEngine):
     """Python format string engine with extended default syntax"""
-    
-    name = 'format'
-    extensions = ['.txt', '']  # Default for files without special extension
-    
+
+    name = "format"
+    extensions = [".txt", ""]  # Default for files without special extension
+
     def parse_template(self, template_str: str) -> dict:
         """
         Extract placeholders and defaults from format string.
-        
+
         Supports custom syntax: {name:default_value}
         Standard format specs (e.g., {value:.2f}) are preserved.
         """
         # Pattern to find {placeholder} or {placeholder:default}
         # Must distinguish from format specs like {value:.2f}
-        pattern = r'\{([^}:]+)(?::([^}]+))?\}'
-        
+        pattern = r"\{([^}:]+)(?::([^}]+))?\}"
+
         placeholders = []
         defaults = {}
-        
+
         for match in re.finditer(pattern, template_str):
             name = match.group(1).strip()
             default_val = match.group(2)
-            
+
             placeholders.append(name)
             if default_val and not self._is_format_spec(default_val):
                 defaults[name] = default_val
-        
+
         return {
-            'placeholders': list(set(placeholders)),  # Unique
-            'defaults': defaults,
-            'metadata': {'syntax': 'python_format'}
+            "placeholders": list(set(placeholders)),  # Unique
+            "defaults": defaults,
+            "metadata": {"syntax": "python_format"},
         }
-    
+
     def _is_format_spec(self, spec: str) -> bool:
         """Check if string is a format spec (e.g., '.2f' vs 'default_val')"""
         # Format specs typically start with format characters
-        return spec.startswith(('.', '<', '>', '^', '=', '+', '-', ' ', '0')) or \
-               spec.isdigit()
-    
+        return (
+            spec.startswith((".", "<", ">", "^", "=", "+", "-", " ", "0"))
+            or spec.isdigit()
+        )
+
     def render(self, template_str: str, **kwargs) -> str:
         """Render using str.format()"""
         return template_str.format(**kwargs)
-    
+
     def detect(self, content: str) -> bool:
         """Detect format strings by single braces"""
-        return '{' in content and '{{' not in content
+        return "{" in content and "{{" not in content
+
 
 # Register on import
 register_engine(FormatEngine())
@@ -288,49 +300,53 @@ from . import TemplateEngine, register_engine
 
 try:
     import jinja2
+
     HAVE_JINJA2 = True
 except ImportError:
     HAVE_JINJA2 = False
 
+
 class Jinja2Engine(TemplateEngine):
     """Jinja2 template engine"""
-    
-    name = 'jinja2'
-    extensions = ['.jinja2', '.j2', '.jinja']
-    
+
+    name = "jinja2"
+    extensions = [".jinja2", ".j2", ".jinja"]
+
     def __init__(self):
         if not HAVE_JINJA2:
             raise ImportError("jinja2 not installed. Install with: pip install jinja2")
         self.env = jinja2.Environment()
-    
+
     def parse_template(self, template_str: str) -> dict:
         """
         Parse Jinja2 template to extract variables.
-        
+
         Uses Jinja2's meta.find_undeclared_variables()
         """
         ast = self.env.parse(template_str)
         placeholders = list(jinja2.meta.find_undeclared_variables(ast))
-        
+
         # Jinja2 defaults are typically in the template via | default filter
         # Can't easily extract these, so return empty defaults
         # User should provide defaults when calling render
-        
+
         return {
-            'placeholders': placeholders,
-            'defaults': {},  # Handled by Jinja2 itself
-            'metadata': {'syntax': 'jinja2'}
+            "placeholders": placeholders,
+            "defaults": {},  # Handled by Jinja2 itself
+            "metadata": {"syntax": "jinja2"},
         }
-    
+
     def render(self, template_str: str, **kwargs) -> str:
         """Render Jinja2 template"""
         template = self.env.from_string(template_str)
         return template.render(**kwargs)
-    
+
     def detect(self, content: str) -> bool:
         """Detect Jinja2 by {{ }} and {% %}"""
-        return ('{{' in content and '}}' in content) or \
-               ('{%' in content and '%}' in content)
+        return ("{{" in content and "}}" in content) or (
+            "{%" in content and "%}" in content
+        )
+
 
 # Register if available
 if HAVE_JINJA2:
@@ -346,21 +362,23 @@ from . import TemplateEngine, register_engine
 
 try:
     import pystache
+
     HAVE_PYSTACHE = True
 except ImportError:
     HAVE_PYSTACHE = False
 
+
 class MustacheEngine(TemplateEngine):
     """Mustache template engine"""
-    
-    name = 'mustache'
-    extensions = ['.mustache', '.hbs']
-    
+
+    name = "mustache"
+    extensions = [".mustache", ".hbs"]
+
     def __init__(self):
         if not HAVE_PYSTACHE:
             raise ImportError("pystache not installed")
         self.renderer = pystache.Renderer()
-    
+
     def parse_template(self, template_str: str) -> dict:
         """Parse Mustache template for variables"""
         # Use pystache's parser to find variables
@@ -368,20 +386,21 @@ class MustacheEngine(TemplateEngine):
         # Extract variable names from parsed structure
         # (Implementation depends on pystache's parse tree format)
         placeholders = self._extract_vars(parsed)
-        
+
         return {
-            'placeholders': placeholders,
-            'defaults': {},  # Mustache uses empty string for missing
-            'metadata': {'syntax': 'mustache'}
+            "placeholders": placeholders,
+            "defaults": {},  # Mustache uses empty string for missing
+            "metadata": {"syntax": "mustache"},
         }
-    
+
     def render(self, template_str: str, **kwargs) -> str:
         """Render Mustache template"""
         return self.renderer.render(template_str, kwargs)
-    
+
     def detect(self, content: str) -> bool:
         """Detect Mustache by {{var}} without spaces"""
-        return '{{' in content and '{{' in content.replace('{{ ', '{{')
+        return "{{" in content and "{{" in content.replace("{{ ", "{{")
+
 
 if HAVE_PYSTACHE:
     register_engine(MustacheEngine())
@@ -403,24 +422,25 @@ from dol import wrap_kvs, add_ipython_key_completions
 from .stores import mk_prompt_store, mk_metadata_store
 from .engines import detect_engine, get_engine
 
+
 class PromptCollection(MutableMappingABC):
     """
     Collection of prompts with MutableMapping interface.
-    
+
     Backed by file storage via dol, with optional metadata.
     """
-    
+
     def __init__(
         self,
         collection_name: str,
         *,
         base_path: Optional[str] = None,
         with_metadata: bool = False,
-        store_factory: Optional[callable] = None
+        store_factory: Optional[callable] = None,
     ):
         """
         Create or open a prompt collection.
-        
+
         Args:
             collection_name: Name of the collection
             base_path: Root directory (defaults to user data dir)
@@ -429,51 +449,51 @@ class PromptCollection(MutableMappingABC):
         """
         self.collection_name = collection_name
         self.base_path = base_path or self._default_base_path()
-        self.collection_dir = Path(self.base_path) / 'collections' / collection_name
-        
+        self.collection_dir = Path(self.base_path) / "collections" / collection_name
+
         # Ensure directory exists
         self.collection_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # Create stores
         if store_factory:
             self._store = store_factory()
         else:
-            prompts_dir = self.collection_dir / 'prompts'
+            prompts_dir = self.collection_dir / "prompts"
             prompts_dir.mkdir(exist_ok=True)
             self._store = mk_prompt_store(str(prompts_dir))
-        
+
         # Optional metadata store
         self.meta = None
         if with_metadata:
-            meta_dir = self.collection_dir / '_prompt_meta'
+            meta_dir = self.collection_dir / "_prompt_meta"
             meta_dir.mkdir(exist_ok=True)
             self.meta = mk_metadata_store(str(meta_dir))
-    
+
     @staticmethod
     def _default_base_path() -> str:
         """Get platform-appropriate base path"""
-        if os.name == 'nt':  # Windows
-            base = os.getenv('LOCALAPPDATA')
-            return os.path.join(base, 'pyrompt')
+        if os.name == "nt":  # Windows
+            base = os.getenv("LOCALAPPDATA")
+            return os.path.join(base, "pyrompt")
         else:  # macOS/Linux
-            return os.path.expanduser('~/.local/share/pyrompt')
-    
+            return os.path.expanduser("~/.local/share/pyrompt")
+
     # MutableMapping interface
     def __getitem__(self, key: str) -> str:
         return self._store[key]
-    
+
     def __setitem__(self, key: str, value: str):
         self._store[key] = value
-    
+
     def __delitem__(self, key: str):
         del self._store[key]
-    
+
     def __iter__(self):
         return iter(self._store)
-    
+
     def __len__(self):
         return len(self._store)
-    
+
     def __repr__(self):
         return f"PromptCollection('{self.collection_name}', {len(self)} prompts)"
 ```
@@ -483,121 +503,120 @@ class PromptCollection(MutableMappingABC):
 ```python
 from .engines import detect_engine, get_engine, TemplateEngine
 
+
 class TemplateCollection(MutableMappingABC):
     """
     Collection of templates with multi-engine support.
-    
+
     Automatically detects template engine based on file extension
     or content. Provides rendering capabilities.
     """
-    
+
     def __init__(
         self,
         collection_name: str,
         *,
         base_path: Optional[str] = None,
         with_metadata: bool = False,
-        default_engine: str = 'format'
+        default_engine: str = "format",
     ):
         self.collection_name = collection_name
         self.base_path = base_path or PromptCollection._default_base_path()
-        self.collection_dir = Path(self.base_path) / 'collections' / collection_name
+        self.collection_dir = Path(self.base_path) / "collections" / collection_name
         self.default_engine = default_engine
-        
+
         # Create template directory
-        templates_dir = self.collection_dir / 'templates'
+        templates_dir = self.collection_dir / "templates"
         templates_dir.mkdir(parents=True, exist_ok=True)
-        
+
         # Store accepts any extension - we handle detection
         self._store = mk_template_store(str(templates_dir))
-        
+
         # Metadata
         self.meta = None
         if with_metadata:
-            meta_dir = self.collection_dir / '_template_meta'
+            meta_dir = self.collection_dir / "_template_meta"
             meta_dir.mkdir(exist_ok=True)
             self.meta = mk_metadata_store(str(meta_dir))
-    
+
     def _detect_engine_for_key(self, key: str) -> TemplateEngine:
         """Detect which engine to use for a template"""
         # Extract extension(s) from key
-        parts = key.split('.')
+        parts = key.split(".")
         if len(parts) > 1:
             # Try longest extension first (e.g., .jinja2.txt -> .jinja2)
             for i in range(len(parts) - 1):
-                ext = '.' + '.'.join(parts[i+1:])
+                ext = "." + ".".join(parts[i + 1 :])
                 engine = get_engine_by_extension(ext)
                 if engine:
                     return engine
-        
+
         # Fall back to content detection
         if key in self._store:
             content = self._store[key]
             return detect_engine(content)
-        
+
         # Use default
         return get_engine(self.default_engine)
-    
+
     def render(self, key: str, **kwargs) -> str:
         """
         Render a template with provided values.
-        
+
         Args:
             key: Template key
             **kwargs: Values to inject
-            
+
         Returns:
             Rendered template string
         """
         template_str = self._store[key]
         engine = self._detect_engine_for_key(key)
         return engine.render(template_str, **kwargs)
-    
+
     def parse(self, key: str) -> dict:
         """
         Parse a template to extract structure.
-        
+
         Returns dict with placeholders, defaults, metadata.
         """
         template_str = self._store[key]
         engine = self._detect_engine_for_key(key)
         return engine.parse_template(template_str)
-    
+
     def to_prompt_function(self, key: str, **prompt_func_kwargs):
         """
         Convert template to an AI-enabled function using oa.prompt_function.
-        
+
         Args:
             key: Template key
             **prompt_func_kwargs: Additional kwargs for prompt_function
-        
+
         Returns:
             Callable function that invokes LLM with rendered template
         """
         from oa import prompt_function
-        
+
         template_str = self._store[key]
         parse_info = self.parse(key)
-        
+
         return prompt_function(
-            template_str,
-            defaults=parse_info.get('defaults', {}),
-            **prompt_func_kwargs
+            template_str, defaults=parse_info.get("defaults", {}), **prompt_func_kwargs
         )
-    
+
     # MutableMapping interface delegates to _store
     def __getitem__(self, key: str) -> str:
         return self._store[key]
-    
+
     def __setitem__(self, key: str, value: str):
         self._store[key] = value
-    
+
     def __delitem__(self, key: str):
         del self._store[key]
-    
+
     def __iter__(self):
         return iter(self._store)
-    
+
     def __len__(self):
         return len(self._store)
 ```
@@ -618,32 +637,28 @@ class TemplateCollection(MutableMappingABC):
 ```python
 # Add to TemplateCollection:
 
+
 def create_prompt_functions(
-    self,
-    keys: Optional[List[str]] = None,
-    **common_kwargs
-) -> 'PromptFuncs':
+    self, keys: Optional[List[str]] = None, **common_kwargs
+) -> "PromptFuncs":
     """
     Create PromptFuncs collection from templates.
-    
+
     Args:
         keys: Template keys to include (None = all)
         **common_kwargs: Common kwargs for all prompt_functions
-    
+
     Returns:
         PromptFuncs object with functions for each template
     """
     from oa import PromptFuncs
-    
+
     keys = keys or list(self._store.keys())
-    
+
     # Create dict of template_name -> template_string
     template_dict = {k: self._store[k] for k in keys}
-    
-    return PromptFuncs(
-        template_store=template_dict,
-        **common_kwargs
-    )
+
+    return PromptFuncs(template_store=template_dict, **common_kwargs)
 ```
 
 #### 4.2 JSON Output Functions (base.py)
@@ -651,35 +666,31 @@ def create_prompt_functions(
 ```python
 # Add to TemplateCollection:
 
-def to_prompt_json_function(
-    self,
-    key: str,
-    json_schema: dict,
-    **prompt_func_kwargs
-):
+
+def to_prompt_json_function(self, key: str, json_schema: dict, **prompt_func_kwargs):
     """
     Convert template to JSON-returning AI function.
-    
+
     Uses oa.prompt_json_function to ensure structured output.
-    
+
     Args:
         key: Template key
         json_schema: JSON schema for output validation
         **prompt_func_kwargs: Additional kwargs
-    
+
     Returns:
         Function that returns parsed JSON dict
     """
     from oa import prompt_json_function
-    
+
     template_str = self._store[key]
     parse_info = self.parse(key)
-    
+
     return prompt_json_function(
         template_str,
         json_schema=json_schema,
-        defaults=parse_info.get('defaults', {}),
-        **prompt_func_kwargs
+        defaults=parse_info.get("defaults", {}),
+        **prompt_func_kwargs,
     )
 ```
 
@@ -697,25 +708,26 @@ import numpy as np
 from oa import embeddings
 from oa.batch_embeddings import compute_embeddings
 
+
 class SemanticIndex:
     """
     Semantic search index for prompts/templates.
-    
+
     Uses oa.embeddings to create vector representations,
     then supports similarity search.
     """
-    
+
     def __init__(
         self,
         collection: Mapping[str, str],
         *,
         auto_update: bool = False,
-        embedding_model: str = 'text-embedding-3-small',
-        batch_size: int = 100
+        embedding_model: str = "text-embedding-3-small",
+        batch_size: int = 100,
     ):
         """
         Create semantic index for a collection.
-        
+
         Args:
             collection: Mapping of keys to text (prompts/templates)
             auto_update: Whether to auto-update on collection changes
@@ -726,72 +738,71 @@ class SemanticIndex:
         self.auto_update = auto_update
         self.embedding_model = embedding_model
         self.batch_size = batch_size
-        
+
         # Storage for embeddings
         self._embeddings: Dict[str, np.ndarray] = {}
-        
+
         # Build initial index
         self.rebuild()
-    
+
     def rebuild(self):
         """Rebuild entire index from current collection"""
         keys = list(self.collection.keys())
         texts = [self.collection[k] for k in keys]
-        
+
         if not texts:
             self._embeddings = {}
             return
-        
+
         # Use batch computation for efficiency
         _, embedding_vectors = compute_embeddings(
             segments=texts,
             batch_size=self.batch_size,
             model=self.embedding_model,
-            verbosity=0
+            verbosity=0,
         )
-        
+
         # Store embeddings
         self._embeddings = {
-            key: np.array(emb)
-            for key, emb in zip(keys, embedding_vectors)
+            key: np.array(emb) for key, emb in zip(keys, embedding_vectors)
         }
-    
+
     def add(self, key: str):
         """Add single item to index"""
         text = self.collection[key]
         # Single embedding computation
         emb = embeddings(text, model=self.embedding_model)
         self._embeddings[key] = np.array(emb)
-    
+
     def remove(self, key: str):
         """Remove item from index"""
         self._embeddings.pop(key, None)
-    
+
     def search(
         self,
         query: str,
         top_k: int = 5,
         filters: Optional[dict] = None,
-        diversity_threshold: Optional[float] = None
+        diversity_threshold: Optional[float] = None,
     ) -> List[Tuple[str, float]]:
         """
         Search for similar prompts.
-        
+
         Args:
             query: Search query text
             top_k: Number of results to return
             filters: Metadata filters (if collection has metadata)
             diversity_threshold: If set, exclude results too similar to each other
-        
+
         Returns:
             List of (key, similarity_score) tuples, sorted by score descending
         """
         if not self._embeddings:
             return []
-        
+
         # Get query embedding
         query_emb = np.array(embeddings(query, model=self.embedding_model))
-        
+
         # Compute similarities
         similarities = []
         for key, emb in self._embeddings.items():
@@ -800,33 +811,30 @@ class SemanticIndex:
                 np.linalg.norm(query_emb) * np.linalg.norm(emb)
             )
             similarities.append((key, float(sim)))
-        
+
         # Sort by similarity descending
         similarities.sort(key=lambda x: x[1], reverse=True)
-        
+
         # Apply filters if provided
-        if filters and hasattr(self.collection, 'meta'):
+        if filters and hasattr(self.collection, "meta"):
             similarities = [
-                (k, s) for k, s in similarities
-                if self._matches_filters(k, filters)
+                (k, s) for k, s in similarities if self._matches_filters(k, filters)
             ]
-        
+
         # Apply diversity if requested
         if diversity_threshold:
-            similarities = self._diversify_results(
-                similarities, diversity_threshold
-            )
-        
+            similarities = self._diversify_results(similarities, diversity_threshold)
+
         return similarities[:top_k]
-    
+
     def _matches_filters(self, key: str, filters: dict) -> bool:
         """Check if item matches metadata filters"""
-        if not hasattr(self.collection, 'meta') or self.collection.meta is None:
+        if not hasattr(self.collection, "meta") or self.collection.meta is None:
             return True
-        
+
         if key not in self.collection.meta:
             return False
-        
+
         meta = self.collection.meta[key]
         for filter_key, filter_val in filters.items():
             if filter_key not in meta:
@@ -841,27 +849,25 @@ class SemanticIndex:
                     return False
             elif meta[filter_key] != filter_val:
                 return False
-        
+
         return True
-    
+
     def _diversify_results(
-        self,
-        results: List[Tuple[str, float]],
-        threshold: float
+        self, results: List[Tuple[str, float]], threshold: float
     ) -> List[Tuple[str, float]]:
         """
         Remove results too similar to each other.
-        
+
         Keep results that are less than threshold similar to already-selected results.
         """
         if not results:
             return results
-        
+
         diverse = [results[0]]  # Always keep top result
-        
+
         for key, score in results[1:]:
             emb = self._embeddings[key]
-            
+
             # Check similarity to already-selected results
             too_similar = False
             for selected_key, _ in diverse:
@@ -872,10 +878,10 @@ class SemanticIndex:
                 if sim >= threshold:
                     too_similar = True
                     break
-            
+
             if not too_similar:
                 diverse.append((key, score))
-        
+
         return diverse
 ```
 
@@ -902,30 +908,32 @@ from pathlib import Path
 # Use GitHub API library
 try:
     from github import Github, Repository
+
     HAVE_GITHUB = True
 except ImportError:
     HAVE_GITHUB = False
 
+
 class GitHubPromptCollection:
     """
     Prompt collection backed by GitHub repository.
-    
+
     Repos must end with '_pyrompt' suffix.
     Contains prompts/ and/or templates/ directories.
     """
-    
+
     def __init__(
         self,
         repo: str,
         *,
         token: Optional[str] = None,
         readonly: bool = False,
-        branch: str = 'main',
-        local_cache: Optional[str] = None
+        branch: str = "main",
+        local_cache: Optional[str] = None,
     ):
         """
         Create GitHub-backed collection.
-        
+
         Args:
             repo: Repository name (user/repo_name_pyrompt)
             token: GitHub token (for write access)
@@ -935,62 +943,65 @@ class GitHubPromptCollection:
         """
         if not HAVE_GITHUB:
             raise ImportError("PyGithub required. Install: pip install PyGithub")
-        
-        if not repo.endswith('_pyrompt'):
+
+        if not repo.endswith("_pyrompt"):
             raise ValueError("Repository must end with '_pyrompt'")
-        
+
         self.repo_name = repo
         self.readonly = readonly
         self.branch = branch
-        
+
         # Setup GitHub client
         self.gh = Github(token) if token else Github()
         self.repo = self.gh.get_repo(repo)
-        
+
         # Local cache
         self.local_cache = local_cache or self._default_cache_path()
         self._ensure_local_cache()
-    
+
     def _default_cache_path(self) -> str:
         """Get default cache path for this repo"""
-        cache_base = Path.home() / '.cache' / 'pyrompt' / 'github'
-        return str(cache_base / self.repo_name.replace('/', '_'))
-    
+        cache_base = Path.home() / ".cache" / "pyrompt" / "github"
+        return str(cache_base / self.repo_name.replace("/", "_"))
+
     def _ensure_local_cache(self):
         """Clone or pull repo to local cache"""
         if not os.path.exists(self.local_cache):
             # Clone repo
             import git
+
             git.Repo.clone_from(
                 f"https://github.com/{self.repo_name}",
                 self.local_cache,
-                branch=self.branch
+                branch=self.branch,
             )
         else:
             # Pull latest
             import git
+
             repo = git.Repo(self.local_cache)
             repo.remotes.origin.pull(self.branch)
-    
+
     def sync(self):
         """Push local changes to GitHub (if not readonly)"""
         if self.readonly:
             raise PermissionError("Collection is readonly")
-        
+
         import git
+
         repo = git.Repo(self.local_cache)
-        
+
         # Add all changes
         repo.git.add(A=True)
-        
+
         # Commit
         if repo.is_dirty():
             repo.index.commit("Update prompts via pyrompt")
-            
+
             # Push
-            origin = repo.remote('origin')
+            origin = repo.remote("origin")
             origin.push(self.branch)
-    
+
     # Provide MutableMapping interface over local cache
     # (Implementation similar to PromptCollection but uses local_cache path)
 ```
@@ -999,82 +1010,76 @@ class GitHubPromptCollection:
 
 ```python
 def discover_prompt_collections(
-    search_term: Optional[str] = None,
-    min_stars: int = 0,
-    language: str = 'Python'
+    search_term: Optional[str] = None, min_stars: int = 0, language: str = "Python"
 ) -> List[dict]:
     """
     Discover public *_pyrompt repositories on GitHub.
-    
+
     Args:
         search_term: Search query (e.g., "python data")
         min_stars: Minimum star count
         language: Programming language filter
-    
+
     Returns:
         List of dicts with repo info (name, description, stars, url)
     """
     if not HAVE_GITHUB:
         raise ImportError("PyGithub required")
-    
+
     gh = Github()
-    
+
     # Build search query
     query_parts = []
     if search_term:
         query_parts.append(search_term)
-    query_parts.append('_pyrompt in:name')
+    query_parts.append("_pyrompt in:name")
     if language:
-        query_parts.append(f'language:{language}')
+        query_parts.append(f"language:{language}")
     if min_stars:
-        query_parts.append(f'stars:>={min_stars}')
-    
-    query = ' '.join(query_parts)
-    
+        query_parts.append(f"stars:>={min_stars}")
+
+    query = " ".join(query_parts)
+
     # Search
-    repos = gh.search_repositories(query, sort='stars', order='desc')
-    
+    repos = gh.search_repositories(query, sort="stars", order="desc")
+
     # Format results
     results = []
     for repo in repos:
-        results.append({
-            'name': repo.full_name,
-            'description': repo.description,
-            'stars': repo.stargazers_count,
-            'forks': repo.forks_count,
-            'url': repo.html_url,
-            'updated': repo.updated_at
-        })
-    
+        results.append(
+            {
+                "name": repo.full_name,
+                "description": repo.description,
+                "stars": repo.stargazers_count,
+                "forks": repo.forks_count,
+                "url": repo.html_url,
+                "updated": repo.updated_at,
+            }
+        )
+
     return results
 
-def fork_collection(
-    source: str,
-    target: str,
-    token: str
-) -> GitHubPromptCollection:
+
+def fork_collection(source: str, target: str, token: str) -> GitHubPromptCollection:
     """
     Fork a collection to your account.
-    
+
     Args:
         source: Source repo (user/repo_pyrompt)
         target: Target repo (your_user/repo_pyrompt)
         token: GitHub token with repo permissions
-    
+
     Returns:
         GitHubPromptCollection for the new fork
     """
     gh = Github(token)
     source_repo = gh.get_repo(source)
-    
+
     # Create fork
     fork = source_repo.create_fork()
-    
+
     # Return collection for fork
-    return GitHubPromptCollection(
-        repo=fork.full_name,
-        token=token
-    )
+    return GitHubPromptCollection(repo=fork.full_name, token=token)
 ```
 
 ### Phase 7: Collection Mall
@@ -1087,23 +1092,24 @@ def fork_collection(
 from typing import Dict, Optional, List
 from collections.abc import Mapping
 
+
 class PromptMall(Mapping):
     """
     Collection of collections - a "mall" of stores.
-    
+
     Provides nested access: mall['collection_name']['prompt_key']
     """
-    
+
     def __init__(
         self,
         workspace_name: str,
         *,
         base_path: Optional[str] = None,
-        collection_names: Optional[List[str]] = None
+        collection_names: Optional[List[str]] = None,
     ):
         """
         Create a mall (collection of collections).
-        
+
         Args:
             workspace_name: Name for this workspace
             base_path: Root directory
@@ -1111,77 +1117,67 @@ class PromptMall(Mapping):
         """
         self.workspace_name = workspace_name
         self.base_path = base_path
-        
+
         # Storage for collections
         self._collections: Dict[str, PromptCollection] = {}
-        
+
         # Create initial collections
         if collection_names:
             for name in collection_names:
                 self._collections[name] = PromptCollection(
-                    f"{workspace_name}_{name}",
-                    base_path=base_path
+                    f"{workspace_name}_{name}", base_path=base_path
                 )
-    
-    def add_collection(
-        self,
-        name: str,
-        collection_type: str = 'prompt'
-    ):
+
+    def add_collection(self, name: str, collection_type: str = "prompt"):
         """Add a new collection to the mall"""
-        if collection_type == 'prompt':
+        if collection_type == "prompt":
             self._collections[name] = PromptCollection(
-                f"{self.workspace_name}_{name}",
-                base_path=self.base_path
+                f"{self.workspace_name}_{name}", base_path=self.base_path
             )
-        elif collection_type == 'template':
+        elif collection_type == "template":
             self._collections[name] = TemplateCollection(
-                f"{self.workspace_name}_{name}",
-                base_path=self.base_path
+                f"{self.workspace_name}_{name}", base_path=self.base_path
             )
         else:
             raise ValueError(f"Unknown collection type: {collection_type}")
-    
+
     def search(
-        self,
-        query: str,
-        collections: Optional[List[str]] = None,
-        **search_kwargs
+        self, query: str, collections: Optional[List[str]] = None, **search_kwargs
     ) -> Dict[str, List[Tuple[str, float]]]:
         """
         Search across multiple collections.
-        
+
         Args:
             query: Search query
             collections: Collection names to search (None = all)
             **search_kwargs: Additional args for SemanticIndex.search
-        
+
         Returns:
             Dict mapping collection_name -> search results
         """
         collections = collections or list(self._collections.keys())
-        
+
         results = {}
         for coll_name in collections:
             if coll_name not in self._collections:
                 continue
-            
+
             coll = self._collections[coll_name]
             index = SemanticIndex(coll)
             results[coll_name] = index.search(query, **search_kwargs)
-        
+
         return results
-    
+
     # Mapping interface
     def __getitem__(self, key: str):
         if key not in self._collections:
             # Auto-create collection on first access
             self.add_collection(key)
         return self._collections[key]
-    
+
     def __iter__(self):
         return iter(self._collections)
-    
+
     def __len__(self):
         return len(self._collections)
 ```
@@ -1211,77 +1207,80 @@ import pytest
 import tempfile
 from pathlib import Path
 
+
 @pytest.fixture
 def temp_collection_dir():
     """Provide temporary directory for testing"""
     with tempfile.TemporaryDirectory() as tmpdir:
         yield tmpdir
 
+
 @pytest.fixture
 def sample_prompts():
     """Sample prompts for testing"""
     return {
-        'greeting': 'Hello, {name}!',
-        'farewell': 'Goodbye, {name}. See you {when}!',
-        'system': 'You are a helpful assistant.'
+        "greeting": "Hello, {name}!",
+        "farewell": "Goodbye, {name}. See you {when}!",
+        "system": "You are a helpful assistant.",
     }
+
 
 @pytest.fixture
 def sample_templates():
     """Sample templates with various engines"""
     return {
-        'simple.txt': 'Hello {name}',
-        'advanced.jinja2': 'Hello {{ name|default("friend") }}',
-        'logic.mustache': 'Hello {{name}}'
+        "simple.txt": "Hello {name}",
+        "advanced.jinja2": 'Hello {{ name|default("friend") }}',
+        "logic.mustache": "Hello {{name}}",
     }
+
 
 # test_collections.py
 def test_prompt_collection_basic(temp_collection_dir, sample_prompts):
     """Test basic CRUD operations"""
-    coll = PromptCollection('test', base_path=temp_collection_dir)
-    
+    coll = PromptCollection("test", base_path=temp_collection_dir)
+
     # Create
-    coll['greeting'] = sample_prompts['greeting']
-    
+    coll["greeting"] = sample_prompts["greeting"]
+
     # Read
-    assert coll['greeting'] == sample_prompts['greeting']
-    
+    assert coll["greeting"] == sample_prompts["greeting"]
+
     # Update
-    coll['greeting'] = 'Hi {name}!'
-    assert coll['greeting'] == 'Hi {name}!'
-    
+    coll["greeting"] = "Hi {name}!"
+    assert coll["greeting"] == "Hi {name}!"
+
     # Delete
-    del coll['greeting']
-    assert 'greeting' not in coll
+    del coll["greeting"]
+    assert "greeting" not in coll
+
 
 def test_template_collection_render(temp_collection_dir):
     """Test template rendering with different engines"""
-    coll = TemplateCollection('test', base_path=temp_collection_dir)
-    
+    coll = TemplateCollection("test", base_path=temp_collection_dir)
+
     # Format engine
-    coll['simple.txt'] = 'Hello {name}'
-    assert coll.render('simple.txt', name='Alice') == 'Hello Alice'
-    
+    coll["simple.txt"] = "Hello {name}"
+    assert coll.render("simple.txt", name="Alice") == "Hello Alice"
+
     # Jinja2 engine (if available)
     try:
-        coll['advanced.jinja2'] = 'Hello {{ name }}'
-        assert coll.render('advanced.jinja2', name='Bob') == 'Hello Bob'
+        coll["advanced.jinja2"] = "Hello {{ name }}"
+        assert coll.render("advanced.jinja2", name="Bob") == "Hello Bob"
     except ImportError:
         pytest.skip("Jinja2 not installed")
 
+
 def test_template_to_prompt_function(temp_collection_dir):
     """Test conversion to prompt function"""
-    coll = TemplateCollection('test', base_path=temp_collection_dir)
-    coll['greet'] = 'Hello {name}!'
-    
+    coll = TemplateCollection("test", base_path=temp_collection_dir)
+    coll["greet"] = "Hello {name}!"
+
     # Create function (mock prompt_func to avoid API calls)
-    func = coll.to_prompt_function(
-        'greet',
-        prompt_func=lambda x: f"AI says: {x}"
-    )
-    
-    result = func(name='Alice')
-    assert 'Hello Alice' in result
+    func = coll.to_prompt_function("greet", prompt_func=lambda x: f"AI says: {x}")
+
+    result = func(name="Alice")
+    assert "Hello Alice" in result
 ```
 
 ## Development Workflow
@@ -1332,39 +1331,41 @@ def test_template_to_prompt_function(temp_collection_dir):
 - **`dol.Files`**: Base filesystem store
   ```python
   from dol import Files
-  store = Files('/path/to/dir', max_levels=0)  # Flat directory
+
+  store = Files("/path/to/dir", max_levels=0)  # Flat directory
   ```
 
 - **`dol.wrap_kvs`**: Add encoding/decoding layers
   ```python
   from dol import wrap_kvs
+
   store = wrap_kvs(
       base_store,
-      key_of_id=lambda k: k.replace('.txt', ''),
-      id_of_key=lambda k: f'{k}.txt',
+      key_of_id=lambda k: k.replace(".txt", ""),
+      id_of_key=lambda k: f"{k}.txt",
       obj_of_data=json.loads,
-      data_of_obj=json.dumps
+      data_of_obj=json.dumps,
   )
   ```
 
 - **`dol.filt_iter`**: Filter keys
   ```python
   from dol import filt_iter
-  filtered = filt_iter(store, filt=filt_iter.suffixes('.txt', '.md'))
+
+  filtered = filt_iter(store, filt=filt_iter.suffixes(".txt", ".md"))
   ```
 
 - **`dol.KeyCodecs`**: Transform keys
   ```python
   from dol import KeyCodecs
-  codec = KeyCodecs(
-      key_of_id=str.lower,
-      id_of_key=str.upper
-  )
+
+  codec = KeyCodecs(key_of_id=str.lower, id_of_key=str.upper)
   ```
 
 - **`dol.add_ipython_key_completions`**: Enable tab completion
   ```python
   from dol import add_ipython_key_completions
+
   store = add_ipython_key_completions(store)
   ```
 
@@ -1373,6 +1374,7 @@ def test_template_to_prompt_function(temp_collection_dir):
 - **`i2.Sig`**: Manipulate function signatures
   ```python
   from i2 import Sig
+
   sig = Sig(my_function)
   new_sig = sig.ch_defaults(x=10, y=20)
   ```
@@ -1380,6 +1382,7 @@ def test_template_to_prompt_function(temp_collection_dir):
 - **`i2.Wrapper`**: Create function wrappers
   ```python
   from i2 import Wrapper
+
   wrapped = Wrapper(func, ingress=preprocess, egress=postprocess)
   ```
 
