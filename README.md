@@ -16,6 +16,12 @@
 
 All data sources use Python's `Mapping` and `MutableMapping` interfaces (via `dol`), and all template types are registered in an extensible plugin system.
 
+## What pyrompt adds
+
+Hosted prompt servers such as [Langfuse](https://github.com/langfuse/langfuse) give you numbered prompt versions, labels and a UI, at the cost of running (or paying for) a service. File formats such as [Prompty](https://github.com/microsoft/prompty) define one prompt per `.prompty` file and a runner for it. pyrompt is neither: it is a dict-like layer over *any* store (a folder, a GitHub repo, any `dol` backend), with a choice of template engines, embedding search across a collection, and GitHub sharing. Versioning comes from the store (for example git), not from pyrompt.
+
+If you need to read `.prompty` files, the route is a `TemplateEngine` registered for the `.prompty` extension; none ships yet.
+
 ## Quick Start
 
 ```python
