@@ -3,8 +3,9 @@
 import sys
 import types
 
-import numpy as np
 import pytest
+
+np = pytest.importorskip("numpy")  # optional dependency
 
 VECS = {
     "python expert": [1.0, 0.0, 0.0],
