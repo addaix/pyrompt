@@ -1,34 +1,34 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-22T20:53:18Z",
+  "built_at": "2026-11-22T21:13:57Z",
   "package": {
     "name": "pyrompt",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "display_name": "pyrompt",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "c254e8c8d883a12bde7093e1771a439af6bc1036",
-    "short_commit": "c254e8c",
+    "commit": "4822572f069ef853338892275014fa0a94711f56",
+    "short_commit": "4822572",
     "branch": "main",
     "tags": [
-      "0.0.9"
+      "0.0.10"
     ],
     "dirty": false,
     "remote_url": "https://github.com/addaix/pyrompt",
-    "commit_url": "https://github.com/addaix/pyrompt/commit/c254e8c8d883a12bde7093e1771a439af6bc1036",
+    "commit_url": "https://github.com/addaix/pyrompt/commit/4822572f069ef853338892275014fa0a94711f56",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "addaix/pyrompt",
-    "sha": "b6eb79a172bcc436f3fa2d4586c155229e4b3a12",
+    "sha": "011cd93fd1bf1d99421dab1ec1f7a468181c23b4",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "45068801747",
-    "run_url": "https://github.com/addaix/pyrompt/actions/runs/45068801747",
+    "run_id": "45070765236",
+    "run_url": "https://github.com/addaix/pyrompt/actions/runs/45070765236",
     "server_url": "https://github.com"
   },
   "tools": {
@@ -62,11 +62,11 @@
   },
   "pypi": {
     "checked": true,
-    "latest": "0.0.9",
+    "latest": "0.0.10",
     "relation": "same",
     "error": null
   },
-  "reproduce": "git clone https://github.com/addaix/pyrompt && cd pyrompt\ngit checkout c254e8c8d883a12bde7093e1771a439af6bc1036\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/addaix/pyrompt && cd pyrompt\ngit checkout 4822572f069ef853338892275014fa0a94711f56\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
     "aligned": true,

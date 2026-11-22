@@ -19,7 +19,7 @@
 - [pyrompt.search](_autosummary/pyrompt.search.html.md): Semantic search for prompts and templates using embeddings.
 - [pyrompt.stores](_autosummary/pyrompt.stores.html.md): Storage layer for pyrompt using dol abstractions.
 - [pyrompt.util](_autosummary/pyrompt.util.html.md): Utility functions and convenience helpers for pyrompt.
-- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-22 20:53 UTC&#42;&#42; from commit &lt;a href="https://github.com/add...
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-22 21:13 UTC&#42;&#42; from commit &lt;a href="https://github.com/add...
 
 ## Optional
 

@@ -2,7 +2,7 @@
 
 # About this build
 
-This documentation was built on **2026-11-22 20:53 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/c254e8c8d883a12bde7093e1771a439af6bc1036"><code>c254e8c</code></a> on branch <code>main</code>, for **pyrompt 0.0.9** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-22 21:13 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/4822572f069ef853338892275014fa0a94711f56"><code>4822572</code></a> on branch <code>main</code>, for **pyrompt 0.0.10** (from <code>pyproject.toml</code>).
 
 #### NOTE
 Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
@@ -11,9 +11,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 |                     |                                                                                                                                                       |
 |---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/addaix/pyrompt/commit/c254e8c8d883a12bde7093e1771a439af6bc1036"><code>c254e8c8d883a12bde7093e1771a439af6bc1036</code></a> |
+| Commit              | <a href="https://github.com/addaix/pyrompt/commit/4822572f069ef853338892275014fa0a94711f56"><code>4822572f069ef853338892275014fa0a94711f56</code></a> |
 | Branch              | <code>main</code>                                                                                                                                     |
-| Tags at this commit | <code>0.0.9</code>                                                                                                                                    |
+| Tags at this commit | <code>0.0.10</code>                                                                                                                                   |
 | Working tree        | clean                                                                                                                                                 |
 | Remote              | <code>https://github.com/addaix/pyrompt</code>                                                                                                        |
 
@@ -22,9 +22,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>addaix/pyrompt</code>                                                                |
-| Run          | <a href="https://github.com/addaix/pyrompt/actions/runs/45068801747">45068801747</a>       |
+| Run          | <a href="https://github.com/addaix/pyrompt/actions/runs/45070765236">45070765236</a>       |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>b6eb79a172bcc436f3fa2d4586c155229e4b3a12</code> (in the history of the built commit) |
+| Event commit | <code>011cd93fd1bf1d99421dab1ec1f7a468181c23b4</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -49,13 +49,13 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/pyrompt/0.0.9/">0.0.9</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/pyrompt/0.0.10/">0.0.10</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/addaix/pyrompt && cd pyrompt
-git checkout c254e8c8d883a12bde7093e1771a439af6bc1036
+git checkout 4822572f069ef853338892275014fa0a94711f56
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
