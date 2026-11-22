@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyrompt"
-version = "0.0.9"
+version = "0.0.10"
 description = "Manage, share, and search prompts and prompt templates, with multiple templating languages"
 readme = "README.md"
 license = "MIT"
