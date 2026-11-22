@@ -2,18 +2,20 @@
 
 # About this build
 
-This documentation was built on **2026-11-22 21:13 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/4822572f069ef853338892275014fa0a94711f56"><code>4822572</code></a> on branch <code>main</code>, for **pyrompt 0.0.10** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-22 23:08 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/e17b9206b7c94629a7d80c8e4be7fb807f50136d"><code>e17b920</code></a> on branch <code>main</code>, for **pyrompt 0.0.11** (from <code>pyproject.toml</code>).
 
-#### NOTE
-Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
+#### WARNING
+The documentation and the package may be misaligned:
+
+- The documented version (0.0.11) is ahead of the latest release on PyPI (0.0.10): these docs describe unreleased code.
 
 ## Source
 
 |                     |                                                                                                                                                       |
 |---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/addaix/pyrompt/commit/4822572f069ef853338892275014fa0a94711f56"><code>4822572f069ef853338892275014fa0a94711f56</code></a> |
+| Commit              | <a href="https://github.com/addaix/pyrompt/commit/e17b9206b7c94629a7d80c8e4be7fb807f50136d"><code>e17b9206b7c94629a7d80c8e4be7fb807f50136d</code></a> |
 | Branch              | <code>main</code>                                                                                                                                     |
-| Tags at this commit | <code>0.0.10</code>                                                                                                                                   |
+| Tags at this commit | <code>0.0.11</code>                                                                                                                                   |
 | Working tree        | clean                                                                                                                                                 |
 | Remote              | <code>https://github.com/addaix/pyrompt</code>                                                                                                        |
 
@@ -22,9 +24,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>addaix/pyrompt</code>                                                                |
-| Run          | <a href="https://github.com/addaix/pyrompt/actions/runs/45070765236">45070765236</a>       |
+| Run          | <a href="https://github.com/addaix/pyrompt/actions/runs/45081422409">45081422409</a>       |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>011cd93fd1bf1d99421dab1ec1f7a468181c23b4</code> (in the history of the built commit) |
+| Event commit | <code>52084ae4795b371fefe64d5759d3e1a6b91bb387</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -49,13 +51,13 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/pyrompt/0.0.10/">0.0.10</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/pyrompt/0.0.10/">0.0.10</a>, older than the documented version (0.0.11).
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/addaix/pyrompt && cd pyrompt
-git checkout 4822572f069ef853338892275014fa0a94711f56
+git checkout e17b9206b7c94629a7d80c8e4be7fb807f50136d
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

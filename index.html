@@ -96,6 +96,7 @@ data-aria-dark="Switch to auto color mode">
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
 <li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#what-pyrompt-adds">What pyrompt adds</a></li>
 <li><a class="reference internal" href="#quick-start">Quick Start</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#template-languages">Template Languages</a><ul>
@@ -181,6 +182,11 @@ data-aria-dark="Switch to auto color mode">
 <li><p>🏗️ Build composable prompt management systems</p></li>
 </ul>
 <p>All data sources use Python’s <code class="docutils literal notranslate"><span class="pre">Mapping</span></code> and <code class="docutils literal notranslate"><span class="pre">MutableMapping</span></code> interfaces (via <code class="docutils literal notranslate"><span class="pre">dol</span></code>), and all template types are registered in an extensible plugin system.</p>
+</section>
+<section id="what-pyrompt-adds">
+<h2>What pyrompt adds<a class="headerlink" href="#what-pyrompt-adds" title="Link to this heading">#</a></h2>
+<p>Hosted prompt servers such as <a class="reference external" href="https://github.com/langfuse/langfuse">Langfuse</a> give you numbered prompt versions, labels and a UI, at the cost of running (or paying for) a service. File formats such as <a class="reference external" href="https://github.com/microsoft/prompty">Prompty</a> define one prompt per <code class="docutils literal notranslate"><span class="pre">.prompty</span></code> file and a runner for it. pyrompt is neither: it is a dict-like layer over <em>any</em> store (a folder, a GitHub repo, any <code class="docutils literal notranslate"><span class="pre">dol</span></code> backend), with a choice of template engines, embedding search across a collection, and GitHub sharing. Versioning comes from the store (for example git), not from pyrompt.</p>
+<p>If you need to read <code class="docutils literal notranslate"><span class="pre">.prompty</span></code> files, the route is a <code class="docutils literal notranslate"><span class="pre">TemplateEngine</span></code> registered for the <code class="docutils literal notranslate"><span class="pre">.prompty</span></code> extension; none ships yet.</p>
 </section>
 <section id="quick-start">
 <h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
@@ -778,7 +784,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 </section>
 
-<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-22 21:13 UTC from <a href="https://github.com/addaix/pyrompt/commit/4822572f069ef853338892275014fa0a94711f56">4822572</a> (main) · pyrompt 0.0.10 · <a href="about-this-build.html">about this build</a></p>
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-22 23:08 UTC from <a href="https://github.com/addaix/pyrompt/commit/e17b9206b7c94629a7d80c8e4be7fb807f50136d">e17b920</a> (main) · pyrompt 0.0.11 · <a href="about-this-build.html">about this build</a></p>
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
@@ -813,7 +819,7 @@ data-aria-dark="Switch to auto color mode">
     </div>
   </div>
 </footer>
-      <script src="_static/documentation_options.js?v=a83ce22a"></script>
+      <script src="_static/documentation_options.js?v=0c446633"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
