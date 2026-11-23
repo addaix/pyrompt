@@ -2,20 +2,20 @@
 
 # About this build
 
-This documentation was built on **2026-11-22 23:08 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/e17b9206b7c94629a7d80c8e4be7fb807f50136d"><code>e17b920</code></a> on branch <code>main</code>, for **pyrompt 0.0.11** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-23 04:52 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/403a3d19c2300cc56d48bd5a81be3853b0696ff0"><code>403a3d1</code></a> on branch <code>main</code>, for **pyrompt 0.0.12** (from <code>pyproject.toml</code>).
 
 #### WARNING
 The documentation and the package may be misaligned:
 
-- The documented version (0.0.11) is ahead of the latest release on PyPI (0.0.10): these docs describe unreleased code.
+- The documented version (0.0.12) is ahead of the latest release on PyPI (0.0.11): these docs describe unreleased code.
 
 ## Source
 
 |                     |                                                                                                                                                       |
 |---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/addaix/pyrompt/commit/e17b9206b7c94629a7d80c8e4be7fb807f50136d"><code>e17b9206b7c94629a7d80c8e4be7fb807f50136d</code></a> |
+| Commit              | <a href="https://github.com/addaix/pyrompt/commit/403a3d19c2300cc56d48bd5a81be3853b0696ff0"><code>403a3d19c2300cc56d48bd5a81be3853b0696ff0</code></a> |
 | Branch              | <code>main</code>                                                                                                                                     |
-| Tags at this commit | <code>0.0.11</code>                                                                                                                                   |
+| Tags at this commit | <code>0.0.12</code>                                                                                                                                   |
 | Working tree        | clean                                                                                                                                                 |
 | Remote              | <code>https://github.com/addaix/pyrompt</code>                                                                                                        |
 
@@ -24,9 +24,9 @@ The documentation and the package may be misaligned:
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>addaix/pyrompt</code>                                                                |
-| Run          | <a href="https://github.com/addaix/pyrompt/actions/runs/45081422409">45081422409</a>       |
+| Run          | <a href="https://github.com/addaix/pyrompt/actions/runs/45114191797">45114191797</a>       |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>52084ae4795b371fefe64d5759d3e1a6b91bb387</code> (in the history of the built commit) |
+| Event commit | <code>8249d0ecae7898d62f7103f242345c40c6ebdc0e</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -51,13 +51,13 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/pyrompt/0.0.10/">0.0.10</a>, older than the documented version (0.0.11).
+Latest release: <a href="https://pypi.org/project/pyrompt/0.0.11/">0.0.11</a>, older than the documented version (0.0.12).
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/addaix/pyrompt && cd pyrompt
-git checkout e17b9206b7c94629a7d80c8e4be7fb807f50136d
+git checkout 403a3d19c2300cc56d48bd5a81be3853b0696ff0
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

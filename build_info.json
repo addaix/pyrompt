@@ -1,34 +1,34 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-22T23:08:19Z",
+  "built_at": "2026-11-23T04:52:03Z",
   "package": {
     "name": "pyrompt",
-    "version": "0.0.11",
+    "version": "0.0.12",
     "display_name": "pyrompt",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "e17b9206b7c94629a7d80c8e4be7fb807f50136d",
-    "short_commit": "e17b920",
+    "commit": "403a3d19c2300cc56d48bd5a81be3853b0696ff0",
+    "short_commit": "403a3d1",
     "branch": "main",
     "tags": [
-      "0.0.11"
+      "0.0.12"
     ],
     "dirty": false,
     "remote_url": "https://github.com/addaix/pyrompt",
-    "commit_url": "https://github.com/addaix/pyrompt/commit/e17b9206b7c94629a7d80c8e4be7fb807f50136d",
+    "commit_url": "https://github.com/addaix/pyrompt/commit/403a3d19c2300cc56d48bd5a81be3853b0696ff0",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "addaix/pyrompt",
-    "sha": "52084ae4795b371fefe64d5759d3e1a6b91bb387",
+    "sha": "8249d0ecae7898d62f7103f242345c40c6ebdc0e",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "45081422409",
-    "run_url": "https://github.com/addaix/pyrompt/actions/runs/45081422409",
+    "run_id": "45114191797",
+    "run_url": "https://github.com/addaix/pyrompt/actions/runs/45114191797",
     "server_url": "https://github.com"
   },
   "tools": {
@@ -62,16 +62,16 @@
   },
   "pypi": {
     "checked": true,
-    "latest": "0.0.10",
+    "latest": "0.0.11",
     "relation": "ahead",
     "error": null
   },
-  "reproduce": "git clone https://github.com/addaix/pyrompt && cd pyrompt\ngit checkout e17b9206b7c94629a7d80c8e4be7fb807f50136d\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/addaix/pyrompt && cd pyrompt\ngit checkout 403a3d19c2300cc56d48bd5a81be3853b0696ff0\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
     "aligned": false,
     "notes": [
-      "The documented version (0.0.11) is ahead of the latest release on PyPI (0.0.10): these docs describe unreleased code."
+      "The documented version (0.0.12) is ahead of the latest release on PyPI (0.0.11): these docs describe unreleased code."
     ]
   }
 }
