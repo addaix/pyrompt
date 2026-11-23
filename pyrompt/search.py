@@ -4,7 +4,7 @@ Semantic search for prompts and templates using embeddings.
 Provides similarity-based search over collections.
 """
 
-from typing import List, Tuple, Optional, Dict
+from typing import Callable, List, Tuple, Optional, Dict
 from collections.abc import Mapping
 
 try:
@@ -15,20 +15,48 @@ except ImportError:
     HAVE_NUMPY = False
 
 
+def default_embeddings() -> Callable:
+    """The embedding function used when none is passed: ``oa.embeddings``, else ``aix.embeddings``.
+
+    Both take ``(text_or_texts, model=...)`` and return a vector, or one vector per text.
+    Raises ``ImportError`` naming both when neither is installed.
+    """
+    try:
+        from oa import embeddings
+
+        return embeddings
+    except ImportError:
+        pass
+    try:
+        from aix import embeddings as aix_embeddings
+    except ImportError:
+        raise ImportError(
+            "an embedding function is required for semantic search: "
+            "pass embeddings=..., or have oa or aix installed"
+        )
+
+    def embeddings(x, model=None):
+        if isinstance(x, str):
+            return list(next(iter(aix_embeddings([x], model=model))))
+        return [list(v) for v in aix_embeddings(list(x), model=model)]
+
+    return embeddings
+
+
 class SemanticIndex:
     """
     Semantic search index for prompts/templates.
 
-    Uses oa.embeddings to create vector representations,
-    then supports similarity search.
+    Embeds through ``embeddings`` (a keyword seam; by default ``oa.embeddings``, else
+    ``aix.embeddings``) to create vector representations, then supports similarity search.
 
     Examples:
-        >>> from pyrompt import PromptCollection, SemanticIndex
-        >>> prompts = PromptCollection('my_project')
-        >>> prompts['python'] = "You are a Python expert."
-        >>> prompts['data'] = "You specialize in data analysis."
-        >>> index = SemanticIndex(prompts)
-        >>> results = index.search("help with pandas", top_k=2)
+        >>> from pyrompt import PromptCollection, SemanticIndex  # doctest: +SKIP
+        >>> prompts = PromptCollection('my_project')  # doctest: +SKIP
+        >>> prompts['python'] = "You are a Python expert."  # doctest: +SKIP
+        >>> prompts['data'] = "You specialize in data analysis."  # doctest: +SKIP
+        >>> index = SemanticIndex(prompts)  # doctest: +SKIP
+        >>> results = index.search("help with pandas", top_k=2)  # doctest: +SKIP
     """
 
     def __init__(
@@ -38,6 +66,7 @@ class SemanticIndex:
         auto_update: bool = False,
         embedding_model: str = "text-embedding-3-small",
         batch_size: int = 100,
+        embeddings: Optional[Callable] = None,
     ):
         """
         Create semantic index for a collection.
@@ -47,23 +76,19 @@ class SemanticIndex:
             auto_update: Whether to auto-update on collection changes
             embedding_model: Model to use for embeddings
             batch_size: Batch size for bulk embedding
+            embeddings: ``f(text_or_texts, model=...)`` returning a vector for a string, or
+                one vector per text for a list. Defaults to ``oa.embeddings``, else
+                ``aix.embeddings``.
 
         Raises:
-            ImportError: If numpy or oa not available
+            ImportError: If numpy is missing, or no embedding function is given or installed
         """
         if not HAVE_NUMPY:
             raise ImportError(
                 "numpy required for semantic search. Install with: pip install numpy"
             )
 
-        try:
-            from oa import embeddings
-
-            self._embeddings_func = embeddings
-        except ImportError:
-            raise ImportError(
-                "oa required for semantic search. Install with: pip install oa"
-            )
+        self._embeddings_func = embeddings or default_embeddings()
 
         self.collection = collection
         self.auto_update = auto_update
@@ -86,19 +111,12 @@ class SemanticIndex:
             return
 
         # Use batch computation for efficiency
-        try:
-            from oa.batch_embeddings import compute_embeddings
-
-            # Use batch API for large collections
-            _, embedding_vectors = compute_embeddings(
-                segments=texts,
-                batch_size=self.batch_size,
-                model=self.embedding_model,
-                verbosity=0,
+        embedding_vectors = []
+        for start in range(0, len(texts), self.batch_size):
+            batch = texts[start : start + self.batch_size]
+            embedding_vectors.extend(
+                self._embeddings_func(batch, model=self.embedding_model)
             )
-        except (ImportError, Exception):
-            # Fall back to regular embeddings
-            embedding_vectors = self._embeddings_func(texts, model=self.embedding_model)
 
         # Store embeddings
         self._embeddings = {

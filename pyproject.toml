@@ -66,5 +66,3 @@ minversion = "6.0"
 testpaths = ["tests"]
 doctest_optionflags = ["NORMALIZE_WHITESPACE", "ELLIPSIS"]
 
-[tool.wads.ci.testing]
-exclude_paths = ["pyrompt"]
