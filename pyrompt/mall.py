@@ -140,7 +140,7 @@ class PromptMall(Mapping):
             from pyrompt.search import SemanticIndex
         except ImportError:
             raise ImportError(
-                "Semantic search requires oa and numpy. "
+                "Semantic search requires numpy and an embedding function (oa or aix). "
                 "Install with: pip install pyrompt[search]"
             )
 

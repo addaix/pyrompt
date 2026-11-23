@@ -116,7 +116,24 @@ def test_cluster_groups_similar_items(index_cls):
 
 def test_missing_oa_gives_a_helpful_error(monkeypatch):
     monkeypatch.setitem(sys.modules, "oa", None)
+    monkeypatch.setitem(sys.modules, "aix", None)
     from pyrompt.search import SemanticIndex
 
-    with pytest.raises(ImportError, match="oa required"):
+    with pytest.raises(ImportError, match="embedding function"):
         SemanticIndex({"a": "a"})
+
+
+def test_embeddings_keyword_is_the_seam_and_needs_no_oa(monkeypatch):
+    monkeypatch.setitem(sys.modules, "oa", None)
+    monkeypatch.setitem(sys.modules, "aix", None)
+    calls = []
+
+    def embed(x, model=None):
+        calls.append(x)
+        return VECS[x] if isinstance(x, str) else [VECS[t] for t in x]
+
+    from pyrompt.search import SemanticIndex
+
+    idx = SemanticIndex(_coll(), embeddings=embed, batch_size=2)
+    assert idx.search("pandas help", top_k=1)[0][0] == "python expert"
+    assert [len(c) for c in calls if isinstance(c, list)] == [2, 1]  # batched by batch_size
