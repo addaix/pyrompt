@@ -103,6 +103,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#pyrompt.search.SemanticIndex.search"><code class="docutils literal notranslate"><span class="pre">SemanticIndex.search()</span></code></a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#pyrompt.search.default_embeddings"><code class="docutils literal notranslate"><span class="pre">default_embeddings()</span></code></a></li>
 </ul>
 </div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
   </aside>
@@ -145,6 +146,16 @@ data-aria-dark="Switch to auto color mode">
 <span id="pyrompt-search"></span><h1>pyrompt.search<a class="headerlink" href="#module-pyrompt.search" title="Link to this heading">#</a></h1>
 <p>Semantic search for prompts and templates using embeddings.</p>
 <p>Provides similarity-based search over collections.</p>
+<p class="rubric">Functions</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#pyrompt.search.default_embeddings" title="pyrompt.search.default_embeddings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_embeddings</span></code></a>()</p></td>
+<td><p>The embedding function used when none is passed: <code class="docutils literal notranslate"><span class="pre">oa.embeddings</span></code>, else <code class="docutils literal notranslate"><span class="pre">aix.embeddings</span></code>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p class="rubric">Classes</p>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
@@ -157,11 +168,11 @@ data-aria-dark="Switch to auto color mode">
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyrompt.search.SemanticIndex">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrompt.search.</span></span><span class="sig-name descname"><span class="pre">SemanticIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text-embedding-3-small'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/search.html#SemanticIndex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.search.SemanticIndex" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">pyrompt.search.</span></span><span class="sig-name descname"><span class="pre">SemanticIndex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">collection</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'text-embedding-3-small'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embeddings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/search.html#SemanticIndex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.search.SemanticIndex" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Semantic search index for prompts/templates.</p>
-<p>Uses oa.embeddings to create vector representations,
-then supports similarity search.</p>
+<p>Embeds through <code class="docutils literal notranslate"><span class="pre">embeddings</span></code> (a keyword seam; by default <code class="docutils literal notranslate"><span class="pre">oa.embeddings</span></code>, else
+<code class="docutils literal notranslate"><span class="pre">aix.embeddings</span></code>) to create vector representations, then supports similarity search.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span><span class="p">,</span> <span class="n">SemanticIndex</span>
 </span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s1">'my_project'</span><span class="p">)</span>
@@ -248,6 +259,19 @@ then supports similarity search.</p>
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="pyrompt.search.default_embeddings">
+<span class="sig-prename descclassname"><span class="pre">pyrompt.search.</span></span><span class="sig-name descname"><span class="pre">default_embeddings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pyrompt/search.html#default_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyrompt.search.default_embeddings" title="Link to this definition">#</a></dt>
+<dd><p>The embedding function used when none is passed: <code class="docutils literal notranslate"><span class="pre">oa.embeddings</span></code>, else <code class="docutils literal notranslate"><span class="pre">aix.embeddings</span></code>.</p>
+<p>Both take <code class="docutils literal notranslate"><span class="pre">(text_or_texts,</span> <span class="pre">model=...)</span></code> and return a vector, or one vector per text.
+Raises <code class="docutils literal notranslate"><span class="pre">ImportError</span></code> naming both when neither is installed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
         </article><button class="back-to-top" type="button">
@@ -290,7 +314,7 @@ then supports similarity search.</p>
     </div>
   </div>
 </footer>
-      <script src="../_static/documentation_options.js?v=9fc46840"></script>
+      <script src="../_static/documentation_options.js?v=544df88d"></script>
       <script src="../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../_static/clipboard.min.js?v=a7894cd8"></script>

@@ -4,19 +4,24 @@ Semantic search for prompts and templates using embeddings.
 
 Provides similarity-based search over collections.
 
+### Functions
+
+| [`default_embeddings`](#pyrompt.search.default_embeddings)()   | The embedding function used when none is passed: `oa.embeddings`, else `aix.embeddings`.   |
+|-------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
+
 ### Classes
 
 | [`SemanticIndex`](#pyrompt.search.SemanticIndex)(collection, \*[, auto_update, ...])   | Semantic search index for prompts/templates.   |
 |------------------------------------------------------------------------------------------------------|------------------------------------------------|
 
-### *class* pyrompt.search.SemanticIndex(collection, , auto_update=False, embedding_model='text-embedding-3-small', batch_size=100)
+### *class* pyrompt.search.SemanticIndex(collection, , auto_update=False, embedding_model='text-embedding-3-small', batch_size=100, embeddings=None)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 Semantic search index for prompts/templates.
 
-Uses oa.embeddings to create vector representations,
-then supports similarity search.
+Embeds through `embeddings` (a keyword seam; by default `oa.embeddings`, else
+`aix.embeddings`) to create vector representations, then supports similarity search.
 
 ### Examples
 
@@ -79,3 +84,13 @@ Search for similar prompts.
 >>> for key, score in results:
 ...     print(f"{key}: {score:.3f}")
 ```
+
+### pyrompt.search.default_embeddings()
+
+The embedding function used when none is passed: `oa.embeddings`, else `aix.embeddings`.
+
+Both take `(text_or_texts, model=...)` and return a vector, or one vector per text.
+Raises `ImportError` naming both when neither is installed.
+
+* **Return type:**
+  [`Callable`](https://docs.python.org/3/library/typing.html#typing.Callable)

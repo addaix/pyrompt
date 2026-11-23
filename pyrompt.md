@@ -1,4 +1,4 @@
-> built 2026-11-23 04:58 UTC from 3b367af (main) · pyrompt 0.0.13. Details: build_info.json
+> built 2026-11-23 07:13 UTC from 68ddc38 (main) · pyrompt 0.0.14. Details: build_info.json
 
 # index.html.md
 
@@ -1496,14 +1496,14 @@ Search across multiple collections.
 
 Get collections.
 
-### *class* pyrompt.SemanticIndex(collection, , auto_update=False, embedding_model='text-embedding-3-small', batch_size=100)
+### *class* pyrompt.SemanticIndex(collection, , auto_update=False, embedding_model='text-embedding-3-small', batch_size=100, embeddings=None)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 Semantic search index for prompts/templates.
 
-Uses oa.embeddings to create vector representations,
-then supports similarity search.
+Embeds through `embeddings` (a keyword seam; by default `oa.embeddings`, else
+`aix.embeddings`) to create vector representations, then supports similarity search.
 
 ### Examples
 
@@ -2210,19 +2210,24 @@ Semantic search for prompts and templates using embeddings.
 
 Provides similarity-based search over collections.
 
+### Functions
+
+| [`default_embeddings`](_autosummary/pyrompt.search.html.md#pyrompt.search.default_embeddings)()   | The embedding function used when none is passed: `oa.embeddings`, else `aix.embeddings`.   |
+|-------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|
+
 ### Classes
 
 | [`SemanticIndex`](_autosummary/pyrompt.search.html.md#pyrompt.search.SemanticIndex)(collection, \*[, auto_update, ...])   | Semantic search index for prompts/templates.   |
 |------------------------------------------------------------------------------------------------------|------------------------------------------------|
 
-### *class* pyrompt.search.SemanticIndex(collection, , auto_update=False, embedding_model='text-embedding-3-small', batch_size=100)
+### *class* pyrompt.search.SemanticIndex(collection, , auto_update=False, embedding_model='text-embedding-3-small', batch_size=100, embeddings=None)
 
 Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 
 Semantic search index for prompts/templates.
 
-Uses oa.embeddings to create vector representations,
-then supports similarity search.
+Embeds through `embeddings` (a keyword seam; by default `oa.embeddings`, else
+`aix.embeddings`) to create vector representations, then supports similarity search.
 
 ### Examples
 
@@ -2285,6 +2290,16 @@ Search for similar prompts.
 >>> for key, score in results:
 ...     print(f"{key}: {score:.3f}")
 ```
+
+### pyrompt.search.default_embeddings()
+
+The embedding function used when none is passed: `oa.embeddings`, else `aix.embeddings`.
+
+Both take `(text_or_texts, model=...)` and return a vector, or one vector per text.
+Raises `ImportError` naming both when neither is installed.
+
+* **Return type:**
+  [`Callable`](https://docs.python.org/3/library/typing.html#typing.Callable)
 
 
 # _autosummary/pyrompt.stores.html.md
@@ -2626,18 +2641,20 @@ Validate a template string.
 
 # About this build
 
-This documentation was built on **2026-11-23 04:58 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/3b367afd72e1856602239b8ff70a64b74c4cdcf8"><code>3b367af</code></a> on branch <code>main</code>, for **pyrompt 0.0.13** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-23 07:13 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/68ddc38f5ab380b9034d0315c6ddbb53a4e53d09"><code>68ddc38</code></a> on branch <code>main</code>, for **pyrompt 0.0.14** (from <code>pyproject.toml</code>).
 
-#### NOTE
-Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
+#### WARNING
+The documentation and the package may be misaligned:
+
+- The documented version (0.0.14) is ahead of the latest release on PyPI (0.0.13): these docs describe unreleased code.
 
 ## Source
 
 |                     |                                                                                                                                                       |
 |---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/addaix/pyrompt/commit/3b367afd72e1856602239b8ff70a64b74c4cdcf8"><code>3b367afd72e1856602239b8ff70a64b74c4cdcf8</code></a> |
+| Commit              | <a href="https://github.com/addaix/pyrompt/commit/68ddc38f5ab380b9034d0315c6ddbb53a4e53d09"><code>68ddc38f5ab380b9034d0315c6ddbb53a4e53d09</code></a> |
 | Branch              | <code>main</code>                                                                                                                                     |
-| Tags at this commit | <code>0.0.13</code>                                                                                                                                   |
+| Tags at this commit | <code>0.0.14</code>                                                                                                                                   |
 | Working tree        | clean                                                                                                                                                 |
 | Remote              | <code>https://github.com/addaix/pyrompt</code>                                                                                                        |
 
@@ -2646,15 +2663,15 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>addaix/pyrompt</code>                                                                |
-| Run          | <a href="https://github.com/addaix/pyrompt/actions/runs/45114760620">45114760620</a>       |
+| Run          | <a href="https://github.com/addaix/pyrompt/actions/runs/45129328515">45129328515</a>       |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>7fdab2a479ba17aa2a20a5e02675fe8c1d3ff79d</code> (in the history of the built commit) |
+| Event commit | <code>5cecadb761918261c1c7788ac43cbab681ec345f</code> (in the history of the built commit) |
 
 ## Tools
 
 |          |         |
 |----------|---------|
-| epythet  | 0.2.23  |
+| epythet  | 0.2.24  |
 | Sphinx   | 9.1.1   |
 | docutils | 0.22.4  |
 | Python   | 3.12.16 |
@@ -2673,14 +2690,14 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/pyrompt/0.0.13/">0.0.13</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/pyrompt/0.0.13/">0.0.13</a>, older than the documented version (0.0.14).
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/addaix/pyrompt && cd pyrompt
-git checkout 3b367afd72e1856602239b8ff70a64b74c4cdcf8
-pip install "epythet==0.2.23"
+git checkout 68ddc38f5ab380b9034d0315c6ddbb53a4e53d09
+pip install "epythet==0.2.24"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
 

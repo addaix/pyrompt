@@ -4,6 +4,12 @@ pyrompt.search
 .. automodule:: pyrompt.search
 
    
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      default_embeddings
+   
    .. rubric:: Classes
 
    .. autosummary::

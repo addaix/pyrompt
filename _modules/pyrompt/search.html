@@ -131,7 +131,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="4"><span class="sd">Provides similarity-based search over collections.</span>
 </span><span data-line="5"><span class="sd">"""</span>
 </span><span data-line="6">
-</span><span data-line="7"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span>
+</span><span data-line="7"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span>
 </span><span data-line="8"><span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span>
 </span><span data-line="9">
 </span><span data-line="10"><span class="k">try</span><span class="p">:</span>
@@ -142,302 +142,323 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="15">    <span class="n">HAVE_NUMPY</span> <span class="o">=</span> <span class="kc">False</span>
 </span><span data-line="16">
 </span><span data-line="17">
+<div class="viewcode-block" id="default_embeddings">
+<a class="viewcode-back" href="../../_autosummary/pyrompt.search.html#pyrompt.default_embeddings">[docs]</a>
+</span><span data-line="18"><span class="k">def</span><span class="w"> </span><span class="nf">default_embeddings</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+</span><span data-line="19"><span class="w">    </span><span class="sd">"""The embedding function used when none is passed: ``oa.embeddings``, else ``aix.embeddings``.</span>
+</span><span data-line="20">
+</span><span data-line="21"><span class="sd">    Both take ``(text_or_texts, model=...)`` and return a vector, or one vector per text.</span>
+</span><span data-line="22"><span class="sd">    Raises ``ImportError`` naming both when neither is installed.</span>
+</span><span data-line="23"><span class="sd">    """</span>
+</span><span data-line="24">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="25">        <span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">embeddings</span>
+</span><span data-line="26">
+</span><span data-line="27">        <span class="k">return</span> <span class="n">embeddings</span>
+</span><span data-line="28">    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+</span><span data-line="29">        <span class="k">pass</span>
+</span><span data-line="30">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="31">        <span class="kn">from</span><span class="w"> </span><span class="nn">aix</span><span class="w"> </span><span class="kn">import</span> <span class="n">embeddings</span> <span class="k">as</span> <span class="n">aix_embeddings</span>
+</span><span data-line="32">    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+</span><span data-line="33">        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+</span><span data-line="34">            <span class="s2">"an embedding function is required for semantic search: "</span>
+</span><span data-line="35">            <span class="s2">"pass embeddings=..., or have oa or aix installed"</span>
+</span><span data-line="36">        <span class="p">)</span>
+</span><span data-line="37">
+</span><span data-line="38">    <span class="k">def</span><span class="w"> </span><span class="nf">embeddings</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span data-line="39">        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+</span><span data-line="40">            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">aix_embeddings</span><span class="p">([</span><span class="n">x</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">))))</span>
+</span><span data-line="41">        <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">aix_embeddings</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)]</span>
+</span><span data-line="42">
+</span><span data-line="43">    <span class="k">return</span> <span class="n">embeddings</span></div>
+
+</span><span data-line="44">
+</span><span data-line="45">
 <div class="viewcode-block" id="SemanticIndex">
 <a class="viewcode-back" href="../../_autosummary/pyrompt.search.html#pyrompt.SemanticIndex">[docs]</a>
-</span><span data-line="18"><span class="k">class</span><span class="w"> </span><span class="nc">SemanticIndex</span><span class="p">:</span>
-</span><span data-line="19"><span class="w">    </span><span class="sd">"""</span>
-</span><span data-line="20"><span class="sd">    Semantic search index for prompts/templates.</span>
-</span><span data-line="21">
-</span><span data-line="22"><span class="sd">    Uses oa.embeddings to create vector representations,</span>
-</span><span data-line="23"><span class="sd">    then supports similarity search.</span>
-</span><span data-line="24">
-</span><span data-line="25"><span class="sd">    Examples:</span>
-</span><span data-line="26"><span class="sd">        &gt;&gt;&gt; from pyrompt import PromptCollection, SemanticIndex</span>
-</span><span data-line="27"><span class="sd">        &gt;&gt;&gt; prompts = PromptCollection('my_project')</span>
-</span><span data-line="28"><span class="sd">        &gt;&gt;&gt; prompts['python'] = "You are a Python expert."</span>
-</span><span data-line="29"><span class="sd">        &gt;&gt;&gt; prompts['data'] = "You specialize in data analysis."</span>
-</span><span data-line="30"><span class="sd">        &gt;&gt;&gt; index = SemanticIndex(prompts)</span>
-</span><span data-line="31"><span class="sd">        &gt;&gt;&gt; results = index.search("help with pandas", top_k=2)</span>
-</span><span data-line="32"><span class="sd">    """</span>
-</span><span data-line="33">
-</span><span data-line="34">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-</span><span data-line="35">        <span class="bp">self</span><span class="p">,</span>
-</span><span data-line="36">        <span class="n">collection</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
-</span><span data-line="37">        <span class="o">*</span><span class="p">,</span>
-</span><span data-line="38">        <span class="n">auto_update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-</span><span data-line="39">        <span class="n">embedding_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"text-embedding-3-small"</span><span class="p">,</span>
-</span><span data-line="40">        <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-</span><span data-line="41">    <span class="p">):</span>
-</span><span data-line="42"><span class="w">        </span><span class="sd">"""</span>
-</span><span data-line="43"><span class="sd">        Create semantic index for a collection.</span>
-</span><span data-line="44">
-</span><span data-line="45"><span class="sd">        Args:</span>
-</span><span data-line="46"><span class="sd">            collection: Mapping of keys to text (prompts/templates)</span>
-</span><span data-line="47"><span class="sd">            auto_update: Whether to auto-update on collection changes</span>
-</span><span data-line="48"><span class="sd">            embedding_model: Model to use for embeddings</span>
-</span><span data-line="49"><span class="sd">            batch_size: Batch size for bulk embedding</span>
-</span><span data-line="50">
-</span><span data-line="51"><span class="sd">        Raises:</span>
-</span><span data-line="52"><span class="sd">            ImportError: If numpy or oa not available</span>
-</span><span data-line="53"><span class="sd">        """</span>
-</span><span data-line="54">        <span class="k">if</span> <span class="ow">not</span> <span class="n">HAVE_NUMPY</span><span class="p">:</span>
-</span><span data-line="55">            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-</span><span data-line="56">                <span class="s2">"numpy required for semantic search. Install with: pip install numpy"</span>
-</span><span data-line="57">            <span class="p">)</span>
-</span><span data-line="58">
-</span><span data-line="59">        <span class="k">try</span><span class="p">:</span>
-</span><span data-line="60">            <span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">embeddings</span>
+</span><span data-line="46"><span class="k">class</span><span class="w"> </span><span class="nc">SemanticIndex</span><span class="p">:</span>
+</span><span data-line="47"><span class="w">    </span><span class="sd">"""</span>
+</span><span data-line="48"><span class="sd">    Semantic search index for prompts/templates.</span>
+</span><span data-line="49">
+</span><span data-line="50"><span class="sd">    Embeds through ``embeddings`` (a keyword seam; by default ``oa.embeddings``, else</span>
+</span><span data-line="51"><span class="sd">    ``aix.embeddings``) to create vector representations, then supports similarity search.</span>
+</span><span data-line="52">
+</span><span data-line="53"><span class="sd">    Examples:</span>
+</span><span data-line="54"><span class="sd">        &gt;&gt;&gt; from pyrompt import PromptCollection, SemanticIndex  # doctest: +SKIP</span>
+</span><span data-line="55"><span class="sd">        &gt;&gt;&gt; prompts = PromptCollection('my_project')  # doctest: +SKIP</span>
+</span><span data-line="56"><span class="sd">        &gt;&gt;&gt; prompts['python'] = "You are a Python expert."  # doctest: +SKIP</span>
+</span><span data-line="57"><span class="sd">        &gt;&gt;&gt; prompts['data'] = "You specialize in data analysis."  # doctest: +SKIP</span>
+</span><span data-line="58"><span class="sd">        &gt;&gt;&gt; index = SemanticIndex(prompts)  # doctest: +SKIP</span>
+</span><span data-line="59"><span class="sd">        &gt;&gt;&gt; results = index.search("help with pandas", top_k=2)  # doctest: +SKIP</span>
+</span><span data-line="60"><span class="sd">    """</span>
 </span><span data-line="61">
-</span><span data-line="62">            <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings_func</span> <span class="o">=</span> <span class="n">embeddings</span>
-</span><span data-line="63">        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-</span><span data-line="64">            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-</span><span data-line="65">                <span class="s2">"oa required for semantic search. Install with: pip install oa"</span>
-</span><span data-line="66">            <span class="p">)</span>
-</span><span data-line="67">
-</span><span data-line="68">        <span class="bp">self</span><span class="o">.</span><span class="n">collection</span> <span class="o">=</span> <span class="n">collection</span>
-</span><span data-line="69">        <span class="bp">self</span><span class="o">.</span><span class="n">auto_update</span> <span class="o">=</span> <span class="n">auto_update</span>
-</span><span data-line="70">        <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span> <span class="o">=</span> <span class="n">embedding_model</span>
-</span><span data-line="71">        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
-</span><span data-line="72">
-</span><span data-line="73">        <span class="c1"># Storage for embeddings</span>
-</span><span data-line="74">        <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span data-line="75">
-</span><span data-line="76">        <span class="c1"># Build initial index</span>
-</span><span data-line="77">        <span class="bp">self</span><span class="o">.</span><span class="n">rebuild</span><span class="p">()</span>
-</span><span data-line="78">
+</span><span data-line="62">    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span data-line="63">        <span class="bp">self</span><span class="p">,</span>
+</span><span data-line="64">        <span class="n">collection</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span>
+</span><span data-line="65">        <span class="o">*</span><span class="p">,</span>
+</span><span data-line="66">        <span class="n">auto_update</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+</span><span data-line="67">        <span class="n">embedding_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"text-embedding-3-small"</span><span class="p">,</span>
+</span><span data-line="68">        <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+</span><span data-line="69">        <span class="n">embeddings</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span data-line="70">    <span class="p">):</span>
+</span><span data-line="71"><span class="w">        </span><span class="sd">"""</span>
+</span><span data-line="72"><span class="sd">        Create semantic index for a collection.</span>
+</span><span data-line="73">
+</span><span data-line="74"><span class="sd">        Args:</span>
+</span><span data-line="75"><span class="sd">            collection: Mapping of keys to text (prompts/templates)</span>
+</span><span data-line="76"><span class="sd">            auto_update: Whether to auto-update on collection changes</span>
+</span><span data-line="77"><span class="sd">            embedding_model: Model to use for embeddings</span>
+</span><span data-line="78"><span class="sd">            batch_size: Batch size for bulk embedding</span>
+</span><span data-line="79"><span class="sd">            embeddings: ``f(text_or_texts, model=...)`` returning a vector for a string, or</span>
+</span><span data-line="80"><span class="sd">                one vector per text for a list. Defaults to ``oa.embeddings``, else</span>
+</span><span data-line="81"><span class="sd">                ``aix.embeddings``.</span>
+</span><span data-line="82">
+</span><span data-line="83"><span class="sd">        Raises:</span>
+</span><span data-line="84"><span class="sd">            ImportError: If numpy is missing, or no embedding function is given or installed</span>
+</span><span data-line="85"><span class="sd">        """</span>
+</span><span data-line="86">        <span class="k">if</span> <span class="ow">not</span> <span class="n">HAVE_NUMPY</span><span class="p">:</span>
+</span><span data-line="87">            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+</span><span data-line="88">                <span class="s2">"numpy required for semantic search. Install with: pip install numpy"</span>
+</span><span data-line="89">            <span class="p">)</span>
+</span><span data-line="90">
+</span><span data-line="91">        <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings_func</span> <span class="o">=</span> <span class="n">embeddings</span> <span class="ow">or</span> <span class="n">default_embeddings</span><span class="p">()</span>
+</span><span data-line="92">
+</span><span data-line="93">        <span class="bp">self</span><span class="o">.</span><span class="n">collection</span> <span class="o">=</span> <span class="n">collection</span>
+</span><span data-line="94">        <span class="bp">self</span><span class="o">.</span><span class="n">auto_update</span> <span class="o">=</span> <span class="n">auto_update</span>
+</span><span data-line="95">        <span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span> <span class="o">=</span> <span class="n">embedding_model</span>
+</span><span data-line="96">        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+</span><span data-line="97">
+</span><span data-line="98">        <span class="c1"># Storage for embeddings</span>
+</span><span data-line="99">        <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span data-line="100">
+</span><span data-line="101">        <span class="c1"># Build initial index</span>
+</span><span data-line="102">        <span class="bp">self</span><span class="o">.</span><span class="n">rebuild</span><span class="p">()</span>
+</span><span data-line="103">
 <div class="viewcode-block" id="SemanticIndex.rebuild">
 <a class="viewcode-back" href="../../_autosummary/pyrompt.search.html#pyrompt.SemanticIndex.rebuild">[docs]</a>
-</span><span data-line="79">    <span class="k">def</span><span class="w"> </span><span class="nf">rebuild</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span data-line="80"><span class="w">        </span><span class="sd">"""Rebuild entire index from current collection."""</span>
-</span><span data-line="81">        <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-</span><span data-line="82">        <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
-</span><span data-line="83">
-</span><span data-line="84">        <span class="k">if</span> <span class="ow">not</span> <span class="n">texts</span><span class="p">:</span>
-</span><span data-line="85">            <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span data-line="86">            <span class="k">return</span>
-</span><span data-line="87">
-</span><span data-line="88">        <span class="c1"># Use batch computation for efficiency</span>
-</span><span data-line="89">        <span class="k">try</span><span class="p">:</span>
-</span><span data-line="90">            <span class="kn">from</span><span class="w"> </span><span class="nn">oa.batch_embeddings</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_embeddings</span>
-</span><span data-line="91">
-</span><span data-line="92">            <span class="c1"># Use batch API for large collections</span>
-</span><span data-line="93">            <span class="n">_</span><span class="p">,</span> <span class="n">embedding_vectors</span> <span class="o">=</span> <span class="n">compute_embeddings</span><span class="p">(</span>
-</span><span data-line="94">                <span class="n">segments</span><span class="o">=</span><span class="n">texts</span><span class="p">,</span>
-</span><span data-line="95">                <span class="n">batch_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span>
-</span><span data-line="96">                <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span><span class="p">,</span>
-</span><span data-line="97">                <span class="n">verbosity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-</span><span data-line="98">            <span class="p">)</span>
-</span><span data-line="99">        <span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
-</span><span data-line="100">            <span class="c1"># Fall back to regular embeddings</span>
-</span><span data-line="101">            <span class="n">embedding_vectors</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings_func</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span><span class="p">)</span>
-</span><span data-line="102">
-</span><span data-line="103">        <span class="c1"># Store embeddings</span>
-</span><span data-line="104">        <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span> <span class="o">=</span> <span class="p">{</span>
-</span><span data-line="105">            <span class="n">key</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">emb</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">embedding_vectors</span><span class="p">)</span>
-</span><span data-line="106">        <span class="p">}</span></div>
+</span><span data-line="104">    <span class="k">def</span><span class="w"> </span><span class="nf">rebuild</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="105"><span class="w">        </span><span class="sd">"""Rebuild entire index from current collection."""</span>
+</span><span data-line="106">        <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</span><span data-line="107">        <span class="n">texts</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
+</span><span data-line="108">
+</span><span data-line="109">        <span class="k">if</span> <span class="ow">not</span> <span class="n">texts</span><span class="p">:</span>
+</span><span data-line="110">            <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span data-line="111">            <span class="k">return</span>
+</span><span data-line="112">
+</span><span data-line="113">        <span class="c1"># Use batch computation for efficiency</span>
+</span><span data-line="114">        <span class="n">embedding_vectors</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="115">        <span class="k">for</span> <span class="n">start</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">texts</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">):</span>
+</span><span data-line="116">            <span class="n">batch</span> <span class="o">=</span> <span class="n">texts</span><span class="p">[</span><span class="n">start</span> <span class="p">:</span> <span class="n">start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">]</span>
+</span><span data-line="117">            <span class="n">embedding_vectors</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+</span><span data-line="118">                <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings_func</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span><span class="p">)</span>
+</span><span data-line="119">            <span class="p">)</span>
+</span><span data-line="120">
+</span><span data-line="121">        <span class="c1"># Store embeddings</span>
+</span><span data-line="122">        <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="123">            <span class="n">key</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">emb</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">embedding_vectors</span><span class="p">)</span>
+</span><span data-line="124">        <span class="p">}</span></div>
 
-</span><span data-line="107">
+</span><span data-line="125">
 <div class="viewcode-block" id="SemanticIndex.add">
 <a class="viewcode-back" href="../../_autosummary/pyrompt.search.html#pyrompt.SemanticIndex.add">[docs]</a>
-</span><span data-line="108">    <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span data-line="109"><span class="w">        </span><span class="sd">"""</span>
-</span><span data-line="110"><span class="sd">        Add single item to index.</span>
-</span><span data-line="111">
-</span><span data-line="112"><span class="sd">        Args:</span>
-</span><span data-line="113"><span class="sd">            key: Key of item to add</span>
-</span><span data-line="114"><span class="sd">        """</span>
-</span><span data-line="115">        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span data-line="116">        <span class="c1"># Single embedding computation</span>
-</span><span data-line="117">        <span class="n">emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings_func</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span><span class="p">)</span>
-</span><span data-line="118">        <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span></div>
+</span><span data-line="126">    <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span data-line="127"><span class="w">        </span><span class="sd">"""</span>
+</span><span data-line="128"><span class="sd">        Add single item to index.</span>
+</span><span data-line="129">
+</span><span data-line="130"><span class="sd">        Args:</span>
+</span><span data-line="131"><span class="sd">            key: Key of item to add</span>
+</span><span data-line="132"><span class="sd">        """</span>
+</span><span data-line="133">        <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</span><span data-line="134">        <span class="c1"># Single embedding computation</span>
+</span><span data-line="135">        <span class="n">emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings_func</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span><span class="p">)</span>
+</span><span data-line="136">        <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span></div>
 
-</span><span data-line="119">
+</span><span data-line="137">
 <div class="viewcode-block" id="SemanticIndex.remove">
 <a class="viewcode-back" href="../../_autosummary/pyrompt.search.html#pyrompt.SemanticIndex.remove">[docs]</a>
-</span><span data-line="120">    <span class="k">def</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-</span><span data-line="121"><span class="w">        </span><span class="sd">"""</span>
-</span><span data-line="122"><span class="sd">        Remove item from index.</span>
-</span><span data-line="123">
-</span><span data-line="124"><span class="sd">        Args:</span>
-</span><span data-line="125"><span class="sd">            key: Key of item to remove</span>
-</span><span data-line="126"><span class="sd">        """</span>
-</span><span data-line="127">        <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+</span><span data-line="138">    <span class="k">def</span><span class="w"> </span><span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span data-line="139"><span class="w">        </span><span class="sd">"""</span>
+</span><span data-line="140"><span class="sd">        Remove item from index.</span>
+</span><span data-line="141">
+</span><span data-line="142"><span class="sd">        Args:</span>
+</span><span data-line="143"><span class="sd">            key: Key of item to remove</span>
+</span><span data-line="144"><span class="sd">        """</span>
+</span><span data-line="145">        <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
 
-</span><span data-line="128">
+</span><span data-line="146">
 <div class="viewcode-block" id="SemanticIndex.search">
 <a class="viewcode-back" href="../../_autosummary/pyrompt.search.html#pyrompt.SemanticIndex.search">[docs]</a>
-</span><span data-line="129">    <span class="k">def</span><span class="w"> </span><span class="nf">search</span><span class="p">(</span>
-</span><span data-line="130">        <span class="bp">self</span><span class="p">,</span>
-</span><span data-line="131">        <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span data-line="132">        <span class="n">top_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-</span><span data-line="133">        <span class="n">filters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span data-line="134">        <span class="n">diversity_threshold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span data-line="135">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-</span><span data-line="136"><span class="w">        </span><span class="sd">"""</span>
-</span><span data-line="137"><span class="sd">        Search for similar prompts.</span>
-</span><span data-line="138">
-</span><span data-line="139"><span class="sd">        Args:</span>
-</span><span data-line="140"><span class="sd">            query: Search query text</span>
-</span><span data-line="141"><span class="sd">            top_k: Number of results to return</span>
-</span><span data-line="142"><span class="sd">            filters: Metadata filters (if collection has metadata)</span>
-</span><span data-line="143"><span class="sd">            diversity_threshold: If set, exclude results too similar to each other</span>
-</span><span data-line="144">
-</span><span data-line="145"><span class="sd">        Returns:</span>
-</span><span data-line="146"><span class="sd">            List of (key, similarity_score) tuples, sorted by score descending</span>
-</span><span data-line="147">
-</span><span data-line="148"><span class="sd">        Example:</span>
-</span><span data-line="149"><span class="sd">            &gt;&gt;&gt; results = index.search("help with data analysis", top_k=3)  # doctest: +SKIP</span>
-</span><span data-line="150"><span class="sd">            &gt;&gt;&gt; for key, score in results:  # doctest: +SKIP</span>
-</span><span data-line="151"><span class="sd">            ...     print(f"{key}: {score:.3f}")</span>
-</span><span data-line="152"><span class="sd">        """</span>
-</span><span data-line="153">        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">:</span>
-</span><span data-line="154">            <span class="k">return</span> <span class="p">[]</span>
-</span><span data-line="155">
-</span><span data-line="156">        <span class="c1"># Get query embedding</span>
-</span><span data-line="157">        <span class="n">query_emb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_embeddings_func</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span><span class="p">))</span>
-</span><span data-line="158">
-</span><span data-line="159">        <span class="c1"># Compute similarities</span>
-</span><span data-line="160">        <span class="n">similarities</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span data-line="161">        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">emb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span data-line="162">            <span class="c1"># Cosine similarity</span>
-</span><span data-line="163">            <span class="n">sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">query_emb</span><span class="p">,</span> <span class="n">emb</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-</span><span data-line="164">                <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">query_emb</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span>
-</span><span data-line="165">            <span class="p">)</span>
-</span><span data-line="166">            <span class="n">similarities</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">sim</span><span class="p">)))</span>
-</span><span data-line="167">
-</span><span data-line="168">        <span class="c1"># Sort by similarity descending</span>
-</span><span data-line="169">        <span class="n">similarities</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="170">
-</span><span data-line="171">        <span class="c1"># Apply filters if provided</span>
-</span><span data-line="172">        <span class="k">if</span> <span class="n">filters</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="p">,</span> <span class="s2">"meta"</span><span class="p">):</span>
-</span><span data-line="173">            <span class="n">similarities</span> <span class="o">=</span> <span class="p">[</span>
-</span><span data-line="174">                <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">similarities</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matches_filters</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
-</span><span data-line="175">            <span class="p">]</span>
+</span><span data-line="147">    <span class="k">def</span><span class="w"> </span><span class="nf">search</span><span class="p">(</span>
+</span><span data-line="148">        <span class="bp">self</span><span class="p">,</span>
+</span><span data-line="149">        <span class="n">query</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span data-line="150">        <span class="n">top_k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+</span><span data-line="151">        <span class="n">filters</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span data-line="152">        <span class="n">diversity_threshold</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span data-line="153">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+</span><span data-line="154"><span class="w">        </span><span class="sd">"""</span>
+</span><span data-line="155"><span class="sd">        Search for similar prompts.</span>
+</span><span data-line="156">
+</span><span data-line="157"><span class="sd">        Args:</span>
+</span><span data-line="158"><span class="sd">            query: Search query text</span>
+</span><span data-line="159"><span class="sd">            top_k: Number of results to return</span>
+</span><span data-line="160"><span class="sd">            filters: Metadata filters (if collection has metadata)</span>
+</span><span data-line="161"><span class="sd">            diversity_threshold: If set, exclude results too similar to each other</span>
+</span><span data-line="162">
+</span><span data-line="163"><span class="sd">        Returns:</span>
+</span><span data-line="164"><span class="sd">            List of (key, similarity_score) tuples, sorted by score descending</span>
+</span><span data-line="165">
+</span><span data-line="166"><span class="sd">        Example:</span>
+</span><span data-line="167"><span class="sd">            &gt;&gt;&gt; results = index.search("help with data analysis", top_k=3)  # doctest: +SKIP</span>
+</span><span data-line="168"><span class="sd">            &gt;&gt;&gt; for key, score in results:  # doctest: +SKIP</span>
+</span><span data-line="169"><span class="sd">            ...     print(f"{key}: {score:.3f}")</span>
+</span><span data-line="170"><span class="sd">        """</span>
+</span><span data-line="171">        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">:</span>
+</span><span data-line="172">            <span class="k">return</span> <span class="p">[]</span>
+</span><span data-line="173">
+</span><span data-line="174">        <span class="c1"># Get query embedding</span>
+</span><span data-line="175">        <span class="n">query_emb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_embeddings_func</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_model</span><span class="p">))</span>
 </span><span data-line="176">
-</span><span data-line="177">        <span class="c1"># Apply diversity if requested</span>
-</span><span data-line="178">        <span class="k">if</span> <span class="n">diversity_threshold</span><span class="p">:</span>
-</span><span data-line="179">            <span class="n">similarities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diversify_results</span><span class="p">(</span><span class="n">similarities</span><span class="p">,</span> <span class="n">diversity_threshold</span><span class="p">)</span>
-</span><span data-line="180">
-</span><span data-line="181">        <span class="k">return</span> <span class="n">similarities</span><span class="p">[:</span><span class="n">top_k</span><span class="p">]</span></div>
+</span><span data-line="177">        <span class="c1"># Compute similarities</span>
+</span><span data-line="178">        <span class="n">similarities</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="179">        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">emb</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span data-line="180">            <span class="c1"># Cosine similarity</span>
+</span><span data-line="181">            <span class="n">sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">query_emb</span><span class="p">,</span> <span class="n">emb</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+</span><span data-line="182">                <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">query_emb</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span>
+</span><span data-line="183">            <span class="p">)</span>
+</span><span data-line="184">            <span class="n">similarities</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">sim</span><span class="p">)))</span>
+</span><span data-line="185">
+</span><span data-line="186">        <span class="c1"># Sort by similarity descending</span>
+</span><span data-line="187">        <span class="n">similarities</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="188">
+</span><span data-line="189">        <span class="c1"># Apply filters if provided</span>
+</span><span data-line="190">        <span class="k">if</span> <span class="n">filters</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="p">,</span> <span class="s2">"meta"</span><span class="p">):</span>
+</span><span data-line="191">            <span class="n">similarities</span> <span class="o">=</span> <span class="p">[</span>
+</span><span data-line="192">                <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">similarities</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matches_filters</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">filters</span><span class="p">)</span>
+</span><span data-line="193">            <span class="p">]</span>
+</span><span data-line="194">
+</span><span data-line="195">        <span class="c1"># Apply diversity if requested</span>
+</span><span data-line="196">        <span class="k">if</span> <span class="n">diversity_threshold</span><span class="p">:</span>
+</span><span data-line="197">            <span class="n">similarities</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_diversify_results</span><span class="p">(</span><span class="n">similarities</span><span class="p">,</span> <span class="n">diversity_threshold</span><span class="p">)</span>
+</span><span data-line="198">
+</span><span data-line="199">        <span class="k">return</span> <span class="n">similarities</span><span class="p">[:</span><span class="n">top_k</span><span class="p">]</span></div>
 
-</span><span data-line="182">
-</span><span data-line="183">    <span class="k">def</span><span class="w"> </span><span class="nf">_matches_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span data-line="184"><span class="w">        </span><span class="sd">"""</span>
-</span><span data-line="185"><span class="sd">        Check if item matches metadata filters.</span>
-</span><span data-line="186">
-</span><span data-line="187"><span class="sd">        Args:</span>
-</span><span data-line="188"><span class="sd">            key: Item key</span>
-</span><span data-line="189"><span class="sd">            filters: Dict of metadata filters</span>
-</span><span data-line="190">
-</span><span data-line="191"><span class="sd">        Returns:</span>
-</span><span data-line="192"><span class="sd">            True if item matches all filters</span>
-</span><span data-line="193"><span class="sd">        """</span>
-</span><span data-line="194">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="p">,</span> <span class="s2">"meta"</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">meta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span data-line="195">            <span class="k">return</span> <span class="kc">True</span>
-</span><span data-line="196">
-</span><span data-line="197">        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">meta</span><span class="p">:</span>
-</span><span data-line="198">            <span class="k">return</span> <span class="kc">False</span>
-</span><span data-line="199">
-</span><span data-line="200">        <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-</span><span data-line="201">        <span class="k">for</span> <span class="n">filter_key</span><span class="p">,</span> <span class="n">filter_val</span> <span class="ow">in</span> <span class="n">filters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span data-line="202">            <span class="k">if</span> <span class="n">filter_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
-</span><span data-line="203">                <span class="k">return</span> <span class="kc">False</span>
-</span><span data-line="204">            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filter_val</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
-</span><span data-line="205">                <span class="c1"># Check if any filter value in meta value</span>
-</span><span data-line="206">                <span class="n">meta_val</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="n">filter_key</span><span class="p">]</span>
-</span><span data-line="207">                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">meta_val</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
-</span><span data-line="208">                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">filter_val</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">meta_val</span><span class="p">):</span>
-</span><span data-line="209">                        <span class="k">return</span> <span class="kc">False</span>
-</span><span data-line="210">                <span class="k">elif</span> <span class="n">meta_val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">filter_val</span><span class="p">:</span>
-</span><span data-line="211">                    <span class="k">return</span> <span class="kc">False</span>
-</span><span data-line="212">            <span class="k">elif</span> <span class="n">meta</span><span class="p">[</span><span class="n">filter_key</span><span class="p">]</span> <span class="o">!=</span> <span class="n">filter_val</span><span class="p">:</span>
-</span><span data-line="213">                <span class="k">return</span> <span class="kc">False</span>
+</span><span data-line="200">
+</span><span data-line="201">    <span class="k">def</span><span class="w"> </span><span class="nf">_matches_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">filters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span data-line="202"><span class="w">        </span><span class="sd">"""</span>
+</span><span data-line="203"><span class="sd">        Check if item matches metadata filters.</span>
+</span><span data-line="204">
+</span><span data-line="205"><span class="sd">        Args:</span>
+</span><span data-line="206"><span class="sd">            key: Item key</span>
+</span><span data-line="207"><span class="sd">            filters: Dict of metadata filters</span>
+</span><span data-line="208">
+</span><span data-line="209"><span class="sd">        Returns:</span>
+</span><span data-line="210"><span class="sd">            True if item matches all filters</span>
+</span><span data-line="211"><span class="sd">        """</span>
+</span><span data-line="212">        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="p">,</span> <span class="s2">"meta"</span><span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">meta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span data-line="213">            <span class="k">return</span> <span class="kc">True</span>
 </span><span data-line="214">
-</span><span data-line="215">        <span class="k">return</span> <span class="kc">True</span>
-</span><span data-line="216">
-</span><span data-line="217">    <span class="k">def</span><span class="w"> </span><span class="nf">_diversify_results</span><span class="p">(</span>
-</span><span data-line="218">        <span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span>
-</span><span data-line="219">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
-</span><span data-line="220"><span class="w">        </span><span class="sd">"""</span>
-</span><span data-line="221"><span class="sd">        Remove results too similar to each other.</span>
-</span><span data-line="222">
-</span><span data-line="223"><span class="sd">        Keep results that are less than threshold similar to already-selected results.</span>
-</span><span data-line="224"><span class="sd">        Implements Maximal Marginal Relevance (MMR) approach.</span>
-</span><span data-line="225">
-</span><span data-line="226"><span class="sd">        Args:</span>
-</span><span data-line="227"><span class="sd">            results: List of (key, score) tuples</span>
-</span><span data-line="228"><span class="sd">            threshold: Similarity threshold (0-1)</span>
-</span><span data-line="229">
-</span><span data-line="230"><span class="sd">        Returns:</span>
-</span><span data-line="231"><span class="sd">            Filtered list of results</span>
-</span><span data-line="232"><span class="sd">        """</span>
-</span><span data-line="233">        <span class="k">if</span> <span class="ow">not</span> <span class="n">results</span><span class="p">:</span>
-</span><span data-line="234">            <span class="k">return</span> <span class="n">results</span>
-</span><span data-line="235">
-</span><span data-line="236">        <span class="n">diverse</span> <span class="o">=</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>  <span class="c1"># Always keep top result</span>
-</span><span data-line="237">
-</span><span data-line="238">        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-</span><span data-line="239">            <span class="n">emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</span><span data-line="215">        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">meta</span><span class="p">:</span>
+</span><span data-line="216">            <span class="k">return</span> <span class="kc">False</span>
+</span><span data-line="217">
+</span><span data-line="218">        <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</span><span data-line="219">        <span class="k">for</span> <span class="n">filter_key</span><span class="p">,</span> <span class="n">filter_val</span> <span class="ow">in</span> <span class="n">filters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span data-line="220">            <span class="k">if</span> <span class="n">filter_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">meta</span><span class="p">:</span>
+</span><span data-line="221">                <span class="k">return</span> <span class="kc">False</span>
+</span><span data-line="222">            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">filter_val</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+</span><span data-line="223">                <span class="c1"># Check if any filter value in meta value</span>
+</span><span data-line="224">                <span class="n">meta_val</span> <span class="o">=</span> <span class="n">meta</span><span class="p">[</span><span class="n">filter_key</span><span class="p">]</span>
+</span><span data-line="225">                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">meta_val</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">)):</span>
+</span><span data-line="226">                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">filter_val</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">meta_val</span><span class="p">):</span>
+</span><span data-line="227">                        <span class="k">return</span> <span class="kc">False</span>
+</span><span data-line="228">                <span class="k">elif</span> <span class="n">meta_val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">filter_val</span><span class="p">:</span>
+</span><span data-line="229">                    <span class="k">return</span> <span class="kc">False</span>
+</span><span data-line="230">            <span class="k">elif</span> <span class="n">meta</span><span class="p">[</span><span class="n">filter_key</span><span class="p">]</span> <span class="o">!=</span> <span class="n">filter_val</span><span class="p">:</span>
+</span><span data-line="231">                <span class="k">return</span> <span class="kc">False</span>
+</span><span data-line="232">
+</span><span data-line="233">        <span class="k">return</span> <span class="kc">True</span>
+</span><span data-line="234">
+</span><span data-line="235">    <span class="k">def</span><span class="w"> </span><span class="nf">_diversify_results</span><span class="p">(</span>
+</span><span data-line="236">        <span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]],</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span>
+</span><span data-line="237">    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+</span><span data-line="238"><span class="w">        </span><span class="sd">"""</span>
+</span><span data-line="239"><span class="sd">        Remove results too similar to each other.</span>
 </span><span data-line="240">
-</span><span data-line="241">            <span class="c1"># Check similarity to already-selected results</span>
-</span><span data-line="242">            <span class="n">too_similar</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span data-line="243">            <span class="k">for</span> <span class="n">selected_key</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">diverse</span><span class="p">:</span>
-</span><span data-line="244">                <span class="n">selected_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">[</span><span class="n">selected_key</span><span class="p">]</span>
-</span><span data-line="245">                <span class="n">sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">emb</span><span class="p">,</span> <span class="n">selected_emb</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
-</span><span data-line="246">                    <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">selected_emb</span><span class="p">)</span>
-</span><span data-line="247">                <span class="p">)</span>
-</span><span data-line="248">                <span class="k">if</span> <span class="n">sim</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">:</span>
-</span><span data-line="249">                    <span class="n">too_similar</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span data-line="250">                    <span class="k">break</span>
-</span><span data-line="251">
-</span><span data-line="252">            <span class="k">if</span> <span class="ow">not</span> <span class="n">too_similar</span><span class="p">:</span>
-</span><span data-line="253">                <span class="n">diverse</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">score</span><span class="p">))</span>
-</span><span data-line="254">
-</span><span data-line="255">        <span class="k">return</span> <span class="n">diverse</span>
-</span><span data-line="256">
+</span><span data-line="241"><span class="sd">        Keep results that are less than threshold similar to already-selected results.</span>
+</span><span data-line="242"><span class="sd">        Implements Maximal Marginal Relevance (MMR) approach.</span>
+</span><span data-line="243">
+</span><span data-line="244"><span class="sd">        Args:</span>
+</span><span data-line="245"><span class="sd">            results: List of (key, score) tuples</span>
+</span><span data-line="246"><span class="sd">            threshold: Similarity threshold (0-1)</span>
+</span><span data-line="247">
+</span><span data-line="248"><span class="sd">        Returns:</span>
+</span><span data-line="249"><span class="sd">            Filtered list of results</span>
+</span><span data-line="250"><span class="sd">        """</span>
+</span><span data-line="251">        <span class="k">if</span> <span class="ow">not</span> <span class="n">results</span><span class="p">:</span>
+</span><span data-line="252">            <span class="k">return</span> <span class="n">results</span>
+</span><span data-line="253">
+</span><span data-line="254">        <span class="n">diverse</span> <span class="o">=</span> <span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>  <span class="c1"># Always keep top result</span>
+</span><span data-line="255">
+</span><span data-line="256">        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+</span><span data-line="257">            <span class="n">emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</span><span data-line="258">
+</span><span data-line="259">            <span class="c1"># Check similarity to already-selected results</span>
+</span><span data-line="260">            <span class="n">too_similar</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span data-line="261">            <span class="k">for</span> <span class="n">selected_key</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">diverse</span><span class="p">:</span>
+</span><span data-line="262">                <span class="n">selected_emb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">[</span><span class="n">selected_key</span><span class="p">]</span>
+</span><span data-line="263">                <span class="n">sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">emb</span><span class="p">,</span> <span class="n">selected_emb</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span>
+</span><span data-line="264">                    <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">selected_emb</span><span class="p">)</span>
+</span><span data-line="265">                <span class="p">)</span>
+</span><span data-line="266">                <span class="k">if</span> <span class="n">sim</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">:</span>
+</span><span data-line="267">                    <span class="n">too_similar</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span data-line="268">                    <span class="k">break</span>
+</span><span data-line="269">
+</span><span data-line="270">            <span class="k">if</span> <span class="ow">not</span> <span class="n">too_similar</span><span class="p">:</span>
+</span><span data-line="271">                <span class="n">diverse</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">key</span><span class="p">,</span> <span class="n">score</span><span class="p">))</span>
+</span><span data-line="272">
+</span><span data-line="273">        <span class="k">return</span> <span class="n">diverse</span>
+</span><span data-line="274">
 <div class="viewcode-block" id="SemanticIndex.cluster">
 <a class="viewcode-back" href="../../_autosummary/pyrompt.search.html#pyrompt.SemanticIndex.cluster">[docs]</a>
-</span><span data-line="257">    <span class="k">def</span><span class="w"> </span><span class="nf">cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
-</span><span data-line="258"><span class="w">        </span><span class="sd">"""</span>
-</span><span data-line="259"><span class="sd">        Cluster prompts/templates into groups.</span>
-</span><span data-line="260">
-</span><span data-line="261"><span class="sd">        Args:</span>
-</span><span data-line="262"><span class="sd">            n_clusters: Number of clusters</span>
-</span><span data-line="263">
-</span><span data-line="264"><span class="sd">        Returns:</span>
-</span><span data-line="265"><span class="sd">            Dict mapping cluster_id -&gt; list of keys</span>
-</span><span data-line="266">
-</span><span data-line="267"><span class="sd">        Raises:</span>
-</span><span data-line="268"><span class="sd">            ImportError: If scikit-learn not available</span>
-</span><span data-line="269"><span class="sd">        """</span>
-</span><span data-line="270">        <span class="k">try</span><span class="p">:</span>
-</span><span data-line="271">            <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
-</span><span data-line="272">        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-</span><span data-line="273">            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-</span><span data-line="274">                <span class="s2">"scikit-learn required for clustering. "</span>
-</span><span data-line="275">                <span class="s2">"Install with: pip install scikit-learn"</span>
-</span><span data-line="276">            <span class="p">)</span>
-</span><span data-line="277">
-</span><span data-line="278">        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">:</span>
-</span><span data-line="279">            <span class="k">return</span> <span class="p">{}</span>
-</span><span data-line="280">
-</span><span data-line="281">        <span class="c1"># Prepare data</span>
-</span><span data-line="282">        <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-</span><span data-line="283">        <span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">])</span>
+</span><span data-line="275">    <span class="k">def</span><span class="w"> </span><span class="nf">cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">):</span>
+</span><span data-line="276"><span class="w">        </span><span class="sd">"""</span>
+</span><span data-line="277"><span class="sd">        Cluster prompts/templates into groups.</span>
+</span><span data-line="278">
+</span><span data-line="279"><span class="sd">        Args:</span>
+</span><span data-line="280"><span class="sd">            n_clusters: Number of clusters</span>
+</span><span data-line="281">
+</span><span data-line="282"><span class="sd">        Returns:</span>
+</span><span data-line="283"><span class="sd">            Dict mapping cluster_id -&gt; list of keys</span>
 </span><span data-line="284">
-</span><span data-line="285">        <span class="c1"># Cluster</span>
-</span><span data-line="286">        <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">n_clusters</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">)),</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-</span><span data-line="287">        <span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
-</span><span data-line="288">
-</span><span data-line="289">        <span class="c1"># Group by cluster</span>
-</span><span data-line="290">        <span class="n">clusters</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span data-line="291">        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-</span><span data-line="292">            <span class="n">label</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
-</span><span data-line="293">            <span class="k">if</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">clusters</span><span class="p">:</span>
-</span><span data-line="294">                <span class="n">clusters</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span data-line="295">            <span class="n">clusters</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-</span><span data-line="296">
-</span><span data-line="297">        <span class="k">return</span> <span class="n">clusters</span></div>
+</span><span data-line="285"><span class="sd">        Raises:</span>
+</span><span data-line="286"><span class="sd">            ImportError: If scikit-learn not available</span>
+</span><span data-line="287"><span class="sd">        """</span>
+</span><span data-line="288">        <span class="k">try</span><span class="p">:</span>
+</span><span data-line="289">            <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
+</span><span data-line="290">        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+</span><span data-line="291">            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
+</span><span data-line="292">                <span class="s2">"scikit-learn required for clustering. "</span>
+</span><span data-line="293">                <span class="s2">"Install with: pip install scikit-learn"</span>
+</span><span data-line="294">            <span class="p">)</span>
+</span><span data-line="295">
+</span><span data-line="296">        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">:</span>
+</span><span data-line="297">            <span class="k">return</span> <span class="p">{}</span>
+</span><span data-line="298">
+</span><span data-line="299">        <span class="c1"># Prepare data</span>
+</span><span data-line="300">        <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</span><span data-line="301">        <span class="n">vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_embeddings</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">])</span>
+</span><span data-line="302">
+</span><span data-line="303">        <span class="c1"># Cluster</span>
+</span><span data-line="304">        <span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">n_clusters</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">)),</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span data-line="305">        <span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+</span><span data-line="306">
+</span><span data-line="307">        <span class="c1"># Group by cluster</span>
+</span><span data-line="308">        <span class="n">clusters</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span data-line="309">        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+</span><span data-line="310">            <span class="n">label</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+</span><span data-line="311">            <span class="k">if</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">clusters</span><span class="p">:</span>
+</span><span data-line="312">                <span class="n">clusters</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="313">            <span class="n">clusters</span><span class="p">[</span><span class="n">label</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span><span data-line="314">
+</span><span data-line="315">        <span class="k">return</span> <span class="n">clusters</span></div>
 </div>
 
 </span></pre></div>
@@ -467,7 +488,7 @@ data-aria-dark="Switch to auto color mode">
     </div>
   </div>
 </footer>
-      <script src="../../_static/documentation_options.js?v=9fc46840"></script>
+      <script src="../../_static/documentation_options.js?v=544df88d"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>

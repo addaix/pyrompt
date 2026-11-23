@@ -1,38 +1,38 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-23T04:58:19Z",
+  "built_at": "2026-11-23T07:13:17Z",
   "package": {
     "name": "pyrompt",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "display_name": "pyrompt",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "3b367afd72e1856602239b8ff70a64b74c4cdcf8",
-    "short_commit": "3b367af",
+    "commit": "68ddc38f5ab380b9034d0315c6ddbb53a4e53d09",
+    "short_commit": "68ddc38",
     "branch": "main",
     "tags": [
-      "0.0.13"
+      "0.0.14"
     ],
     "dirty": false,
     "remote_url": "https://github.com/addaix/pyrompt",
-    "commit_url": "https://github.com/addaix/pyrompt/commit/3b367afd72e1856602239b8ff70a64b74c4cdcf8",
+    "commit_url": "https://github.com/addaix/pyrompt/commit/68ddc38f5ab380b9034d0315c6ddbb53a4e53d09",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "addaix/pyrompt",
-    "sha": "7fdab2a479ba17aa2a20a5e02675fe8c1d3ff79d",
+    "sha": "5cecadb761918261c1c7788ac43cbab681ec345f",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "45114760620",
-    "run_url": "https://github.com/addaix/pyrompt/actions/runs/45114760620",
+    "run_id": "45129328515",
+    "run_url": "https://github.com/addaix/pyrompt/actions/runs/45129328515",
     "server_url": "https://github.com"
   },
   "tools": {
-    "epythet": "0.2.23",
+    "epythet": "0.2.24",
     "sphinx": "9.1.1",
     "docutils": "0.22.4",
     "python": "3.12.16"
@@ -58,18 +58,20 @@
   },
   "site": {
     "modules_documented": 12,
-    "objects_documented": 114
+    "objects_documented": 115
   },
   "pypi": {
     "checked": true,
     "latest": "0.0.13",
-    "relation": "same",
+    "relation": "ahead",
     "error": null
   },
-  "reproduce": "git clone https://github.com/addaix/pyrompt && cd pyrompt\ngit checkout 3b367afd72e1856602239b8ff70a64b74c4cdcf8\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/addaix/pyrompt && cd pyrompt\ngit checkout 68ddc38f5ab380b9034d0315c6ddbb53a4e53d09\npip install \"epythet==0.2.24\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
-    "aligned": true,
-    "notes": []
+    "aligned": false,
+    "notes": [
+      "The documented version (0.0.14) is ahead of the latest release on PyPI (0.0.13): these docs describe unreleased code."
+    ]
   }
 }
