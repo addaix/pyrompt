@@ -23,7 +23,12 @@ Main Components:
     - GitHubPromptCollection: GitHub-backed collections
 """
 
-__version__ = "0.0.4"
+try:
+    from importlib.metadata import PackageNotFoundError, version as _pkg_version
+
+    __version__ = _pkg_version("pyrompt")  # single source of truth: pyproject metadata
+except PackageNotFoundError:  # source tree that is not installed
+    __version__ = "0+unknown"
 
 # Core collections
 from pyrompt.base import PromptCollection, TemplateCollection
