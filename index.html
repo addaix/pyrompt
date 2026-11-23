@@ -207,32 +207,27 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="15"><span class="c1"># Output: Hello, Alice! Welcome to Wonderland.</span>
 </span><span data-line="16">
 </span><span data-line="17"><span class="c1"># Create an AI function from a template</span>
-</span><span data-line="18"><span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">prompt_function</span>
+</span><span data-line="18"><span class="kn">from</span><span class="w"> </span><span class="nn">aix</span><span class="w"> </span><span class="kn">import</span> <span class="n">prompt_func</span>
 </span><span data-line="19">
-</span><span data-line="20"><span class="n">greet</span> <span class="o">=</span> <span class="n">prompt_function</span><span class="p">(</span><span class="n">templates</span><span class="p">[</span><span class="s2">"greeting"</span><span class="p">])</span>
+</span><span data-line="20"><span class="n">greet</span> <span class="o">=</span> <span class="n">prompt_func</span><span class="p">(</span><span class="n">templates</span><span class="p">[</span><span class="s2">"greeting"</span><span class="p">])</span>
 </span><span data-line="21"><span class="n">response</span> <span class="o">=</span> <span class="n">greet</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"Bob"</span><span class="p">,</span> <span class="n">place</span><span class="o">=</span><span class="s2">"the future"</span><span class="p">)</span>
 </span></pre></div>
 </div>
 </section>
 <section id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Basic installation (Python format strings only)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Basic installation (Python format strings, Jinja2 templates)</span>
 </span><span data-line="2">pip<span class="w"> </span>install<span class="w"> </span>pyrompt
 </span><span data-line="3">
-</span><span data-line="4"><span class="c1"># With Jinja2 support (recommended)</span>
-</span><span data-line="5">pip<span class="w"> </span>install<span class="w"> </span>pyrompt<span class="o">[</span>jinja2<span class="o">]</span>
-</span><span data-line="6">
-</span><span data-line="7"><span class="c1"># With all template engines</span>
-</span><span data-line="8">pip<span class="w"> </span>install<span class="w"> </span>pyrompt<span class="o">[</span>all<span class="o">]</span>
-</span><span data-line="9">
-</span><span data-line="10"><span class="c1"># Full installation with semantic search</span>
-</span><span data-line="11">pip<span class="w"> </span>install<span class="w"> </span>pyrompt<span class="o">[</span>full<span class="o">]</span>
+</span><span data-line="4"><span class="c1"># With AI functions (generation is routed through aix)</span>
+</span><span data-line="5">pip<span class="w"> </span>install<span class="w"> </span>pyrompt<span class="o">[</span>ai<span class="o">]</span>
 </span></pre></div>
 </div>
 <p><strong>Dependencies:</strong></p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">dol</span></code> - Storage abstractions (Mapping/MutableMapping interfaces)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">oa</span></code> - AI operations (prompt_function, embeddings)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aix</span></code> (optional, the <code class="docutils literal notranslate"><span class="pre">ai</span></code> extra) - LLM generation (<code class="docutils literal notranslate"><span class="pre">aix.prompt_func</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">oa</span></code> (optional) - embeddings for semantic search</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">i2</span></code> - Function signature manipulation and wrapping</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">jinja2</span></code> (optional) - Jinja2 templating support</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">pystache</span></code> (optional) - Mustache templating support</p></li>
@@ -352,7 +347,7 @@ data-aria-dark="Switch to auto color mode">
 <h3>Creating AI Functions<a class="headerlink" href="#creating-ai-functions" title="Link to this heading">#</a></h3>
 <p>Transform templates into callable AI functions:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">TemplateCollection</span>
-</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">prompt_function</span><span class="p">,</span> <span class="n">prompt_json_function</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">aix</span><span class="w"> </span><span class="kn">import</span> <span class="n">prompt_func</span>
 </span><span data-line="3">
 </span><span data-line="4"><span class="n">templates</span> <span class="o">=</span> <span class="n">TemplateCollection</span><span class="p">(</span><span class="s2">"my_project"</span><span class="p">)</span>
 </span><span data-line="5">
@@ -365,36 +360,38 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="12"><span class="s2">Focus on: </span><span class="si">{focus_areas}</span>
 </span><span data-line="13"><span class="s2">"""</span>
 </span><span data-line="14">
-</span><span data-line="15"><span class="n">review_code</span> <span class="o">=</span> <span class="n">prompt_function</span><span class="p">(</span>
-</span><span data-line="16">    <span class="n">templates</span><span class="p">[</span><span class="s2">"code_review"</span><span class="p">],</span> <span class="n">defaults</span><span class="o">=</span><span class="p">{</span><span class="s2">"focus_areas"</span><span class="p">:</span> <span class="s2">"correctness and readability"</span><span class="p">}</span>
-</span><span data-line="17"><span class="p">)</span>
-</span><span data-line="18">
-</span><span data-line="19"><span class="n">result</span> <span class="o">=</span> <span class="n">review_code</span><span class="p">(</span><span class="n">language</span><span class="o">=</span><span class="s2">"python"</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s1">'def hello(): return "world"'</span><span class="p">)</span>
-</span><span data-line="20">
-</span><span data-line="21"><span class="c1"># JSON-returning function</span>
-</span><span data-line="22"><span class="n">templates</span><span class="p">[</span><span class="s2">"extract_entities"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"""</span>
-</span><span data-line="23"><span class="s2">Extract entities from this text: </span><span class="si">{text}</span>
-</span><span data-line="24">
-</span><span data-line="25"><span class="s2">Return a JSON object with keys: people, places, organizations</span>
-</span><span data-line="26"><span class="s2">"""</span>
-</span><span data-line="27">
-</span><span data-line="28"><span class="n">extract</span> <span class="o">=</span> <span class="n">prompt_json_function</span><span class="p">(</span>
-</span><span data-line="29">    <span class="n">templates</span><span class="p">[</span><span class="s2">"extract_entities"</span><span class="p">],</span>
-</span><span data-line="30">    <span class="n">json_schema</span><span class="o">=</span><span class="p">{</span>
-</span><span data-line="31">        <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"entities"</span><span class="p">,</span>
-</span><span data-line="32">        <span class="s2">"schema"</span><span class="p">:</span> <span class="p">{</span>
-</span><span data-line="33">            <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
-</span><span data-line="34">            <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
-</span><span data-line="35">                <span class="s2">"people"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span> <span class="s2">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
-</span><span data-line="36">                <span class="s2">"places"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span> <span class="s2">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
-</span><span data-line="37">                <span class="s2">"organizations"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span> <span class="s2">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
-</span><span data-line="38">            <span class="p">},</span>
-</span><span data-line="39">        <span class="p">},</span>
-</span><span data-line="40">    <span class="p">},</span>
-</span><span data-line="41"><span class="p">)</span>
-</span><span data-line="42">
-</span><span data-line="43"><span class="n">entities</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Alice works at Google in New York."</span><span class="p">)</span>
-</span><span data-line="44"><span class="c1"># Returns: {"people": ["Alice"], "places": ["New York"], "organizations": ["Google"]}</span>
+</span><span data-line="15"><span class="n">review_code</span> <span class="o">=</span> <span class="n">prompt_func</span><span class="p">(</span><span class="n">templates</span><span class="p">[</span><span class="s2">"code_review"</span><span class="p">])</span>
+</span><span data-line="16">
+</span><span data-line="17"><span class="n">result</span> <span class="o">=</span> <span class="n">review_code</span><span class="p">(</span>
+</span><span data-line="18">    <span class="n">language</span><span class="o">=</span><span class="s2">"python"</span><span class="p">,</span>
+</span><span data-line="19">    <span class="n">code</span><span class="o">=</span><span class="s1">'def hello(): return "world"'</span><span class="p">,</span>
+</span><span data-line="20">    <span class="n">focus_areas</span><span class="o">=</span><span class="s2">"correctness and readability"</span><span class="p">,</span>
+</span><span data-line="21"><span class="p">)</span>
+</span><span data-line="22">
+</span><span data-line="23"><span class="c1"># JSON-returning function</span>
+</span><span data-line="24"><span class="n">templates</span><span class="p">[</span><span class="s2">"extract_entities"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"""</span>
+</span><span data-line="25"><span class="s2">Extract entities from this text: </span><span class="si">{text}</span>
+</span><span data-line="26">
+</span><span data-line="27"><span class="s2">Return a JSON object with keys: people, places, organizations</span>
+</span><span data-line="28"><span class="s2">"""</span>
+</span><span data-line="29">
+</span><span data-line="30"><span class="n">extract</span> <span class="o">=</span> <span class="n">templates</span><span class="o">.</span><span class="n">to_prompt_json_function</span><span class="p">(</span>
+</span><span data-line="31">    <span class="s2">"extract_entities"</span><span class="p">,</span>
+</span><span data-line="32">    <span class="n">json_schema</span><span class="o">=</span><span class="p">{</span>
+</span><span data-line="33">        <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"entities"</span><span class="p">,</span>
+</span><span data-line="34">        <span class="s2">"schema"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="35">            <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+</span><span data-line="36">            <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+</span><span data-line="37">                <span class="s2">"people"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span> <span class="s2">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
+</span><span data-line="38">                <span class="s2">"places"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span> <span class="s2">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
+</span><span data-line="39">                <span class="s2">"organizations"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span> <span class="s2">"items"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"type"</span><span class="p">:</span> <span class="s2">"string"</span><span class="p">}},</span>
+</span><span data-line="40">            <span class="p">},</span>
+</span><span data-line="41">        <span class="p">},</span>
+</span><span data-line="42">    <span class="p">},</span>
+</span><span data-line="43"><span class="p">)</span>
+</span><span data-line="44">
+</span><span data-line="45"><span class="n">entities</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"Alice works at Google in New York."</span><span class="p">)</span>
+</span><span data-line="46"><span class="c1"># Returns: {"people": ["Alice"], "places": ["New York"], "organizations": ["Google"]}</span>
 </span></pre></div>
 </div>
 </section>
@@ -584,7 +581,7 @@ data-aria-dark="Switch to auto color mode">
 <section id="real-world-example">
 <h2>Real-World Example<a class="headerlink" href="#real-world-example" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">pyrompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptCollection</span><span class="p">,</span> <span class="n">TemplateCollection</span>
-</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">prompt_function</span><span class="p">,</span> <span class="n">PromptFuncs</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">aix</span><span class="w"> </span><span class="kn">import</span> <span class="n">prompt_func</span>
 </span><span data-line="3">
 </span><span data-line="4"><span class="c1"># Set up collections</span>
 </span><span data-line="5"><span class="n">system_prompts</span> <span class="o">=</span> <span class="n">PromptCollection</span><span class="p">(</span><span class="s2">"system"</span><span class="p">)</span>
@@ -615,7 +612,7 @@ data-aria-dark="Switch to auto color mode">
 </span><span data-line="30"><span class="s2">"""</span>
 </span><span data-line="31">
 </span><span data-line="32"><span class="c1"># Create AI function</span>
-</span><span data-line="33"><span class="n">review_pr</span> <span class="o">=</span> <span class="n">prompt_function</span><span class="p">(</span>
+</span><span data-line="33"><span class="n">review_pr</span> <span class="o">=</span> <span class="n">prompt_func</span><span class="p">(</span>
 </span><span data-line="34">    <span class="n">templates</span><span class="p">[</span><span class="s2">"review_pr.jinja2"</span><span class="p">],</span>
 </span><span data-line="35">    <span class="n">prompt_func_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"system"</span><span class="p">:</span> <span class="n">system_prompts</span><span class="p">[</span><span class="s2">"code_reviewer"</span><span class="p">]},</span>
 </span><span data-line="36"><span class="p">)</span>
@@ -784,7 +781,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 </section>
 
-<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-23 04:52 UTC from <a href="https://github.com/addaix/pyrompt/commit/403a3d19c2300cc56d48bd5a81be3853b0696ff0">403a3d1</a> (main) · pyrompt 0.0.12 · <a href="about-this-build.html">about this build</a></p>
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-23 04:58 UTC from <a href="https://github.com/addaix/pyrompt/commit/3b367afd72e1856602239b8ff70a64b74c4cdcf8">3b367af</a> (main) · pyrompt 0.0.13 · <a href="about-this-build.html">about this build</a></p>
         </article><button class="back-to-top" type="button">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
@@ -819,7 +816,7 @@ data-aria-dark="Switch to auto color mode">
     </div>
   </div>
 </footer>
-      <script src="_static/documentation_options.js?v=3bbcec59"></script>
+      <script src="_static/documentation_options.js?v=9fc46840"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>

@@ -1,4 +1,4 @@
-> built 2026-11-23 04:52 UTC from 403a3d1 (main) · pyrompt 0.0.12. Details: build_info.json
+> built 2026-11-23 04:58 UTC from 3b367af (main) · pyrompt 0.0.13. Details: build_info.json
 
 # index.html.md
 
@@ -49,32 +49,27 @@ print(templates["greeting"].format(name="Alice", place="Wonderland"))
 # Output: Hello, Alice! Welcome to Wonderland.
 
 # Create an AI function from a template
-from oa import prompt_function
+from aix import prompt_func
 
-greet = prompt_function(templates["greeting"])
+greet = prompt_func(templates["greeting"])
 response = greet(name="Bob", place="the future")
 ```
 
 ## Installation
 
 ```bash
-# Basic installation (Python format strings only)
+# Basic installation (Python format strings, Jinja2 templates)
 pip install pyrompt
 
-# With Jinja2 support (recommended)
-pip install pyrompt[jinja2]
-
-# With all template engines
-pip install pyrompt[all]
-
-# Full installation with semantic search
-pip install pyrompt[full]
+# With AI functions (generation is routed through aix)
+pip install pyrompt[ai]
 ```
 
 **Dependencies:**
 
 - `dol` - Storage abstractions (Mapping/MutableMapping interfaces)
-- `oa` - AI operations (prompt_function, embeddings)
+- `aix` (optional, the `ai` extra) - LLM generation (`aix.prompt_func`)
+- `oa` (optional) - embeddings for semantic search
 - `i2` - Function signature manipulation and wrapping
 - `jinja2` (optional) - Jinja2 templating support
 - `pystache` (optional) - Mustache templating support
@@ -202,7 +197,7 @@ Transform templates into callable AI functions:
 
 ```python
 from pyrompt import TemplateCollection
-from oa import prompt_function, prompt_json_function
+from aix import prompt_func
 
 templates = TemplateCollection("my_project")
 
@@ -215,11 +210,13 @@ Review this {language} code:
 Focus on: {focus_areas}
 """
 
-review_code = prompt_function(
-    templates["code_review"], defaults={"focus_areas": "correctness and readability"}
-)
+review_code = prompt_func(templates["code_review"])
 
-result = review_code(language="python", code='def hello(): return "world"')
+result = review_code(
+    language="python",
+    code='def hello(): return "world"',
+    focus_areas="correctness and readability",
+)
 
 # JSON-returning function
 templates["extract_entities"] = """
@@ -228,8 +225,8 @@ Extract entities from this text: {text}
 Return a JSON object with keys: people, places, organizations
 """
 
-extract = prompt_json_function(
-    templates["extract_entities"],
+extract = templates.to_prompt_json_function(
+    "extract_entities",
     json_schema={
         "name": "entities",
         "schema": {
@@ -437,7 +434,7 @@ results = mall.search("python", collections=["system_prompts", "personas"])
 
 ```python
 from pyrompt import PromptCollection, TemplateCollection
-from oa import prompt_function, PromptFuncs
+from aix import prompt_func
 
 # Set up collections
 system_prompts = PromptCollection("system")
@@ -468,7 +465,7 @@ Provide:
 """
 
 # Create AI function
-review_pr = prompt_function(
+review_pr = prompt_func(
     templates["review_pr.jinja2"],
     prompt_func_kwargs={"system": system_prompts["code_reviewer"]},
 )
@@ -2629,20 +2626,18 @@ Validate a template string.
 
 # About this build
 
-This documentation was built on **2026-11-23 04:52 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/403a3d19c2300cc56d48bd5a81be3853b0696ff0"><code>403a3d1</code></a> on branch <code>main</code>, for **pyrompt 0.0.12** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-23 04:58 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/3b367afd72e1856602239b8ff70a64b74c4cdcf8"><code>3b367af</code></a> on branch <code>main</code>, for **pyrompt 0.0.13** (from <code>pyproject.toml</code>).
 
-#### WARNING
-The documentation and the package may be misaligned:
-
-- The documented version (0.0.12) is ahead of the latest release on PyPI (0.0.11): these docs describe unreleased code.
+#### NOTE
+Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
 
 ## Source
 
 |                     |                                                                                                                                                       |
 |---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/addaix/pyrompt/commit/403a3d19c2300cc56d48bd5a81be3853b0696ff0"><code>403a3d19c2300cc56d48bd5a81be3853b0696ff0</code></a> |
+| Commit              | <a href="https://github.com/addaix/pyrompt/commit/3b367afd72e1856602239b8ff70a64b74c4cdcf8"><code>3b367afd72e1856602239b8ff70a64b74c4cdcf8</code></a> |
 | Branch              | <code>main</code>                                                                                                                                     |
-| Tags at this commit | <code>0.0.12</code>                                                                                                                                   |
+| Tags at this commit | <code>0.0.13</code>                                                                                                                                   |
 | Working tree        | clean                                                                                                                                                 |
 | Remote              | <code>https://github.com/addaix/pyrompt</code>                                                                                                        |
 
@@ -2651,9 +2646,9 @@ The documentation and the package may be misaligned:
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>addaix/pyrompt</code>                                                                |
-| Run          | <a href="https://github.com/addaix/pyrompt/actions/runs/45114191797">45114191797</a>       |
+| Run          | <a href="https://github.com/addaix/pyrompt/actions/runs/45114760620">45114760620</a>       |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>8249d0ecae7898d62f7103f242345c40c6ebdc0e</code> (in the history of the built commit) |
+| Event commit | <code>7fdab2a479ba17aa2a20a5e02675fe8c1d3ff79d</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -2678,13 +2673,13 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/pyrompt/0.0.11/">0.0.11</a>, older than the documented version (0.0.12).
+Latest release: <a href="https://pypi.org/project/pyrompt/0.0.13/">0.0.13</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/addaix/pyrompt && cd pyrompt
-git checkout 403a3d19c2300cc56d48bd5a81be3853b0696ff0
+git checkout 3b367afd72e1856602239b8ff70a64b74c4cdcf8
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

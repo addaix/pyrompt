@@ -1,34 +1,34 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-23T04:52:03Z",
+  "built_at": "2026-11-23T04:58:19Z",
   "package": {
     "name": "pyrompt",
-    "version": "0.0.12",
+    "version": "0.0.13",
     "display_name": "pyrompt",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "403a3d19c2300cc56d48bd5a81be3853b0696ff0",
-    "short_commit": "403a3d1",
+    "commit": "3b367afd72e1856602239b8ff70a64b74c4cdcf8",
+    "short_commit": "3b367af",
     "branch": "main",
     "tags": [
-      "0.0.12"
+      "0.0.13"
     ],
     "dirty": false,
     "remote_url": "https://github.com/addaix/pyrompt",
-    "commit_url": "https://github.com/addaix/pyrompt/commit/403a3d19c2300cc56d48bd5a81be3853b0696ff0",
+    "commit_url": "https://github.com/addaix/pyrompt/commit/3b367afd72e1856602239b8ff70a64b74c4cdcf8",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "addaix/pyrompt",
-    "sha": "8249d0ecae7898d62f7103f242345c40c6ebdc0e",
+    "sha": "7fdab2a479ba17aa2a20a5e02675fe8c1d3ff79d",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "45114191797",
-    "run_url": "https://github.com/addaix/pyrompt/actions/runs/45114191797",
+    "run_id": "45114760620",
+    "run_url": "https://github.com/addaix/pyrompt/actions/runs/45114760620",
     "server_url": "https://github.com"
   },
   "tools": {
@@ -62,16 +62,14 @@
   },
   "pypi": {
     "checked": true,
-    "latest": "0.0.11",
-    "relation": "ahead",
+    "latest": "0.0.13",
+    "relation": "same",
     "error": null
   },
-  "reproduce": "git clone https://github.com/addaix/pyrompt && cd pyrompt\ngit checkout 403a3d19c2300cc56d48bd5a81be3853b0696ff0\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/addaix/pyrompt && cd pyrompt\ngit checkout 3b367afd72e1856602239b8ff70a64b74c4cdcf8\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
-    "aligned": false,
-    "notes": [
-      "The documented version (0.0.12) is ahead of the latest release on PyPI (0.0.11): these docs describe unreleased code."
-    ]
+    "aligned": true,
+    "notes": []
   }
 }

@@ -5,21 +5,19 @@ orphan: true
 
 # About this build
 
-This documentation was built on **2026-11-23 04:52 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/403a3d19c2300cc56d48bd5a81be3853b0696ff0"><code>403a3d1</code></a> on branch <code>main</code>, for **pyrompt 0.0.12** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-23 04:58 UTC** from commit <a href="https://github.com/addaix/pyrompt/commit/3b367afd72e1856602239b8ff70a64b74c4cdcf8"><code>3b367af</code></a> on branch <code>main</code>, for **pyrompt 0.0.13** (from <code>pyproject.toml</code>).
 
-:::{warning}
-The documentation and the package may be misaligned:
-
-- The documented version (0.0.12) is ahead of the latest release on PyPI (0.0.11): these docs describe unreleased code.
+:::{note}
+Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
 :::
 
 ## Source
 
 | | |
 |---|---|
-| Commit | <a href="https://github.com/addaix/pyrompt/commit/403a3d19c2300cc56d48bd5a81be3853b0696ff0"><code>403a3d19c2300cc56d48bd5a81be3853b0696ff0</code></a> |
+| Commit | <a href="https://github.com/addaix/pyrompt/commit/3b367afd72e1856602239b8ff70a64b74c4cdcf8"><code>3b367afd72e1856602239b8ff70a64b74c4cdcf8</code></a> |
 | Branch | <code>main</code> |
-| Tags at this commit | <code>0.0.12</code> |
+| Tags at this commit | <code>0.0.13</code> |
 | Working tree | clean |
 | Remote | <code>https://github.com/addaix/pyrompt</code> |
 
@@ -28,9 +26,9 @@ The documentation and the package may be misaligned:
 | | |
 |---|---|
 | Repository | <code>addaix/pyrompt</code> |
-| Run | <a href="https://github.com/addaix/pyrompt/actions/runs/45114191797">45114191797</a> |
+| Run | <a href="https://github.com/addaix/pyrompt/actions/runs/45114760620">45114760620</a> |
 | Ref | <code>refs/heads/main</code> |
-| Event commit | <code>8249d0ecae7898d62f7103f242345c40c6ebdc0e</code> (in the history of the built commit) |
+| Event commit | <code>7fdab2a479ba17aa2a20a5e02675fe8c1d3ff79d</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -55,13 +53,13 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/pyrompt/0.0.11/">0.0.11</a>, older than the documented version (0.0.12).
+Latest release: <a href="https://pypi.org/project/pyrompt/0.0.13/">0.0.13</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/addaix/pyrompt && cd pyrompt
-git checkout 403a3d19c2300cc56d48bd5a81be3853b0696ff0
+git checkout 3b367afd72e1856602239b8ff70a64b74c4cdcf8
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

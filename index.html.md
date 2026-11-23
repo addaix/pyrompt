@@ -45,32 +45,27 @@ print(templates["greeting"].format(name="Alice", place="Wonderland"))
 # Output: Hello, Alice! Welcome to Wonderland.
 
 # Create an AI function from a template
-from oa import prompt_function
+from aix import prompt_func
 
-greet = prompt_function(templates["greeting"])
+greet = prompt_func(templates["greeting"])
 response = greet(name="Bob", place="the future")
 ```
 
 ## Installation
 
 ```bash
-# Basic installation (Python format strings only)
+# Basic installation (Python format strings, Jinja2 templates)
 pip install pyrompt
 
-# With Jinja2 support (recommended)
-pip install pyrompt[jinja2]
-
-# With all template engines
-pip install pyrompt[all]
-
-# Full installation with semantic search
-pip install pyrompt[full]
+# With AI functions (generation is routed through aix)
+pip install pyrompt[ai]
 ```
 
 **Dependencies:**
 
 - `dol` - Storage abstractions (Mapping/MutableMapping interfaces)
-- `oa` - AI operations (prompt_function, embeddings)
+- `aix` (optional, the `ai` extra) - LLM generation (`aix.prompt_func`)
+- `oa` (optional) - embeddings for semantic search
 - `i2` - Function signature manipulation and wrapping
 - `jinja2` (optional) - Jinja2 templating support
 - `pystache` (optional) - Mustache templating support
@@ -198,7 +193,7 @@ Transform templates into callable AI functions:
 
 ```python
 from pyrompt import TemplateCollection
-from oa import prompt_function, prompt_json_function
+from aix import prompt_func
 
 templates = TemplateCollection("my_project")
 
@@ -211,11 +206,13 @@ Review this {language} code:
 Focus on: {focus_areas}
 """
 
-review_code = prompt_function(
-    templates["code_review"], defaults={"focus_areas": "correctness and readability"}
-)
+review_code = prompt_func(templates["code_review"])
 
-result = review_code(language="python", code='def hello(): return "world"')
+result = review_code(
+    language="python",
+    code='def hello(): return "world"',
+    focus_areas="correctness and readability",
+)
 
 # JSON-returning function
 templates["extract_entities"] = """
@@ -224,8 +221,8 @@ Extract entities from this text: {text}
 Return a JSON object with keys: people, places, organizations
 """
 
-extract = prompt_json_function(
-    templates["extract_entities"],
+extract = templates.to_prompt_json_function(
+    "extract_entities",
     json_schema={
         "name": "entities",
         "schema": {
@@ -433,7 +430,7 @@ results = mall.search("python", collections=["system_prompts", "personas"])
 
 ```python
 from pyrompt import PromptCollection, TemplateCollection
-from oa import prompt_function, PromptFuncs
+from aix import prompt_func
 
 # Set up collections
 system_prompts = PromptCollection("system")
@@ -464,7 +461,7 @@ Provide:
 """
 
 # Create AI function
-review_pr = prompt_function(
+review_pr = prompt_func(
     templates["review_pr.jinja2"],
     prompt_func_kwargs={"system": system_prompts["code_reviewer"]},
 )
